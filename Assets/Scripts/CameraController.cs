@@ -9,12 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private List<CameraSet> _camers;
     [SerializeField] private CinemachineBrain _brain;
 
-    private CinemachineBlenderSettings.CustomBlend[] _blends;
     private EStates _currentState;
-    private void Awake()
-    {
-        _blends = _brain.m_CustomBlends.m_CustomBlends;
-    }
 
     public float ChangeState(EStates state)
     {
@@ -25,7 +20,7 @@ public class CameraController : MonoBehaviour
 
         float time = 0;
         
-        foreach (var customBlend in _blends)
+        foreach (var customBlend in _brain.m_CustomBlends.m_CustomBlends)
         {
             if (customBlend.m_From == _currentState.ToString() && customBlend.m_To == state.ToString())
             {
