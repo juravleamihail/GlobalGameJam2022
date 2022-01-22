@@ -271,20 +271,52 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a272be01-8455-4b97-9405-069fb9853e9b
-    m_ActionName: PlayerOneMovement/Triggers[/Keyboard/space]
+    m_ActionId: 33efa8af-513d-4f75-9b4a-46de8cf23397
+    m_ActionName: PlayerActions/PlayerOneSwitch[/Keyboard/tab]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 86b9314e-8319-4bec-89ad-3367c0e75eb8
-    m_ActionName: PlayerOneMovement/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+    m_ActionId: 9dbc2e90-1678-46f2-9912-365d4d68c275
+    m_ActionName: PlayerActions/PlayerOneUp[/Keyboard/w]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 22f1f575-5104-4525-91a0-385bdc0a9c98
-    m_ActionName: PlayerActions/PlayerTwoTriggers[/Keyboard/numpad0]
+    m_ActionId: 7fe965a7-3a8f-4bf1-9331-fcd6f920824f
+    m_ActionName: PlayerActions/PlayerTwoUp[/Keyboard/upArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a9e8d28e-0cf6-4c32-a069-289b8e91fd52
-    m_ActionName: PlayerActions/PlayerTwoMovement1[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+    m_ActionId: d64a03bc-468a-4a6a-b138-560381c9c8a5
+    m_ActionName: PlayerActions/PlayerOneDown[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c7c60f7e-c6b4-4793-84b4-f4e38c9e1938
+    m_ActionName: PlayerActions/PlayerTwoDown[/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 04010d0b-73b9-4f41-8ce4-645d65323527
+    m_ActionName: PlayerActions/PlayerOneLeft[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8b54e992-9f3a-476a-9ad5-f6ede0b154e6
+    m_ActionName: PlayerActions/PlayerTwoLeft[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: edd021ae-ff29-41f9-8fc3-b2d49d255e77
+    m_ActionName: PlayerActions/PlayerOneRight[/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e73ed3f5-2ac2-4d10-a4bc-d2d9f334c8be
+    m_ActionName: PlayerActions/PlayerTwoRight[/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7cefd07e-e99d-44be-945a-01bf1c297ba7
+    m_ActionName: PlayerActions/PlayerOneUndo[/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 33b63201-8501-4c9a-9b5b-c5b5a57edac4
+    m_ActionName: PlayerActions/PlayerTwoUndo[/Keyboard/backspace]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ed869a8a-9141-40de-bb96-f63620da4d7c
+    m_ActionName: PlayerActions/PlayerTwoSwitch[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: PlayerActions
@@ -594,20 +626,52 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a272be01-8455-4b97-9405-069fb9853e9b
-    m_ActionName: PlayerOneMovement/Triggers[/Keyboard/space]
+    m_ActionId: 33efa8af-513d-4f75-9b4a-46de8cf23397
+    m_ActionName: PlayerActions/PlayerOneSwitch[/Keyboard/tab]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 86b9314e-8319-4bec-89ad-3367c0e75eb8
-    m_ActionName: PlayerOneMovement/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+    m_ActionId: 9dbc2e90-1678-46f2-9912-365d4d68c275
+    m_ActionName: PlayerActions/PlayerOneUp[/Keyboard/w]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 22f1f575-5104-4525-91a0-385bdc0a9c98
-    m_ActionName: PlayerActions/PlayerTwoTriggers[/Keyboard/numpad0]
+    m_ActionId: 7fe965a7-3a8f-4bf1-9331-fcd6f920824f
+    m_ActionName: PlayerActions/PlayerTwoUp[/Keyboard/upArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a9e8d28e-0cf6-4c32-a069-289b8e91fd52
-    m_ActionName: PlayerActions/PlayerTwoMovement1[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+    m_ActionId: d64a03bc-468a-4a6a-b138-560381c9c8a5
+    m_ActionName: PlayerActions/PlayerOneDown[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c7c60f7e-c6b4-4793-84b4-f4e38c9e1938
+    m_ActionName: PlayerActions/PlayerTwoDown[/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 04010d0b-73b9-4f41-8ce4-645d65323527
+    m_ActionName: PlayerActions/PlayerOneLeft[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8b54e992-9f3a-476a-9ad5-f6ede0b154e6
+    m_ActionName: PlayerActions/PlayerTwoLeft[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: edd021ae-ff29-41f9-8fc3-b2d49d255e77
+    m_ActionName: PlayerActions/PlayerOneRight[/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e73ed3f5-2ac2-4d10-a4bc-d2d9f334c8be
+    m_ActionName: PlayerActions/PlayerTwoRight[/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7cefd07e-e99d-44be-945a-01bf1c297ba7
+    m_ActionName: PlayerActions/PlayerOneUndo[/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 33b63201-8501-4c9a-9b5b-c5b5a57edac4
+    m_ActionName: PlayerActions/PlayerTwoUndo[/Keyboard/backspace]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ed869a8a-9141-40de-bb96-f63620da4d7c
+    m_ActionName: PlayerActions/PlayerTwoSwitch[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: PlayerActions
