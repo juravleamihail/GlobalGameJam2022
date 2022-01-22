@@ -54,6 +54,28 @@ public class GridSystem
         }
     }
     
+    public Transform GetTileAt(uint gridX, uint gridZ)
+    {
+        return _Grid[gridX, gridZ];
+    }
+
+    public Vector2Int GetGridCoordsOfTile(Transform tile)
+    {
+        for (int x = 1; x <= _GridSize; ++x)
+        {
+            for (int y = 1; y <= _GridSize; ++y)
+            {
+                Transform candidate = _Grid[x, y];
+                if (candidate == tile)
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+        Debug.Log("Tile object " + tile.gameObject.name + " was not found in grid.");
+        return _vector2IntException;
+    }
+
     public Vector3 ConvertGridCoordsToVector3(uint gridX, uint gridY)
     {
         if (!IsOnGrid(new Vector2Int((int)gridX, (int)gridY)))
