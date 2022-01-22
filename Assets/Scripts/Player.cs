@@ -13,9 +13,14 @@ public class Player : PlayerInputHandler
         base.OnPlayerMove(context);
     }
 
-    protected override void OnPlayerTrigger(InputAction.CallbackContext context)
+    protected override void OnPlayerUndo(InputAction.CallbackContext context)
     {
-        base.OnPlayerTrigger(context);
+        base.OnPlayerUndo(context);
+    }
+
+    protected override void OnPlayerSwitch(InputAction.CallbackContext context)
+    {
+        base.OnPlayerSwitch(context);
     }
 
     private void Start()

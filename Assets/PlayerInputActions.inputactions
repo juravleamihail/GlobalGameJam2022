@@ -6,7 +6,7 @@
             "id": "a5d6c7b5-b125-47fb-86e9-f029036ead2d",
             "actions": [
                 {
-                    "name": "PlayerOneTriggers",
+                    "name": "PlayerOneSwitch",
                     "type": "Button",
                     "id": "a272be01-8455-4b97-9405-069fb9853e9b",
                     "expectedControlType": "Button",
@@ -24,15 +24,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "PlayerTwoTriggers",
-                    "type": "Button",
-                    "id": "22f1f575-5104-4525-91a0-385bdc0a9c98",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "PlayerTwoMovement",
                     "type": "Value",
                     "id": "a9e8d28e-0cf6-4c32-a069-289b8e91fd52",
@@ -40,17 +31,44 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PlayerOneUndo",
+                    "type": "Button",
+                    "id": "da7cab70-0c66-46d9-8a2c-e63e74c3d585",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PlayerTwoUndo",
+                    "type": "Button",
+                    "id": "74967f13-f37e-457f-89e4-75d1d544cb4f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PlayerTwoSwitch",
+                    "type": "Button",
+                    "id": "86209b10-8600-408b-8b09-95b2a58107d7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "9a16c8cc-4c44-423c-ae91-0b6a00620c60",
-                    "path": "<Keyboard>/space",
+                    "id": "ff296800-206f-441b-8ea6-94ba83d9f3aa",
+                    "path": "<Keyboard>/tab",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "PlayerOneTriggers",
+                    "action": "PlayerOneSwitch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -110,17 +128,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "a4966bcb-6c88-495c-aad3-159928d41154",
-                    "path": "<Keyboard>/numpad0",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "PlayerTwoTriggers",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "2D Vector",
                     "id": "68de43cf-2fd6-4f13-babf-b57226289acc",
                     "path": "2DVector",
@@ -174,6 +181,39 @@
                     "action": "PlayerTwoMovement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b65fa3fe-4866-47f6-b59c-75c674179667",
+                    "path": "<Keyboard>/x",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "PlayerOneUndo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "017f67bb-881d-4a6b-b5b8-6d56d67d0eb4",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "PlayerTwoUndo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cecff3a3-5e0a-41bc-a80b-2c0d4d02030d",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "PlayerTwoSwitch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

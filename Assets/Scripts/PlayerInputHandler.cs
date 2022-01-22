@@ -18,13 +18,15 @@ public class PlayerInputHandler : MonoBehaviour
         if (_playerInput.playerIndex == 0)
         {
             playerActions.PlayerActions.Enable();
-            playerActions.PlayerActions.PlayerOneTriggers.performed += OnPlayerTrigger;
+            playerActions.PlayerActions.PlayerOneSwitch.performed += OnPlayerSwitch;
+            playerActions.PlayerActions.PlayerOneUndo.performed += OnPlayerUndo;
             playerActions.PlayerActions.PlayerOneMovement.performed += OnPlayerMove;
         }
         else if(_playerInput.playerIndex == 1)
         {
             playerActions.PlayerActions.Enable();
-            playerActions.PlayerActions.PlayerTwoTriggers.performed += OnPlayerTrigger;
+            playerActions.PlayerActions.PlayerTwoSwitch.performed += OnPlayerSwitch;
+            playerActions.PlayerActions.PlayerTwoUndo.performed += OnPlayerUndo;
             playerActions.PlayerActions.PlayerTwoMovement.performed += OnPlayerMove;
         }
     }
@@ -33,7 +35,13 @@ public class PlayerInputHandler : MonoBehaviour
     {
     }
 
-    protected virtual void OnPlayerTrigger(CallbackContext context)
+    protected virtual void OnPlayerSwitch(CallbackContext context)
     {
+        
+    }
+
+    protected virtual void OnPlayerUndo(CallbackContext context)
+    {
+
     }
 }
