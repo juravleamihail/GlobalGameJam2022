@@ -1,25 +1,23 @@
+using DefaultNamespace;
 using States;
 using UI;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-
-   [SerializeField] private MainMenu _mainMenuUI;
+   [Space(10), SerializeField] private GameSettingsSO _gameSettings;
+   [Space(25), SerializeField] private MainMenu _mainMenuUI;
    [SerializeField] private Hud _hudUI;
-   [SerializeField] private float _tileSize;
-
-   [SerializeField] private uint _gridSize;
-
+   
+   
    private StateMachine _stateMachine;
-
    private GridSystem _grid;
 
    public override void Awake()
    {
       base.Awake();
       _stateMachine = new StateMachine();
-      _grid = new GridSystem(_gridSize, _tileSize);
+      _grid = new GridSystem(_gameSettings.GridSize, _gameSettings.TileSize);
    }
 
    private void Update()
@@ -29,7 +27,7 @@ public class GameManager : Singleton<GameManager>
 
    public void StartGame()
    {
-      _stateMachine.ChangeState(new TurnState(10, _hudUI.UpdateTimer,null));
+      _stateMachine.ChangeState(new TurnState(_gameSettings.Timer, _hudUI.UpdateTimer,null));
       ToggleUI(UIStates.Gameplay);
    }
 
