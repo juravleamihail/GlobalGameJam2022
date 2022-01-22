@@ -18,7 +18,10 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private List<Player> players;
+    [SerializeField]
+    private PlayerTypeListSO _playerTypeList;
+
+    private List<Player> _players;
 
     [SerializeField]
     private int _maxPlayers=2;
@@ -34,17 +37,34 @@ public class PlayerManager : MonoBehaviour
             Destroy(this);
         }
 
-        players = new List<Player>( FindObjectsOfType<Player>());
+        _players = new List<Player>();
+        InitPlayers();
     }
 
     public Player GetPlayerByIndex(int index)
     {
-        if(!(index>=0 && index<2))
+        if(!(index>=0 && index<_playerTypeList.playerTypeList.Count))
         {
             Debug.LogError("wrong index");
             return null;
         }
 
-        return players.Find(player => player.PlayerIndex == index);
+        return _players.Find(player => player.PlayerType.PlayerIndex == index);
     }
+
+    void InitPlayers()
+    {
+        for(int i=0;i<_maxPlayers;i++)
+        {
+           var player =  Instantiate(_playerTypeList.playerTypeList[i].Prefab).GetComponent<Player>();
+           player.transform.parent = transform;
+           player.transform.position = Vector3.zero;
+            player.PlayerType = _playerTypeList.playerTypeList[i];
+
+           _players.Add(player);
+           
+        }
+    }
+
+
 }

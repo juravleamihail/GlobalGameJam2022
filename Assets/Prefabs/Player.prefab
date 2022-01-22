@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 449362955787029887}
   - component: {fileID: 449362955787029881}
-  - component: {fileID: 449362955787029880}
+  - component: {fileID: 9023589823516925912}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -59,26 +59,58 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a272be01-8455-4b97-9405-069fb9853e9b
-    m_ActionName: PlayerMovement/Triggers[/Keyboard/space]
+    m_ActionId: 33efa8af-513d-4f75-9b4a-46de8cf23397
+    m_ActionName: PlayerActions/PlayerOneSwitch[/Keyboard/tab]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 86b9314e-8319-4bec-89ad-3367c0e75eb8
-    m_ActionName: PlayerOneMovement/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+    m_ActionId: 9dbc2e90-1678-46f2-9912-365d4d68c275
+    m_ActionName: PlayerActions/PlayerOneUp[/Keyboard/w]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 8c835c35-f137-415f-9803-97ce03c14968
-    m_ActionName: PlayerTwoMovement/Triggers[/Keyboard/numpad0]
+    m_ActionId: 7fe965a7-3a8f-4bf1-9331-fcd6f920824f
+    m_ActionName: PlayerActions/PlayerTwoUp[/Keyboard/upArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 1667831a-a2bd-480f-a221-a666f682b26e
-    m_ActionName: PlayerTwoMovement/Movement[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+    m_ActionId: d64a03bc-468a-4a6a-b138-560381c9c8a5
+    m_ActionName: PlayerActions/PlayerOneDown[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c7c60f7e-c6b4-4793-84b4-f4e38c9e1938
+    m_ActionName: PlayerActions/PlayerTwoDown[/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 04010d0b-73b9-4f41-8ce4-645d65323527
+    m_ActionName: PlayerActions/PlayerOneLeft[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8b54e992-9f3a-476a-9ad5-f6ede0b154e6
+    m_ActionName: PlayerActions/PlayerTwoLeft[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: edd021ae-ff29-41f9-8fc3-b2d49d255e77
+    m_ActionName: PlayerActions/PlayerOneRight[/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e73ed3f5-2ac2-4d10-a4bc-d2d9f334c8be
+    m_ActionName: PlayerActions/PlayerTwoRight[/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7cefd07e-e99d-44be-945a-01bf1c297ba7
+    m_ActionName: PlayerActions/PlayerOneUndo[/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 33b63201-8501-4c9a-9b5b-c5b5a57edac4
+    m_ActionName: PlayerActions/PlayerTwoUndo[/Keyboard/backspace]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ed869a8a-9141-40de-bb96-f63620da4d7c
+    m_ActionName: PlayerActions/PlayerTwoSwitch[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
-  m_DefaultActionMap: PlayerOneMovement
+  m_DefaultActionMap: PlayerActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &449362955787029880
+--- !u!114 &9023589823516925912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,6 +119,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 449362955787029886}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c13f52a665134435a00b1016c2e806e, type: 3}
+  m_Script: {fileID: 11500000, guid: f0d864a577daa4c668f45742bf58ccfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
