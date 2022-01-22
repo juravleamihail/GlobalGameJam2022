@@ -1,12 +1,12 @@
-using System;
-using DefaultNamespace;
+using States;
+using UI;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
 
-   [SerializeField] private MainMenu _mainMenuUI;
-   [SerializeField] private Hud _hudUI;
+   [SerializeField] private MainMenu mainMenuUI;
+   [SerializeField] private Hud hudUI;
 
    private StateMachine _stateMachine;
 
@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
 
    public void StartGame()
    {
-      _stateMachine.ChangeState(new TurnState(10, _hudUI.UpdateTimer,null));
+      _stateMachine.ChangeState(new TurnState(10, hudUI.UpdateTimer,null));
       ToggleUI(UIStates.Gameplay);
    }
 
@@ -39,8 +39,8 @@ public class GameManager : Singleton<GameManager>
 
    private void ToggleUI(UIStates uiState)
    {
-      _mainMenuUI.gameObject.SetActive(uiState == UIStates.MainMenu);
-      _hudUI.gameObject.SetActive(uiState == UIStates.Gameplay);
+      mainMenuUI.gameObject.SetActive(uiState == UIStates.MainMenu);
+      hudUI.gameObject.SetActive(uiState == UIStates.Gameplay);
    }
 
    private enum UIStates{

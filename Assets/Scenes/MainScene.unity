@@ -492,10 +492,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089bfa3c1615b4bfdb03cd9d9b031899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onStartButton:
+  onStartButton:
     m_PersistentCalls:
       m_Calls: []
-  _OnExitButton:
+  onExitButton:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1031135402
@@ -712,8 +712,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfda5ccf31a4a40ec9406a265761d04e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainMenuUI: {fileID: 1031135401}
-  _hudUI: {fileID: 1835846221}
+  mainMenuUI: {fileID: 1031135401}
+  hudUI: {fileID: 1835846221}
 --- !u!1 &1281567547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,8 +1196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aee425859ef84a7c9ff0b3549e27a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timerTxt: {fileID: 424241934}
-  _onBackButton:
+  timerTxt: {fileID: 424241934}
+  onBackButton:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1942948373

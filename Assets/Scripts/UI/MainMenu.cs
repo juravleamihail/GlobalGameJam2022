@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MainMenu : MonoBehaviour {
-    [SerializeField] private UnityEvent _onStartButton;
-    [SerializeField] private UnityEvent _OnExitButton;
+namespace UI
+{
+    public class MainMenu : MonoBehaviour {
+        [SerializeField] private UnityEvent onStartButton;
+        [SerializeField] private UnityEvent onExitButton;
     
-    public void OnStartButton() {
-        _onStartButton.Invoke();
-        GameManager.Instance.StartGame();
-    }
+        public void OnStartButton() {
+            onStartButton.Invoke();
+            GameManager.Instance.StartGame();
+        }
     
-    public void OnExitButton() {
-        _OnExitButton.Invoke();
-        GameManager.Instance.ExitGame();
+        public void OnExitButton() {
+            onExitButton.Invoke();
+            GameManager.Instance.ExitGame();
+        }
     }
 }

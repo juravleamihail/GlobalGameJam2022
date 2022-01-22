@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IState
+namespace States
 {
-    void OnEnter();
-    void Update();
-    void OnExit();
+    public interface IState
+    {
+        void OnEnter();
+        void Update();
+        void OnExit();
+        void CanTransitionTo(IState nextState);
+    }
 }
