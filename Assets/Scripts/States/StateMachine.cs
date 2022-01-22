@@ -1,11 +1,14 @@
+using System;
+
 namespace States
 {
     public class StateMachine
     {
-        private IState _currentState;
-
-        public void ChangeState(IState newState)
+        private StateBase _currentState;
+        
+        public void ChangeState(StateBase newState, Action<EStates> _setUiCb, Func<EStates, float> _setCameras)
         {
+            newState.InitUIAndCameraCb(_setUiCb, _setCameras);
             // if (!_currentState.CanTransitionTo(newState))
             // {
             //     return;
