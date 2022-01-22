@@ -29,7 +29,7 @@ public class GameManager : Singleton<GameManager>
 
     private void ChangeState(StateBase state)
     {
-       _stateMachine.ChangeState(state,  ToggleUI, _cameraController.ChangeState);
+       _stateMachine.ChangeState(state, ToggleUI, _cameraController.ChangeState);
     }
 
     [ContextMenu("triggerTurnState")]
@@ -37,14 +37,14 @@ public class GameManager : Singleton<GameManager>
     {
        ChangeState(CreateTurnState());
     }
-   
+  
     public void BackToMainMenu()
     {
        ChangeState(CreateMaineMenuState());
     }
    
     [ContextMenu("triggerCombat")]
-    public void GoToComat()
+    public void GoToCombat()
     {
        ChangeState(CreateCombatState());
     }
@@ -64,24 +64,6 @@ public class GameManager : Singleton<GameManager>
         MainMenu,
         Gameplay
     }
-   public void BackToMainMenu()
-   {
-      ToggleUI(UIStates.MainMenu);
-   }
-    public Vector3 ConvertGridCoordsToVector3(uint gridX, uint gridY)
-    {
-        return _grid.ConvertGridCoordsToVector3(gridX, gridY);
-    }
-   public void BackToMainMenu()
-   {
-      ChangeState(CreateMaineMenuState());
-   }
-   
-   [ContextMenu("triggerCombat")]
-   public void GoToComat()
-   {
-      ChangeState(CreateCombatState());
-   }
 
     /// <summary>
     /// Toggles between to UI elements
