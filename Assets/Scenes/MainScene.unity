@@ -486,7 +486,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 1
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -1476,6 +1476,7 @@ MonoBehaviour:
   _gameSettings: {fileID: 11400000, guid: 3733eda3a425c471e8090792414d66ff, type: 2}
   _mainMenuUI: {fileID: 1031135401}
   _hudUI: {fileID: 1835846221}
+  _cameraController: {fileID: 2049135056}
 --- !u!1 &1281567547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1657,7 +1658,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 5
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -2217,6 +2218,7 @@ GameObject:
   - component: {fileID: 2049135053}
   - component: {fileID: 2049135052}
   - component: {fileID: 2049135055}
+  - component: {fileID: 2049135056}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2282,8 +2284,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2049135051}
-  m_LocalRotation: {x: -0.52975214, y: 0.0017789461, z: -0.001111094, w: -0.84814996}
-  m_LocalPosition: {x: 4.61, y: 13.26, z: -2.24}
+  m_LocalRotation: {x: 0.31447458, y: 0.24471828, z: -0.08426323, w: 0.9133009}
+  m_LocalPosition: {x: -1.53, y: 8.39, z: -6.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2323,3 +2325,23 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2049135056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049135051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e32aca4ac48446edba085d2f99045bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camers:
+  - State: 0
+    VCam: {fileID: 236480110}
+  - State: 1
+    VCam: {fileID: 1394707167}
+  - State: 2
+    VCam: {fileID: 405289011}
+  _brain: {fileID: 2049135055}

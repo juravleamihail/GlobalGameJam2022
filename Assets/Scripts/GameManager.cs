@@ -8,8 +8,8 @@ public class GameManager : Singleton<GameManager>
    [Space(10), SerializeField] private GameSettingsSO _gameSettings;
    [Space(25), SerializeField] private MainMenu _mainMenuUI;
    [SerializeField] private Hud _hudUI;
-   
-   
+
+   [SerializeField] CameraController _cameraController;
    private StateMachine _stateMachine;
    private GridSystem _grid;
 
@@ -17,6 +17,8 @@ public class GameManager : Singleton<GameManager>
    {
       base.Awake();
       _stateMachine = new StateMachine();
+      BackToMainMenu();
+
       _grid = new GridSystem(_gameSettings.GridSize, _gameSettings.TileSize);
    }
 
@@ -25,15 +27,26 @@ public class GameManager : Singleton<GameManager>
       _stateMachine.UpdateState();
    }
 
-   public void StartGame()
+   private void ChangeState(StateBase state)
    {
-      _stateMachine.ChangeState(new TurnState(_gameSettings.Timer, _hudUI.UpdateTimer,null));
-      ToggleUI(UIStates.Gameplay);
+      _stateMachine.ChangeState(state,  ToggleUI, _cameraController.ChangeState);
    }
 
+   [ContextMenu("triggerTurnState")]
+   public void StartGame()
+   {
+      ChangeState(CreateTurnState());
+   }
+   
    public void BackToMainMenu()
    {
-      ToggleUI(UIStates.MainMenu);
+      ChangeState(CreateMaineMenuState());
+   }
+   
+   [ContextMenu("triggerCombat")]
+   public void GoToComat()
+   {
+      ChangeState(CreateCombatState());
    }
 
    public void ExitGame()
@@ -41,19 +54,41 @@ public class GameManager : Singleton<GameManager>
       Application.Quit();
    }
 
-   private void ToggleUI(UIStates uiState)
+   /// <summary>
+   /// Toggles between to UI elements
+   /// Main Menu & Hud
+   /// </summary>
+   /// <param name="state"></param>
+   private void ToggleUI(EStates state)
    {
-      _mainMenuUI.gameObject.SetActive(uiState == UIStates.MainMenu);
-      _hudUI.gameObject.SetActive(uiState == UIStates.Gameplay);
-   }
-
-   private enum UIStates{
-      MainMenu,
-      Gameplay
+      _mainMenuUI.gameObject.SetActive(state == EStates.MainMenu);
+      _hudUI.gameObject.SetActive(state == EStates.Gameplay);
    }
 
    private Vector3 ConvertGridCoordsToVector3(uint gridX, uint gridY)
    {
       return _grid.ConvertGridCoordsToVector3(gridX, gridY);
+   }
+
+
+   //Factory Pattern
+   private StateBase CreateMaineMenuState()
+   {
+      return new MenuState(EStates.MainMenu);
+   }
+
+   private StateBase CreateTurnState()
+   {
+      return new TurnState(
+         _gameSettings.Timer,
+         _hudUI.UpdateTimer,
+         null,
+         EStates.Gameplay
+      );
+   }
+
+   private StateBase CreateCombatState()
+   {
+      return new CombatState(EStates.Combat);
    }
 }

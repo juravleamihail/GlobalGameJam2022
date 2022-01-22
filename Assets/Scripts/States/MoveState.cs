@@ -1,25 +1,11 @@
+using System;
+
 namespace States
 {
-    public class MoveState : IState
+    public class MoveState : StateBase
     {
-        public void OnEnter()
+        public MoveState(EStates state) : base(state)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnExit()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void CanTransitionTo(IState nextState)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
