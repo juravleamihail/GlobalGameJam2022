@@ -1,16 +1,20 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace UI
 {
     public class MainMenu : MonoBehaviour {
-
+        [SerializeField] private UnityEvent onStartButton;
+        [SerializeField] private UnityEvent onExitButton;
+    
         public void OnStartButton() {
-            SceneManager.LoadScene("MainScene");
+            onStartButton.Invoke();
+            GameManager.Instance.StartGame();
         }
-
+    
         public void OnExitButton() {
-            Application.Quit();
+            onExitButton.Invoke();
+            GameManager.Instance.ExitGame();
         }
     }
 }

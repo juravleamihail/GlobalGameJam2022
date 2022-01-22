@@ -3,27 +3,36 @@ using UnityEngine;
 
 namespace States
 {
-    public class TurnState : IState
+    public class TurnState : StateBase
     {
         private float _timer;
         private readonly Action<float> _onTimer;
         private readonly Action<bool> _onMovementToggle;
     
-        public TurnState(float time, Action<float> onTimer, Action<bool> onToggle)
+        public TurnState(float time, Action<float> onTimer, Action<bool> onToggle, EStates state) : base(state)
         {
             _timer = time;
             _onTimer = onTimer;
             _onMovementToggle = onToggle;
         }
     
-        public void OnEnter()
+        public override void OnEnter()
         {
+            base.OnEnter();
+            _setUiCb.Invoke(_state);
+            
             ToggleInput(true);
             UpdateTimer(_timer);
         }
 
-        public void Update()
+        public override void Update()
         {
+            base.Update();
+            if(!IsTransitionComplate())
+            {
+                return;
+            }
+            
             if (_timer > 0)
             {
                 _timer -= Time.deltaTime;
@@ -31,14 +40,9 @@ namespace States
             }
         }
 
-        public void OnExit()
+        public override void OnExit()
         {
             ToggleInput(false);
-        }
-
-        public void CanTransitionTo(IState nextState)
-        {
-            throw new NotImplementedException();
         }
 
         private void ToggleInput(bool value)
