@@ -20,19 +20,40 @@ public class PlayerInputHandler : MonoBehaviour
             playerActions.PlayerActions.Enable();
             playerActions.PlayerActions.PlayerOneSwitch.performed += OnPlayerSwitch;
             playerActions.PlayerActions.PlayerOneUndo.performed += OnPlayerUndo;
-            playerActions.PlayerActions.PlayerOneMovement.performed += OnPlayerMove;
+            playerActions.PlayerActions.PlayerOneUp.performed += OnPlayerUp;
+            playerActions.PlayerActions.PlayerOneDown.performed += OnPlayerDown;
+            playerActions.PlayerActions.PlayerOneLeft.performed += OnPlayerLeft;
+            playerActions.PlayerActions.PlayerOneRight.performed += OnPlayerRight;
         }
         else if(_playerInput.playerIndex == 1)
         {
             playerActions.PlayerActions.Enable();
             playerActions.PlayerActions.PlayerTwoSwitch.performed += OnPlayerSwitch;
             playerActions.PlayerActions.PlayerTwoUndo.performed += OnPlayerUndo;
-            playerActions.PlayerActions.PlayerTwoMovement.performed += OnPlayerMove;
+            playerActions.PlayerActions.PlayerOneUp.performed += OnPlayerUp;
+            playerActions.PlayerActions.PlayerOneDown.performed += OnPlayerDown;
+            playerActions.PlayerActions.PlayerOneLeft.performed += OnPlayerLeft;
+            playerActions.PlayerActions.PlayerOneRight.performed += OnPlayerRight;
         }
     }
 
-    protected virtual void OnPlayerMove(CallbackContext context)
+     protected virtual void OnPlayerUp(CallbackContext context)
     {
+    }
+
+    protected virtual void OnPlayerDown(CallbackContext context)
+    {
+
+    }
+
+    protected virtual void OnPlayerLeft(CallbackContext context)
+    {
+
+    }
+
+    protected virtual void OnPlayerRight(CallbackContext context)
+    {
+
     }
 
     protected virtual void OnPlayerSwitch(CallbackContext context)
