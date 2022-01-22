@@ -1,6 +1,7 @@
 using DefaultNamespace;
 using States;
 using UI;
+using System;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -26,7 +27,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private uint _killsToWin;
     public uint killsToWin { get { return _killsToWin; } }
 
-    public bool canPlayersDraw { get; private set; }
+    public Action<bool> onTurnStateChanged { private get; set; }
 
     public override void Awake()
     {
@@ -101,7 +102,7 @@ public class GameManager : Singleton<GameManager>
        return new TurnState(
           _gameSettings.Timer,
           _hudUI.UpdateTimer,
-          SetCanPlayersDraw,
+          OnTurnStateChanged,
           EStates.Gameplay
        );
     }
@@ -139,9 +140,9 @@ public class GameManager : Singleton<GameManager>
     {
         return _grid.IsOnGrid(worldPos);
     }
-
-    public void SetCanPlayersDraw(bool inCanPlayersDraw)
+ 
+    public void OnTurnStateChanged(bool inCanPlayersDraw)
     {
-        canPlayersDraw = inCanPlayersDraw;
+        onTurnStateChanged?.Invoke(inCanPlayersDraw);
     }    
 }

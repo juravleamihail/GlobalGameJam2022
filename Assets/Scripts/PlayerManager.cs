@@ -14,9 +14,12 @@ public class PlayerManager : Singleton<PlayerManager>
 
     [SerializeField] private Transform _mapParent;
 
+    public bool canPlayersDrawPaths { get; private set; }
+
     public override void Awake()
     {
         base.Awake();
+        GameManager.Instance.onTurnStateChanged = SetCanPlayersDrawPaths;
         
         _players = new List<Player>();
         InitPlayers();
@@ -45,5 +48,10 @@ public class PlayerManager : Singleton<PlayerManager>
            _players.Add(player);
            
         }
+    }
+
+    void SetCanPlayersDrawPaths(bool inCanPlayersDrawPaths)
+    {
+        canPlayersDrawPaths = inCanPlayersDrawPaths;
     }
 }

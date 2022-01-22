@@ -63,6 +63,10 @@ public class PlayerInputHandler : MonoBehaviour
 
     protected void PlayerDrawPath(GridSystem.Directions direction)
     {
-
+        if (!PlayerManager.Instance.canPlayersDrawPaths)
+        {
+            return;
+        }
+        //TODO DrawPath call
     }
 }
