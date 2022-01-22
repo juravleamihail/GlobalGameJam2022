@@ -1,23 +1,24 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class Hud : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Text _timerTxt; 
+    public class Hud : MonoBehaviour
+    {
+        [SerializeField] private Text timerTxt; 
     
-    [Space(10),Header("Events")]
-    [SerializeField] private UnityEvent _onBackButton;
-    public void OnBackButton()
-    {
-        _onBackButton.Invoke();
-        GameManager.Instance.BackToMainMenu();
-    }
+        [Space(10),Header("Events")]
+        [SerializeField] private UnityEvent onBackButton;
+        public void OnBackButton()
+        {
+            onBackButton.Invoke();
+            GameManager.Instance.BackToMainMenu();
+        }
 
-    public void UpdateTimer(float value)
-    {
-        _timerTxt.text = value.ToString("#");
+        public void UpdateTimer(float value)
+        {
+            timerTxt.text = value.ToString("#");
+        }
     }
 }

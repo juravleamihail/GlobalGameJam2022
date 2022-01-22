@@ -1,20 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class StateMachine
+namespace States
 {
-    private IState _currentState;
-
-    public void ChangeState(IState newState)
+    public class StateMachine
     {
-        _currentState?.OnExit();
-        _currentState = newState;
-        _currentState.OnEnter();
-    }
+        private IState _currentState;
 
-    public void UpdateState()
-    {
-        _currentState?.Update();
+        public void ChangeState(IState newState)
+        {
+            // if (!_currentState.CanTransitionTo(newState))
+            // {
+            //     return;
+            // }
+            
+            _currentState?.OnExit();
+            _currentState = newState;
+            _currentState.OnEnter();
+        }
+
+        public void UpdateState()
+        {
+            _currentState?.Update();
+        }
     }
 }

@@ -1,5 +1,5 @@
-using System;
-using DefaultNamespace;
+using States;
+using UI;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -7,7 +7,8 @@ public class GameManager : Singleton<GameManager>
 
    [SerializeField] private MainMenu _mainMenuUI;
    [SerializeField] private Hud _hudUI;
-   [SerializeField] private float _tileSize;
+   [SerializeField] private float _tileSize;.
+
    [SerializeField] private uint _gridSize;
 
    private StateMachine _stateMachine;
@@ -28,7 +29,7 @@ public class GameManager : Singleton<GameManager>
 
    public void StartGame()
    {
-      _stateMachine.ChangeState(new TurnState(10, _hudUI.UpdateTimer,null));
+      _stateMachine.ChangeState(new TurnState(10, hudUI.UpdateTimer,null));
       ToggleUI(UIStates.Gameplay);
    }
 
