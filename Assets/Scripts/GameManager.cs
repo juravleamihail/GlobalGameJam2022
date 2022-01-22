@@ -16,11 +16,15 @@ public class GameManager : Singleton<GameManager>
 
     public bool isUsingMovePoints; 
     public bool isUsingMaxDistance;
+    public bool winByNrOfKills;
 
     [SerializeField] private uint _movePoints;
     public uint movePoints { get { return _movePoints; } }
     [SerializeField] private uint _maxDistance;
     public uint maxDistance { get { return _maxDistance; } }
+
+    [SerializeField] private uint _killsToWin;
+    public uint killsToWin { get { return _killsToWin;  } }
 
     public override void Awake()
     {
