@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager>
         base.Awake();
         _stateMachine = new StateMachine();
         _grid = new GridSystem(_gameSettings.GridSize, _gameSettings.TileSize);
-       BackToMainMenu();
+        BackToMainMenu();
     }
 
     private void Update()

@@ -7,15 +7,15 @@ using static UnityEngine.InputSystem.InputAction;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputHandler : MonoBehaviour
 {
-    protected PlayerInput _playerInput;
+    protected PlayerInput PlayerInput { get; private set; }
 
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
+        PlayerInput = GetComponent<PlayerInput>();
 
         PlayerInputActions playerActions = new PlayerInputActions();
 
-        if (_playerInput.playerIndex == 0)
+        if (PlayerInput.playerIndex == 0)
         {
             playerActions.PlayerActions.Enable();
             playerActions.PlayerActions.PlayerOneSwitch.performed += OnPlayerSwitch;
@@ -25,7 +25,7 @@ public class PlayerInputHandler : MonoBehaviour
             playerActions.PlayerActions.PlayerOneLeft.performed += OnPlayerLeft;
             playerActions.PlayerActions.PlayerOneRight.performed += OnPlayerRight;
         }
-        else if(_playerInput.playerIndex == 1)
+        else if(PlayerInput.playerIndex == 1)
         {
             playerActions.PlayerActions.Enable();
             playerActions.PlayerActions.PlayerTwoSwitch.performed += OnPlayerSwitch;

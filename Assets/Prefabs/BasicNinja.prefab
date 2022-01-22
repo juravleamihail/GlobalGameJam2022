@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 2127193231170591052}
   - component: {fileID: -3395103081264445467}
   m_Layer: 0
-  m_Name: BasicSamurai
+  m_Name: BasicNinja
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
