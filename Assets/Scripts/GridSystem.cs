@@ -71,7 +71,7 @@ public class GridSystem
         Vector2Int increment = new Vector2Int(0, 0);
         switch (direction)
         {
-            case Directions.None;
+            case Directions.None:
                 increment = new Vector2Int(0, 0);
                 break;
             case Directions.Up:
