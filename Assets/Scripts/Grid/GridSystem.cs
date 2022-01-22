@@ -8,10 +8,16 @@ public class GridSystem
     {
         _GridSize = gridSize;
         _TileSize = tileSize;
+        _Grid = new Transform[gridSize + 1, gridSize + 1]; 
+        //we use +1 because arrays start at (0, 0) but our grid starts at (1, 1)
+        // TODO maybe change this and make the grid itself start at (0, 0) also?
     }
 
     protected uint _GridSize;
     protected float _TileSize;
+
+    protected Transform[,] _Grid;
+
     public enum Directions
     {
         None,
@@ -26,6 +32,28 @@ public class GridSystem
     private Vector3 _vector3Exception = new Vector3(-100f, -100f, -100f);
     private Vector2Int _vector2IntException = new Vector2Int(-1, -1);
 
+    public void InitGameObjectConnection(GameObject gridContainer)
+    {
+        Transform[] tiles = gridContainer.GetComponentsInChildren<Transform>();
+        foreach (Transform tile in tiles)
+        {
+            //we assume that the tiles are placed correctly
+            //and that each tile has the pivot at + (0f, 0f, 0f) relative to the neighboring edge of the previous tile
+            // this needs flipping the assets currently being used, so we should never refer to local space
+
+            Vector3 tileCenter = tile.position + new Vector3(_TileSize / 2, 0f, _TileSize / 2);
+            Vector2Int gridCoords = ConvertVector3ToGridCoords(tileCenter.x, tileCenter.z);
+
+            if (!IsOnGrid(gridCoords))
+            {
+                Debug.Log("Tile " + tile.gameObject.name + " at " + tile.position + " is placed outside the logical grid.");
+                continue;
+            }
+
+            _Grid[gridCoords.x, gridCoords.y] = tile;
+        }
+    }
+    
     public Vector3 ConvertGridCoordsToVector3(uint gridX, uint gridY)
     {
         if (!IsOnGrid(new Vector2Int((int)gridX, (int)gridY)))
@@ -56,9 +84,8 @@ public class GridSystem
         int gridY = Mathf.FloorToInt(worldZ / _TileSize) + 1;
 
         //check that the given X and Z map coords are valid in the grid
-        if (worldX < 0 || worldZ < 0 || gridX > _GridSize || gridY > _GridSize)
+        if (!IsOnGrid(new Vector2Int(gridX, gridY)))
         {
-            //TODO implement IsOnGrid overload and call that instead
             return _vector2IntException;
         }
 
@@ -123,6 +150,21 @@ public class GridSystem
         return result;
     }
 
+    public bool IsOnGrid(Vector2Int gridPos)
+    {
+        if (gridPos.x < 1 || gridPos.y < 1 || gridPos.x > _GridSize || gridPos.y > _GridSize)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool IsOnGrid(Vector3 worldPos)
+    {
+        Vector2Int gridPos = ConvertVector3ToGridCoords(worldPos.x, worldPos.z);
+        return IsValid(gridPos);
+    }
+
     protected bool IsValid(Vector3 pos)
     {
         //negative values are only used to signal exceptions
@@ -137,15 +179,6 @@ public class GridSystem
     {
         //negative values are only used to signal exceptions
         if (pos.x < 0)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    public bool IsOnGrid(Vector2Int gridPos)
-    {
-        if (gridPos.x < 1 || gridPos.y < 1 || gridPos.x > _GridSize || gridPos.y > _GridSize)
         {
             return false;
         }

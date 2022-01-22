@@ -121,4 +121,8 @@ public class GameManager : Singleton<GameManager>
     {
         return _grid.IsOnGrid(gridPos);
     }
+    public bool IsOnGrid(Vector3 worldPos)
+    {
+        return _grid.IsOnGrid(worldPos);
+    }
 }
