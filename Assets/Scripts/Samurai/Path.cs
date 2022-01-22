@@ -39,7 +39,7 @@ public class Path : MonoBehaviour
 
     public void AddTileToPath(uint gridX, uint gridY)
     {
-        if (!CanDrawPath())
+        if (!CanThisPlayerDraw())
         {
             //TODO give audio-visual feedback for denied drawing
             return;
@@ -113,7 +113,7 @@ public class Path : MonoBehaviour
         return true;
     }
 
-    public bool CanDrawPath()
+    public bool CanThisPlayerDraw()
     {
         //TODO if we have a single path per player per turn, check for that here
         return true;

@@ -60,4 +60,9 @@ public class PlayerInputHandler : MonoBehaviour
     protected virtual void OnPlayerUndo(CallbackContext context)
     {
     }
+
+    protected void PlayerDrawPath(GridSystem.Directions direction)
+    {
+
+    }
 }

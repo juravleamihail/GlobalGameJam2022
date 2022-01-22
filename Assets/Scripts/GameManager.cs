@@ -24,7 +24,9 @@ public class GameManager : Singleton<GameManager>
     public uint maxDistance { get { return _maxDistance; } }
 
     [SerializeField] private uint _killsToWin;
-    public uint killsToWin { get { return _killsToWin;  } }
+    public uint killsToWin { get { return _killsToWin; } }
+
+    public bool canPlayersDraw { get; private set; }
 
     public override void Awake()
     {
@@ -99,7 +101,7 @@ public class GameManager : Singleton<GameManager>
        return new TurnState(
           _gameSettings.Timer,
           _hudUI.UpdateTimer,
-          null,
+          SetCanPlayersDraw,
           EStates.Gameplay
        );
     }
@@ -137,4 +139,9 @@ public class GameManager : Singleton<GameManager>
     {
         return _grid.IsOnGrid(worldPos);
     }
+
+    public void SetCanPlayersDraw(bool inCanPlayersDraw)
+    {
+        canPlayersDraw = inCanPlayersDraw;
+    }    
 }
