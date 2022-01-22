@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timer: 10
   _tileSize: 1
-  _gridSize: 8
+  _gridSize: 16

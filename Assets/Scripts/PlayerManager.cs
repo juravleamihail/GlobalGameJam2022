@@ -2,22 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Singleton<PlayerManager>
 {
-    private static PlayerManager _instance;
-    public static PlayerManager Instance
-    {
-        get
-        {
-            if(_instance==null)
-            {
-                _instance = FindObjectOfType<PlayerManager>();
-            }
-
-            return _instance;
-        }
-    }
-
     [SerializeField]
     private PlayerTypeListSO _playerTypeList;
 
@@ -26,17 +12,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private int _maxPlayers=2;
 
-    private void Awake()
-    {
-        if(_instance==null)
-        {
-            _instance = this;
-        }
-        else if(_instance!=null)
-        {
-            Destroy(this);
-        }
+    [SerializeField] private Transform _mapParent;
 
+    public override void Awake()
+    {
+        base.Awake();
+        
         _players = new List<Player>();
         InitPlayers();
     }
@@ -57,7 +38,7 @@ public class PlayerManager : MonoBehaviour
         for(int i=0;i<_maxPlayers;i++)
         {
            var player =  Instantiate(_playerTypeList.playerTypeList[i].Prefab).GetComponent<Player>();
-           player.transform.parent = transform;
+           player.transform.parent = _mapParent == null ? transform : _mapParent;
            player.transform.position = Vector3.zero;
             player.PlayerType = _playerTypeList.playerTypeList[i];
 
@@ -65,6 +46,4 @@ public class PlayerManager : MonoBehaviour
            
         }
     }
-
-
 }
