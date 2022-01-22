@@ -34,6 +34,16 @@ public class GridTest : MonoBehaviour
             direction = GridSystem.Directions.Right;
         }
 
-        pawn.position = GameManager.Instance.MoveOneTileInWorld(pawn.position, direction);
+        if (direction == GridSystem.Directions.None)
+        {
+            return;
+        }
+        
+        Vector3 position = GameManager.Instance.MoveOneTileInWorld(pawn.position, direction);
+        Vector2Int posOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(position.x, position.z);
+        if (GameManager.Instance.IsOnGrid(posOnGrid))
+        {
+            pawn.position = position;
+        }
     }
 }

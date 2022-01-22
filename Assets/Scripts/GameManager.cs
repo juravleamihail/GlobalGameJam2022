@@ -70,4 +70,9 @@ public class GameManager : Singleton<GameManager>
     {
         return _grid.MoveOneTileInWorld(currentPosition, direction);
     }
+
+    public bool IsOnGrid(Vector2Int gridPos)
+    {
+        return _grid.IsOnGrid(gridPos);
+    }
 }

@@ -28,9 +28,8 @@ public class GridSystem
 
     public Vector3 ConvertGridCoordsToVector3(uint gridX, uint gridY)
     {
-        if (gridX == 0 || gridY == 0 || gridX > _GridSize || gridY > _GridSize)
+        if (!IsOnGrid(new Vector2Int((int)gridX, (int)gridY)))
         {
-            //TODO implement IsOnGrid method with different use cases and call that instead
             return _vector3Exception;
         }
 
@@ -59,7 +58,7 @@ public class GridSystem
         //check that the given X and Z map coords are valid in the grid
         if (worldX < 0 || worldZ < 0 || gridX > _GridSize || gridY > _GridSize)
         {
-            //TODO implement IsOnGrid method with different use cases and call that instead
+            //TODO implement IsOnGrid overload and call that instead
             return _vector2IntException;
         }
 
@@ -90,10 +89,9 @@ public class GridSystem
 
         Vector2Int result = new Vector2Int((int)currentGridX, (int)currentGridY) + increment;
 
-        if (result.x < 1 || result.y < 1 || result.x > _GridSize || result.y > _GridSize)
+        if (!IsOnGrid(result))
         {
-            //TODO implement IsOnGrid method with different use cases and call that instead
-            result = _vector2IntException;
+            return _vector2IntException;
         }
 
         return result;
@@ -105,19 +103,19 @@ public class GridSystem
         //we will not do a check for this because of potential approximation errors with floats
         
         Vector2Int posOnGrid = ConvertVector3ToGridCoords(currentPosition.x, currentPosition.z);
-        if (IsValid(posOnGrid))
+        if (!IsValid(posOnGrid))
         {
             return _vector3Exception;
         }
         
         posOnGrid = MoveOneTileOnGrid((uint)posOnGrid.x, (uint)posOnGrid.y, direction);
-        if (IsValid(posOnGrid))
+        if (!IsValid(posOnGrid))
         {
             return _vector3Exception;
         }
 
         Vector3 result = ConvertGridCoordsToVector3((uint)posOnGrid.x, (uint)posOnGrid.y);
-        if (IsValid(result))
+        if (!IsValid(result))
         {
             return _vector3Exception;
         }
@@ -139,6 +137,15 @@ public class GridSystem
     {
         //negative values are only used to signal exceptions
         if (pos.x < 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool IsOnGrid(Vector2Int gridPos)
+    {
+        if (gridPos.x < 1 || gridPos.y < 1 || gridPos.x > _GridSize || gridPos.y > _GridSize)
         {
             return false;
         }
