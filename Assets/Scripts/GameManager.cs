@@ -14,6 +14,14 @@ public class GameManager : Singleton<GameManager>
     private StateMachine _stateMachine;
     private GridSystem _grid;
 
+    public bool isUsingMovePoints; 
+    public bool isUsingMaxDistance;
+
+    [SerializeField] private uint _movePoints;
+    public uint movePoints { get { return _movePoints; } }
+    [SerializeField] private uint _maxDistance;
+    public uint maxDistance { get { return _maxDistance; } }
+
     public override void Awake()
     {
         base.Awake();

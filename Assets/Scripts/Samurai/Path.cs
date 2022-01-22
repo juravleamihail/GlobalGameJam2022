@@ -7,12 +7,6 @@ public class Path : MonoBehaviour
 
     private List<Vector2Int> _Path;
 
-    public bool isUsingMovePoints;
-    public bool isUsingMaxDistance;
-
-    [SerializeField] private uint _movePoints;
-    [SerializeField] private uint _maxDistance;
-
     private void Awake()
     {
         ResetPath();
@@ -95,16 +89,16 @@ public class Path : MonoBehaviour
         // 3. there is an obstacle in the way
 
         // 4. path destination is beyond max movement distance
-        if (isUsingMaxDistance)
+        if (GameManager.Instance.isUsingMaxDistance)
         {
             //TODO implement max movement distance if needed
             Debug.Log("Max movement distance not yet implemented.");
         }
 
         // 5. path exceeds number of movement points
-        if (isUsingMovePoints)
+        if (GameManager.Instance.isUsingMovePoints)
         {
-            if (_Path.Count - 1 == _movePoints)
+            if (_Path.Count - 1 == GameManager.Instance.movePoints)
             {
                 return false;
             }
@@ -123,5 +117,11 @@ public class Path : MonoBehaviour
     {
         //TODO if we have a single path per player per turn, check for that here
         return true;
+    }
+
+    public void OnMovedOneTile()
+    {
+        //TODO make a call to this from the movement logic
+        _Path.RemoveAt(0);
     }
 }
