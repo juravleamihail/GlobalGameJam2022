@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8563c1c6435614e078dc4c78a52dac7e, type: 3}
-  m_Name: BasicSamuraiPlayerOne
+  m_Script: {fileID: 11500000, guid: 9b3bf6dbfb9ed41ab86b8d872aa8c9fd, type: 3}
+  m_Name: SpecialAbility2SamuraiSO
   m_EditorClassIdentifier: 
-  NameText: Basic
+  NameText: 
   PlayerIndex: 0
-  Prefab: {fileID: 6032099527020973445, guid: 63c09c032b7394bed8784eed727a7a83, type: 3}
+  Prefab: {fileID: 0}
