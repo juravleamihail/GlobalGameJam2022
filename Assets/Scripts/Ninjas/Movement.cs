@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     //this script is meant to be placed on each ninja
 
     protected Vector3 _nextTileWorldPosition;
-    protected bool _isMovingOneTile = false;
+    public bool _isMovingOneTile = false;
     protected bool _isMovePhaseForNinja = false;
     private Action _onCompleteCb;
     
