@@ -11,9 +11,6 @@ public class NinjaManager : Singleton<NinjaManager>
 
     private Dictionary<int,List<Ninja>> allNinjas;
 
-    public int debugSelectedP1Ninja;
-    public int debugSelectedP2Ninja;
-
     public override void Awake()
     {
         base.Awake();
