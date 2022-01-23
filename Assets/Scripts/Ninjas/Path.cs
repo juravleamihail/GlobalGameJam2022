@@ -145,7 +145,7 @@ public class Path : MonoBehaviour
         }
         
         //7. the tile is already part of this path
-        if (_Path.Contains(destination))
+        if (!GameManager.Instance.canPathIntersectItself && _Path.Contains(destination))
         {
             return false;
         }
