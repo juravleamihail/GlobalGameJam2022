@@ -10,4 +10,9 @@ public class Ninja : MonoBehaviour
     {
         NinjaType = ninjaTypeSO;
     }
+
+    public int GetPlayerIndex()
+    {
+        return NinjaType.PlayerIndex;
+    }
 }

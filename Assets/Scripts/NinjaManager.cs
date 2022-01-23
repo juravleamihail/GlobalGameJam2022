@@ -44,7 +44,7 @@ public class NinjaManager : MonoBehaviour
 
     public List<Ninja> GetNinjaByPlayer(int playerIndex)
     {
-        return ninjaList.FindAll(samurai => samurai.NinjaType.PlayerIndex == playerIndex);
+        return ninjaList.FindAll(ninja => ninja.NinjaType.PlayerIndex == playerIndex);
     }*/
 
     

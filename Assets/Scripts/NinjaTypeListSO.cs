@@ -5,6 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Ninja/NinjaTypeListSO")]
 public class NinjaTypeListSO : ScriptableObject
 {
-    public List<NinjaTypeSO> samuraiList;
+    public List<NinjaTypeSO> ninjaList;
 }
 

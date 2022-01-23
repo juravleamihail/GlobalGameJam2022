@@ -4,7 +4,20 @@ using UnityEngine;
 
 public class DrawPath : MonoBehaviour
 {
-    //TODO implement connection with keys and state machine
+    //this script is meant to be placed on each ninja
 
     //subscribe the stuff in this class to delegates in the input handler
+    private void Awake()
+    {
+        Ninja ninja = gameObject.GetComponent<Ninja>();
+        int playerIndex = ninja.GetPlayerIndex();
+        Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
+
+        player.onDrawPathInput = OnDrawInputReceived;
+    }
+
+    private void OnDrawInputReceived(GridSystem.Directions direction)
+    {
+
+    }
 }

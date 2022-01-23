@@ -37,7 +37,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
-     protected virtual void OnPlayerUp(CallbackContext context)
+    protected virtual void OnPlayerUp(CallbackContext context)
     {
     }
 
@@ -59,14 +59,5 @@ public class PlayerInputHandler : MonoBehaviour
 
     protected virtual void OnPlayerUndo(CallbackContext context)
     {
-    }
-
-    protected void PlayerDrawPath(GridSystem.Directions direction)
-    {
-        if (!PlayerManager.Instance.canPlayersDrawPaths)
-        {
-            return;
-        }
-        //TODO DrawPath call
     }
 }
