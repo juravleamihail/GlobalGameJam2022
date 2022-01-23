@@ -110,7 +110,7 @@ public class Player : PlayerInputHandler
     public void IncrementKills()
     {
         ++kills;
-        UIManager.Instance.AddKill(_selectedNinjaIndex, kills);
+        UIManager.Instance.AddKill(PlayerType.PlayerIndex, kills);
         if (GameManager.Instance.winByNrOfKills && kills >= GameManager.Instance.killsToWin)
         {
             GameManager.Instance.ShowWinScreen(PlayerType.PlayerIndex);

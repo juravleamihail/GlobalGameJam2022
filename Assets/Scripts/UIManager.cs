@@ -111,7 +111,7 @@ public class UIManager : Singleton<UIManager>
             newGO = Instantiate(newGO, Player2KillsParent.transform);
             var image = newGO.AddComponent<Image>();
             image.sprite = noKillIcon;
-            Player1KillsImages.Add(image);
+            Player2KillsImages.Add(image);
         }
     }
 
