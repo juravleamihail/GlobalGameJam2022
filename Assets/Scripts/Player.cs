@@ -108,5 +108,9 @@ public class Player : PlayerInputHandler
     public void IncrementKills()
     {
         ++kills;
+        if (GameManager.Instance.winByNrOfKills && kills >= GameManager.Instance.killsToWin)
+        {
+            GameManager.Instance.WinGame(PlayerType.PlayerIndex);
+        }
     }
 }
