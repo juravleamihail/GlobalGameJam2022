@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class Ninja : MonoBehaviour
 {
     public NinjaTypeSO NinjaType { get; set; }
 
+    public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
     public void Init(NinjaTypeSO ninjaTypeSO)
     {
         NinjaType = ninjaTypeSO;
@@ -27,5 +29,11 @@ public class Ninja : MonoBehaviour
             return GameManager.Instance.vector2IntException;
         }
         return result;
+    }
+
+    public void TryDrawPath(GridSystem.Directions direction)
+    {
+        //TODO should we run any of the "can draw?" checks here instead of elsewhere?
+        onDrawPathInput?.Invoke(direction);
     }
 }

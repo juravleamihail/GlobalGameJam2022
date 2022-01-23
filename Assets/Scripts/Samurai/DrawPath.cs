@@ -8,20 +8,17 @@ public class DrawPath : MonoBehaviour
     private void Awake()
     {
         Ninja ninja = gameObject.GetComponent<Ninja>();
-        int playerIndex = ninja.GetPlayerIndex();
-        Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
-
-        player.onDrawPathInput = OnDrawInputReceived;
+        ninja.onDrawPathInput = OnDrawInputReceived;
+        //TODO replace this with the following:
+        //  subscribe to an onDrawPathInput action in the Ninja script of this same GameObject
+        //  the Player knows about NinjaManager
+        //  Player calls TryDrawPath(ninjaIndex, direction) on NinjaManager
+        //  NinjaManager checks if the selected ninja may draw
+        //  if yes, invoke Ninja.onDrawPathInput on that specific ninja
     }
 
     private void OnDrawInputReceived(GridSystem.Directions direction)
     {
-        if (!CanThisPlayerDraw())
-        {
-            //TODO give audio-visual feedback for denied drawing
-            return;
-        }
-
         Path path = gameObject.GetComponent<Path>();
         Vector2 currentDestination = path.GetDestination();
 
@@ -34,23 +31,26 @@ public class DrawPath : MonoBehaviour
         }
 
         path.SetNewDestination(newDestination);
+
+        PathDrawFeedback(newDestination);
     }
 
-    private void PathDrawFeedback()
+    private void PathDrawFeedback(Vector2Int newDestination)
     {
         Ninja ninja = gameObject.GetComponent<Ninja>();
         int playerIndex = ninja.GetPlayerIndex();
         Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
-
         Material material = player.pathDrawMaterial;
 
+        Transform destinationTile = GameManager.Instance.GetTileObjectAt((uint)newDestination.x, (uint)newDestination.y);
+        Renderer tileRenderer = destinationTile.gameObject.GetComponent<Renderer>();
+        if (tileRenderer != null)
+        {
+            tileRenderer.material = material;
+        }
 
-    }
+        //TODO add invisibility logic versions (with an editor-exposed design switch between them)
 
-    private bool CanThisPlayerDraw()
-    {
-        //TODO if we have a single path per player per turn, check for that here
-        //TODO should this method call a similarly-named method in the Player class? probably
-        return true;
+        //TODO maybe add audio feedback
     }
 }

@@ -3,49 +3,84 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NinjaManager : MonoBehaviour
+public class NinjaManager : Singleton<NinjaManager>
 {
-    private static NinjaManager _instance;
-    public static NinjaManager Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
+    [SerializeField]private Transform p1NinjaPrefab;
+    [SerializeField]private Transform p2NinjaPrefab;
+    [SerializeField]private Vector2Int[] p1NinjaSpawnPoints;
+    [SerializeField]private Vector2Int[] p2NinjaSpawnPoints;
 
-    private Dictionary<int,List<Ninja>> ninjaList;
+    private Dictionary<int,List<Ninja>> allNinjas;
 
-   
+    public int debugSelectedP1Ninja;
+    public int debugSelectedP2Ninja;
+
     private void Awake()
     {
-        ninjaList = new Dictionary<int, List<Ninja>>();
+        base.Awake();
+        allNinjas = new Dictionary<int, List<Ninja>>();
 
-        if (_instance == null)
+        InitNinjasForPlayer(1, p1NinjaSpawnPoints, p1NinjaPrefab);
+        InitNinjasForPlayer(2, p2NinjaSpawnPoints, p2NinjaPrefab);
+    }
+
+    internal void InitNinjasForPlayer(int playerIndex, Vector2Int[] spawnPoints, Transform prefab)
+    {
+        List<Ninja> ninjaList = new List<Ninja>();
+
+        foreach (Vector2Int spawnPoint in spawnPoints)
         {
-            _instance = this;
+            Vector3 spawnPointInWorld = GameManager.Instance.ConvertGridCoordsToVector3((uint)spawnPoint.x, (uint)spawnPoint.y);
+            Transform ninjaTransform = Instantiate(prefab, spawnPointInWorld, prefab.transform.rotation);
+            Ninja ninja = ninjaTransform.gameObject.GetComponent<Ninja>();
+            if (ninja == null)
+            {
+                Debug.Log("Error: " + prefab + " ninja prefab needs to have Ninja script attached.");
+                return;
+            }
+            ninjaList.Add(ninja);
         }
-        else if (_instance != null)
+
+        allNinjas.Add(playerIndex, ninjaList);
+    }
+
+    public void TryDrawPath(int playerIndex, int ninjaIndex, GridSystem.Directions direction)
+    {
+        if (!CanSelectedNinjaDraw())
         {
-            Destroy(this);
+            //TODO give audio-visual feedback for denied drawing
+            return;
         }
+
+        Ninja ninja = allNinjas[playerIndex][ninjaIndex];
+        ninja.TryDrawPath(direction);
+    }
+
+    private bool CanSelectedNinjaDraw()
+    {
+        //TODO implement:
+        //if we have a single path per player per turn, check for that here
+        
+        //should this method be here, or in Player, or Ninja, or elsewhere?
+        
+        return true;
     }
 
     /*internal void AddNinja(int playerIndex)
     {
-       if(ninja == null)
+        DictionaryEntry<int, List<Ninja
+        
+        if(ninja == null)
         {
             return;
         }
 
-        ninjaList.Add(ninja);
+        allNinjas.Add(ninja);
     }
 
 
     public List<Ninja> GetNinjaByPlayer(int playerIndex)
     {
-        return ninjaList.FindAll(ninja => ninja.NinjaType.PlayerIndex == playerIndex);
+        return allNinjas.FindAll(ninja => ninja.NinjaType.PlayerIndex == playerIndex);
     }*/
-
-    
 }

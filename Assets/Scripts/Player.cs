@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +6,7 @@ using UnityEngine.InputSystem;
 public class Player : PlayerInputHandler
 {
     public PlayerTypeSO PlayerType { get; set; }
-    private Transform _selectedNinja;
-    public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
+    private int _selectedNinjaIndex;
 
     [SerializeField] private Material _pathDrawMaterial;
     public Material pathDrawMaterial { get { return _pathDrawMaterial; } }
@@ -34,33 +32,35 @@ public class Player : PlayerInputHandler
     protected override void OnPlayerDown(InputAction.CallbackContext context)
     {
         base.OnPlayerDown(context);
-        PlayerDrawPath(GridSystem.Directions.Down);
+        TryDrawPath(GridSystem.Directions.Down);
     }
 
     protected override void OnPlayerLeft(InputAction.CallbackContext context)
     {
         base.OnPlayerLeft(context);
-        PlayerDrawPath(GridSystem.Directions.Left);
+        TryDrawPath(GridSystem.Directions.Left);
     }
 
     protected override void OnPlayerRight(InputAction.CallbackContext context)
     {
         base.OnPlayerRight(context);
-        PlayerDrawPath(GridSystem.Directions.Right);
+        TryDrawPath(GridSystem.Directions.Right);
     }
 
     protected override void OnPlayerUp(InputAction.CallbackContext context)
     {
         base.OnPlayerUp(context);
-        PlayerDrawPath(GridSystem.Directions.Up);
+        TryDrawPath(GridSystem.Directions.Up);
     }
-    protected void PlayerDrawPath(GridSystem.Directions direction)
+
+    private void TryDrawPath(GridSystem.Directions direction)
     {
         if (!PlayerManager.Instance.canPlayersDrawPaths)
         {
             return;
         }
 
-        onDrawPathInput?.Invoke(direction);
+        int playerIndex = PlayerType.PlayerIndex;
+        NinjaManager.Instance.TryDrawPath(playerIndex, _selectedNinjaIndex, direction);
     }
 }
