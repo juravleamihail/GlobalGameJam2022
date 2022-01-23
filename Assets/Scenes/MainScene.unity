@@ -7971,8 +7971,6 @@ MonoBehaviour:
   - {x: 16, y: 9}
   - {x: 16, y: 12}
   _ninjaTypeList: {fileID: 11400000, guid: b0205299d4858284cb2913f73df07c7b, type: 2}
-  debugSelectedP1Ninja: 1
-  debugSelectedP2Ninja: 2
 --- !u!4 &397969066
 Transform:
   m_ObjectHideFlags: 0
@@ -10743,7 +10741,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-39562
+  m_Name: pb_Mesh-446134
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12055,7 +12053,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-40586
+  m_Name: pb_Mesh-447158
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14684,7 +14682,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-41354
+  m_Name: pb_Mesh-447926
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -28830,6 +28828,7 @@ MonoBehaviour:
   winByNrOfKills: 0
   canMoveOnlyOneNinjaPerTurn: 0
   invisiblePaths: 0
+  canPathIntersectItself: 0
   _movePoints: 0
   _maxDistance: 0
   _killsToWin: 0
@@ -33043,6 +33042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player0: {fileID: 0}
   player1: {fileID: 0}
+  undoPressTime: 0.3
 --- !u!4 &1506140964
 Transform:
   m_ObjectHideFlags: 0
