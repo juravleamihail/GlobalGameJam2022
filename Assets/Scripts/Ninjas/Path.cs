@@ -86,7 +86,16 @@ public class Path : MonoBehaviour
         //TODO add all conditions here:
 
         // 1. friendly ninja already on that tile
-        //  TODO keep an array of locations of ninjas in PlayerManager or NinjaManager, compare to that array
+        int foundNinjaPlayerIndex = -1;
+        if(NinjaManager.Instance.IsNinjaAtLocation(destination, out foundNinjaPlayerIndex))
+        {
+            Ninja thisNinja = gameObject.GetComponent<Ninja>();
+            int thisNinjaPlayerIndex = thisNinja.GetPlayerIndex();
+            if (thisNinjaPlayerIndex == foundNinjaPlayerIndex)
+            {
+                return false;
+            }
+        }
 
         // 2. tile would be outside grid   
         if (!GameManager.Instance.IsOnGrid(destination))

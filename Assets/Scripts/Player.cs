@@ -21,11 +21,14 @@ public class Player : PlayerInputHandler
     {
         base.OnPlayerUndo(context);
 
-        Debug.Log("Player index: " + PlayerInput.playerIndex +"Undo");
+        UndoDrawPath(false);
     }
+
+    //TODO implement long-press undo
 
     protected override void OnPlayerSwitch(InputAction.CallbackContext context)
     {
+        //TODO replace this with per-key selecting
         base.OnPlayerSwitch(context);
         Debug.Log("Player index: " + PlayerInput.playerIndex + "Switch");
     }

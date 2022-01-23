@@ -88,6 +88,38 @@ public class NinjaManager : Singleton<NinjaManager>
         }
     }
 
+    public bool IsNinjaAtLocation(Vector2Int tileCoords, out int playerIndex)
+    {
+        if (IsNinjaOfPlayer(0, tileCoords))
+        {
+            playerIndex = 0;
+            return true;
+        }
+        if (IsNinjaOfPlayer(1, tileCoords))
+        {
+            playerIndex = 1;
+            return true;
+        }
+        playerIndex = -1;
+        return false;
+    }
+
+    private bool IsNinjaOfPlayer(int playerIndex, Vector2Int tileCoords)
+    {
+        List<Ninja> ninjaList;
+        ninjaList = allNinjas[0];
+        foreach (Ninja ninja in ninjaList)
+        {
+            Vector3 pos = ninja.transform.position;
+            Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
+            if (gridPos == tileCoords)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /*internal void AddNinja(int playerIndex)
     {
         DictionaryEntry<int, List<Ninja
