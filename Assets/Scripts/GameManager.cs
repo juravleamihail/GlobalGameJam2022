@@ -21,6 +21,7 @@ public class GameManager : Singleton<GameManager>
     public bool winByNrOfKills;
 
     public bool canMoveOnlyOneNinjaPerTurn;
+    public bool invisiblePaths;
 
     [SerializeField] private uint _movePoints;
     public uint movePoints { get { return _movePoints; } }

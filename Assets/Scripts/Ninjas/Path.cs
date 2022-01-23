@@ -45,8 +45,11 @@ public class Path : MonoBehaviour
 
     public void SetNewDestination(Vector2Int gridPos)
     {
-        Vector2Int prevTile = GetDestination();
-        StartDisappearingTimer(prevTile);
+        if (GameManager.Instance.invisiblePaths)
+        {
+            Vector2Int prevTile = GetDestination();
+            StartDisappearingTimer(prevTile);
+        }
         _Path.Add(gridPos);
     }
 
@@ -73,12 +76,15 @@ public class Path : MonoBehaviour
         ApplyDefaultMaterial(_Path.Count-1);
         _Path.RemoveAt(_Path.Count - 1);
 
-        //restore feedback color to the new last-tile (if it's not the first one)
-        if (IsOnlyCurrentTile())
+        if (GameManager.Instance.invisiblePaths)
         {
-            return;
+            //restore feedback color to the new last-tile (if it's not the first one)
+            if (IsOnlyCurrentTile())
+            {
+                return;
+            }
+            PathDrawFeedback(GetDestination());
         }
-        PathDrawFeedback(GetDestination());
     }
     public void ApplyDefaultMaterial(int index)
     {
