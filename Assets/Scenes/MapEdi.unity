@@ -7635,13 +7635,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p1NinjaSpawnPoints:
-  - {x: 1, y: 5}
-  - {x: 1, y: 9}
-  - {x: 1, y: 12}
+  - {x: 1, y: 15}
+  - {x: 1, y: 16}
+  - {x: 2, y: 16}
   p2NinjaSpawnPoints:
-  - {x: 16, y: 5}
-  - {x: 16, y: 9}
-  - {x: 16, y: 12}
+  - {x: 16, y: 2}
+  - {x: 16, y: 1}
+  - {x: 15, y: 1}
   _ninjaTypeList: {fileID: 11400000, guid: b0205299d4858284cb2913f73df07c7b, type: 2}
 --- !u!4 &397969066
 Transform:
