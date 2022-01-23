@@ -125,4 +125,34 @@ public class Player : PlayerInputHandler
             GameManager.Instance.ShowWinScreen(otherPlayerIndex);
         }
     }
+
+    public void OldStyleUndo(bool longPress)
+    {
+        UndoDrawPath(longPress);
+    }
+
+    public void OldStyleSelect(int ninjaIndex)
+    {
+        PlayerManager.Instance.GetPlayerByIndex(ninjaIndex).SelectNinja(ninjaIndex);
+    }
+
+    public void OldStyleDown()
+    {
+        TryDrawPath(GridSystem.Directions.Down);
+    }
+
+    public void OldStyleLeft()
+    {
+        TryDrawPath(GridSystem.Directions.Left);
+    }
+
+    public void OldStyleRight()
+    {
+        TryDrawPath(GridSystem.Directions.Right);
+    }
+
+    public void OldStyleUp()
+    {
+        TryDrawPath(GridSystem.Directions.Up);
+    }
 }

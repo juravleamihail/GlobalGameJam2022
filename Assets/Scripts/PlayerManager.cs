@@ -42,14 +42,23 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void InitPlayers()
     {
-        for(int i=0;i<_maxPlayers;i++)
+        for (int i = 0; i < _maxPlayers; i++)
         {
-           var player =  Instantiate(_playerTypeList.playerTypeList[i].Prefab).GetComponent<Player>();
-           player.transform.parent = _mapParent == null ? transform : _mapParent;
-           player.transform.position = Vector3.zero;
+            var player = Instantiate(_playerTypeList.playerTypeList[i].Prefab).GetComponent<Player>();
+            player.transform.parent = _mapParent == null ? transform : _mapParent;
+            player.transform.position = Vector3.zero;
             player.PlayerType = _playerTypeList.playerTypeList[i];
 
-           _players.Add(player);         
+            _players.Add(player);
+
+            if (i == 0)
+            {
+                OldStyleInputs.Instance.player0 = player;
+            }
+            if (i == 1)
+            {
+                OldStyleInputs.Instance.player1 = player;
+            }                
         }
     }
 
