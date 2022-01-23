@@ -8399,7 +8399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d70cc20219cd84593f67d248eafe36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Offset: {x: 0.53, y: 0.39, z: -2.26}
+  m_Offset: {x: 0.53, y: 0.81, z: -5.43}
   m_ApplyAfter: 1
   m_PreserveComposition: 0
 --- !u!43 &409241261
@@ -32529,7 +32529,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-99090
+  m_Name: pb_Mesh-39402
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -50745,6 +50745,8 @@ MonoBehaviour:
   onBackButton:
     m_PersistentCalls:
       m_Calls: []
+  player1WinsScreen: {fileID: 0}
+  player2WinsScreen: {fileID: 0}
 --- !u!1 &6767440450729895229
 GameObject:
   m_ObjectHideFlags: 0

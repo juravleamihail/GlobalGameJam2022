@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameText: White Ninja
   PlayerIndex: 1
-  Prefab: {fileID: 3501982844121361111, guid: bd65d56d09624ea458a12f9fdacc947f, type: 3}
+  Prefab: {fileID: 8267923001077502312, guid: 4607769d6f073394caa1ff2c34c752ae, type: 3}

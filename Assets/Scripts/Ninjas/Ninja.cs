@@ -14,6 +14,9 @@ public class Ninja : MonoBehaviour
     public Action<bool> onUndoInput { private get; set; }
     public bool hasPath;
     public int ninjaIndex; //TODO needs implementing
+
+    [SerializeField] private Animator _animatorController;
+    [SerializeField] private GameObject _mesh;
     
     public void Init(NinjaTypeSO ninjaTypeSO, Action onDeathCb)
     {
@@ -59,13 +62,28 @@ public class Ninja : MonoBehaviour
     public void KillEnemy(Ninja otherNinja)
     {
         // Do some more stuff here (score)
+        _animatorController.SetBool("isAttacking", true);
         otherNinja.Dead();
+        StartCoroutine(WaitToStopAttack());
     }
 
     private void Dead()
     {
         _onPlayerDeath?.Invoke();
+        _animatorController.SetBool("isDead", true);
         //Do some more stuff here (animations)
+        StartCoroutine(WaitToDestroyGameObject());
+    }
+
+    private IEnumerator WaitToDestroyGameObject()
+    {
+        yield return new WaitForSeconds(2);
         Destroy(gameObject);
+    }
+
+    private IEnumerator WaitToStopAttack()
+    {
+        yield return new WaitForSeconds(2);
+        _animatorController.SetBool("isAttacking", false);
     }
 }
