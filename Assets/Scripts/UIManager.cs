@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
@@ -27,6 +28,8 @@ public class UIManager : Singleton<UIManager>
 
     private bool isInit = false;
 
+    [SerializeField] private GameObject player1WinsScreen;
+    [SerializeField] private GameObject player2WinsScreen;
 
     public void DieCharacter(int player, int character)
     {
@@ -158,5 +161,22 @@ public class UIManager : Singleton<UIManager>
     public void ResetTimer()
     {
         timer = gameSettings.Timer;
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ShowWinScreen(int playerWhoWon)
+    {
+        if(playerWhoWon == 0)
+        {
+            player1WinsScreen.SetActive(true);
+        }
+        else
+        {
+            player2WinsScreen.SetActive(true);
+        }
     }
 }
