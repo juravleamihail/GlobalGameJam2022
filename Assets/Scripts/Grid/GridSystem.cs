@@ -32,6 +32,16 @@ public class GridSystem
         Transform[] tiles = gridContainer.GetComponentsInChildren<Transform>();
         foreach (Transform tile in tiles)
         {
+            if (tile == gridContainer)
+            {
+                continue;
+            }
+
+            if (tile.GetComponent<Tile>() == null)
+            {
+                Debug.Log("Tile object " + tile.name + " is not actually a tile.");
+                continue;
+            }
             //we assume that the tiles are placed correctly
             //and that each tile has the pivot at + (0f, 0f, 0f) relative to the neighboring edge of the previous tile
             // this needs flipping the assets currently being used, so we should never refer to local space
