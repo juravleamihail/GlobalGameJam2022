@@ -43,7 +43,7 @@ public class Path : MonoBehaviour
         return _Path[1]; //0 is always the tile where the ninja is
     }
 
-    public bool IsAtDestination()
+    public bool IsOnlyCurrentTile()
     {
         return (_Path.Count == 1);
     }    
@@ -67,7 +67,18 @@ public class Path : MonoBehaviour
             return;
         }
 
+        ApplyDefaultMaterial(_Path.Count-1);
         _Path.RemoveAt(_Path.Count - 1);
+    }
+    public void ApplyDefaultMaterial(int index)
+    {
+        Vector2Int lastTileCoords = _Path[index];
+        Transform lastTileTransform = GameManager.Instance.GetTileObjectAt((uint)lastTileCoords.x, (uint)lastTileCoords.y);
+        Tile lastTile = lastTileTransform.gameObject.GetComponent<Tile>();
+        Material defaultMaterial = lastTile.defaultMaterial;
+
+        Renderer renderer = lastTile.gameObject.GetComponent<Renderer>();
+        renderer.material = defaultMaterial;
     }
 
     public bool CanBeDestination(Vector2Int destination)
@@ -122,5 +133,21 @@ public class Path : MonoBehaviour
     {
         //TODO make a call to this from the movement logic
         _Path.RemoveAt(0);
+    }
+
+    public void PathDrawFeedback(Vector2Int newDestination)
+    {
+        Ninja ninja = gameObject.GetComponent<Ninja>();
+        int playerIndex = ninja.GetPlayerIndex();
+        Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
+        Material material = player.pathDrawMaterial;
+
+        Transform destinationTile = GameManager.Instance.GetTileObjectAt((uint)newDestination.x, (uint)newDestination.y);
+        Renderer tileRenderer = destinationTile.gameObject.GetComponent<Renderer>();
+        tileRenderer.material = material;
+
+        //TODO add invisibility logic versions (with an editor-exposed design switch between them)
+
+        //TODO maybe add audio feedback
     }
 }

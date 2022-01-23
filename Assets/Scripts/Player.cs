@@ -65,9 +65,37 @@ public class Player : PlayerInputHandler
         NinjaManager.Instance.TryDrawPath(playerIndex, _selectedNinjaIndex, direction);
     }
 
-    public void DrawPathDebug(GridSystem.Directions direction)
+    private void UndoDrawPath(bool longUndo = false)
+    {
+        if (!PlayerManager.Instance.isTurnState)
+        {
+            return;
+        }
+
+        int playerIndex = PlayerType.PlayerIndex;
+        NinjaManager.Instance.UndoDrawPath(playerIndex, _selectedNinjaIndex, longUndo);
+    }
+
+    private void SelectNinja(int ninjaIndex)
+    {
+        //TODO clamp ninja indices
+        _selectedNinjaIndex = ninjaIndex;
+    }
+
+    public void DEBUG_DrawPath(GridSystem.Directions direction)
     {
         int playerIndex = PlayerType.PlayerIndex;
         NinjaManager.Instance.TryDrawPath(playerIndex, _selectedNinjaIndex, direction);
+    }
+
+    public void DEBUG_UndoPath(bool longUndo)
+    {
+        int playerIndex = PlayerType.PlayerIndex;
+        NinjaManager.Instance.UndoDrawPath(playerIndex, _selectedNinjaIndex, longUndo);
+    }
+
+    public void DEBUG_SelectNinja(int ninjaIndex)
+    {
+        SelectNinja(ninjaIndex);
     }
 }

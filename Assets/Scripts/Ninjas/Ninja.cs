@@ -8,6 +8,8 @@ public class Ninja : MonoBehaviour
     public NinjaTypeSO NinjaType { get; set; }
 
     public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
+    public Action<bool> onUndoInput { private get; set; }
+
     public void Init(NinjaTypeSO ninjaTypeSO)
     {
         NinjaType = ninjaTypeSO;
@@ -35,5 +37,16 @@ public class Ninja : MonoBehaviour
     {
         //TODO should we run any of the "can draw?" checks here instead of elsewhere?
         onDrawPathInput?.Invoke(direction);
+    }
+
+    public void UndoDrawPath(bool longUndo)
+    {
+        onUndoInput?.Invoke(longUndo);
+    }
+
+    public void StartMovePhase()
+    {
+        Movement movement = gameObject.GetComponent<Movement>();
+        movement.StartMovePhase();
     }
 }

@@ -23,11 +23,11 @@ public class Movement : MonoBehaviour
         _isMovePhaseForNinja = true;
     }
 
-    protected void MoveOneTile(out bool shouldMoveOneTile)
+    protected void SetupMovementToNextTile(out bool shouldMoveOneTile)
     {
         Path pathComponent = gameObject.GetComponent<Path>();
          
-        if (pathComponent.IsAtDestination())
+        if (pathComponent.IsOnlyCurrentTile())
         {
             shouldMoveOneTile = false;
             return;
@@ -40,13 +40,6 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        //debug
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            StartMovePhase();
-        }
-        //debug ends here
-
         if (!_isMovePhaseForNinja)
         {
             return;
@@ -60,11 +53,12 @@ public class Movement : MonoBehaviour
             {
                 _isMovingOneTile = false;
                 Path pathComponent = gameObject.GetComponent<Path>();
+                pathComponent.ApplyDefaultMaterial(0);
                 pathComponent.OnMovedOneTile();
             }
             else
             {
-                MoveOneTile(out _isMovingOneTile);
+                SetupMovementToNextTile(out _isMovingOneTile);
                 _isMovePhaseForNinja = _isMovingOneTile;
             }
         }

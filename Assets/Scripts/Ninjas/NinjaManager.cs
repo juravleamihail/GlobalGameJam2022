@@ -60,6 +60,14 @@ public class NinjaManager : Singleton<NinjaManager>
         ninja.TryDrawPath(direction);
     }
 
+    public void UndoDrawPath(int playerIndex, int ninjaIndex, bool longUndo)
+    {
+        //TODO add logic for undo on a different ninja than the selected one (in one-ninja-per-turn mode)
+
+        Ninja ninja = allNinjas[playerIndex][ninjaIndex];
+        ninja.UndoDrawPath(longUndo);
+    }
+
     private bool CanSelectedNinjaDraw()
     {
         //TODO implement:
@@ -68,6 +76,16 @@ public class NinjaManager : Singleton<NinjaManager>
         //should this method be here, or in Player, or Ninja, or elsewhere?
         
         return true;
+    }
+
+    public void StartMovePhase()
+    {
+        List<Ninja> ninjaList = allNinjas[0];
+        ninjaList.AddRange(allNinjas[1]);
+        foreach (Ninja ninja in ninjaList)
+        {
+            ninja.StartMovePhase();
+        }
     }
 
     /*internal void AddNinja(int playerIndex)

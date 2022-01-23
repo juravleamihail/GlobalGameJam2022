@@ -9,6 +9,7 @@ public class DrawPath : MonoBehaviour
     {
         Ninja ninja = gameObject.GetComponent<Ninja>();
         ninja.onDrawPathInput = OnDrawInputReceived;
+        ninja.onUndoInput = OnUndoInputReceived;
     }
 
     private void OnDrawInputReceived(GridSystem.Directions direction)
@@ -25,26 +26,41 @@ public class DrawPath : MonoBehaviour
         }
 
         path.SetNewDestination(newDestination);
-
-        PathDrawFeedback(newDestination);
+        path.PathDrawFeedback(newDestination);
     }
 
-    private void PathDrawFeedback(Vector2Int newDestination)
+    private void OnUndoInputReceived(bool longUndo)
     {
-        Ninja ninja = gameObject.GetComponent<Ninja>();
-        int playerIndex = ninja.GetPlayerIndex();
-        Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
-        Material material = player.pathDrawMaterial;
-
-        Transform destinationTile = GameManager.Instance.GetTileObjectAt((uint)newDestination.x, (uint)newDestination.y);
-        Renderer tileRenderer = destinationTile.gameObject.GetComponent<Renderer>();
-        if (tileRenderer != null)
+        if (longUndo)
         {
-            tileRenderer.material = material;
+            UndoFullPath();
+        }
+        else
+        {
+            UndoOneTile();
+        }
+    }
+
+    public void UndoOneTile()
+    {
+        Path path = gameObject.GetComponent<Path>();
+        if (path.IsOnlyCurrentTile())
+        {
+            //TODO either this should give some kind of meaningful audiovisual feedback
+            //or the successful undo should, or both
+            //so the player knows when a path was fully cleared
+            return;
         }
 
-        //TODO add invisibility logic versions (with an editor-exposed design switch between them)
+        path.RemoveLastTileFromPath();
+    }
 
-        //TODO maybe add audio feedback
+    public void UndoFullPath()
+    {
+        Path path = gameObject.GetComponent<Path>();
+        while (!path.IsOnlyCurrentTile())
+        {
+            path.RemoveLastTileFromPath();
+        }
     }
 }
