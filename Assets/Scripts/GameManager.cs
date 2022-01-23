@@ -19,6 +19,8 @@ public class GameManager : Singleton<GameManager>
     public bool isUsingMaxDistance;
     public bool winByNrOfKills;
 
+    public bool canMoveOnlyOneNinjaPerTurn;
+
     [SerializeField] private uint _movePoints;
     public uint movePoints { get { return _movePoints; } }
     [SerializeField] private uint _maxDistance;

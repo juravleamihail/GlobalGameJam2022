@@ -50,7 +50,7 @@ public class NinjaManager : Singleton<NinjaManager>
 
     public void TryDrawPath(int playerIndex, int ninjaIndex, GridSystem.Directions direction)
     {
-        if (!CanSelectedNinjaDraw())
+        if (!CanSelectedNinjaDraw(playerIndex, ninjaIndex))
         {
             //TODO give audio-visual feedback for denied drawing
             return;
@@ -62,20 +62,71 @@ public class NinjaManager : Singleton<NinjaManager>
 
     public void UndoDrawPath(int playerIndex, int ninjaIndex, bool longUndo)
     {
-        //TODO add logic for undo on a different ninja than the selected one (in one-ninja-per-turn mode)
+        //if only one ninja moves per turn, undo works regardless of selected ninja
+        if (GameManager.Instance.canMoveOnlyOneNinjaPerTurn)
+        {
+            int foundNinjaIndex = -1;
+            if (IsAnotherNinjaDrawing(playerIndex, ninjaIndex, out foundNinjaIndex))
+            {
+                if (foundNinjaIndex != -1)
+                {
+                    ninjaIndex = foundNinjaIndex;
+                }
+            }
+        }
 
         Ninja ninja = allNinjas[playerIndex][ninjaIndex];
         ninja.UndoDrawPath(longUndo);
     }
 
-    private bool CanSelectedNinjaDraw()
+    private bool CanSelectedNinjaDraw(int playerIndex, int ninjaIndex)
     {
-        //TODO implement:
-        //if we have a single path per player per turn, check for that here
-        
-        //should this method be here, or in Player, or Ninja, or elsewhere?
+        if (GameManager.Instance.canMoveOnlyOneNinjaPerTurn)
+        {
+            return !IsAnotherNinjaDrawing(playerIndex, ninjaIndex);
+        }
         
         return true;
+    }
+
+    private bool IsAnotherNinjaDrawing(int playerIndex, int ninjaIndex)
+    {
+        List<Ninja> ninjaList = allNinjas[playerIndex];
+        for (int i = 0; i < ninjaList.Count; ++i)
+        {
+            if (i == ninjaIndex)
+            { 
+                continue;
+            }
+
+            Ninja ninja = ninjaList[i];
+            if (ninja.hasPath)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsAnotherNinjaDrawing(int playerIndex, int ninjaIndex, out int foundNinjaIndex)
+    {
+        List<Ninja> ninjaList = allNinjas[playerIndex];
+        for (int i = 0; i < ninjaList.Count; ++i)
+        {
+            if (i == ninjaIndex)
+            {
+                continue;
+            }
+
+            Ninja ninja = ninjaList[i];
+            if (ninja.hasPath)
+            {
+                foundNinjaIndex = i;
+                return true;
+            }
+        }
+        foundNinjaIndex = -1;
+        return false;
     }
 
     public void StartMovePhase()

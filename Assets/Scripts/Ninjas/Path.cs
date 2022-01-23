@@ -13,16 +13,11 @@ public class Path : MonoBehaviour
         ResetPath();
     }
 
-    //TODO implement movement:
-    //  while path length > 1
-    //      ninja moves to first tile of path
-    //      first tile of path is removed and array is offset to the left by 1
-
     private void ResetPath()
     {
-        //this should only get called when using the Undo key (and in the Start method of this class, for consistency)
-        //we shouldn't need to rely on resetting the path when the path is complete
-        //the recursive implementation of movement should handle that automatically
+        //this is semi-obsolete with this name
+        //either use it for resetting the path
+        //or remove the Clear() and rename it to Init()
 
         _Path.Clear();
         Vector3 ninjaPos = transform.position;
@@ -123,7 +118,7 @@ public class Path : MonoBehaviour
         }
 
         // 6. there is already another path of the same player with that destination
-        // consider an edge case, if we will have multiple paths per player per turn:
+        // if we will have multiple paths per player per turn:
         //  not all path tiles are destination tiles
         //  path tiles should be able to intersect each other, but not in the destination point
         //  for now, we are treating each tile as a destination in the code, so this might cause problems

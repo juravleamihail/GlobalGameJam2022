@@ -9,6 +9,7 @@ public class Ninja : MonoBehaviour
 
     public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
     public Action<bool> onUndoInput { private get; set; }
+    public bool hasPath;
 
     public void Init(NinjaTypeSO ninjaTypeSO)
     {
