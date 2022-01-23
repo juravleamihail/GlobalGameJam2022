@@ -20,15 +20,16 @@ public class Ninja : MonoBehaviour
     [SerializeField] private GameObject _mesh;
     [SerializeField] private GameObject _katana;
     
-    public void Init(NinjaTypeSO ninjaTypeSO)
+    public void Init(NinjaTypeSO ninjaTypeSO, int index)
     {
         NinjaType = ninjaTypeSO;
-        IsNinjaAlive = true;
+        ninjaIndex = index;
+        SetNinjaAliveStatus(true);
     }
 
     private void Start()
     {
-        HidePlayer();
+        //HidePlayer();
     }
 
     public int GetPlayerIndex()
@@ -51,12 +52,19 @@ public class Ninja : MonoBehaviour
 
     public void TryDrawPath(GridSystem.Directions direction)
     {
-        //TODO should we run any of the "can draw?" checks here instead of elsewhere?
+        if (!IsNinjaAlive)
+        {
+            return;
+        }
         onDrawPathInput?.Invoke(direction);
     }
 
     public void UndoDrawPath(bool longUndo)
-    {
+    {        
+        if (!IsNinjaAlive)
+        {
+            return;
+        }
         onUndoInput?.Invoke(longUndo);
     }
 
@@ -95,9 +103,13 @@ public class Ninja : MonoBehaviour
     {
         NinjaManager.Instance.TryRemoveNinja(GetPlayerIndex(),this);
         yield return new WaitForSeconds(2);
-        
-        IsNinjaAlive = false;
-        _mesh.SetActive(IsNinjaAlive);
+        SetNinjaAliveStatus(false);
+    }
+
+    private void SetNinjaAliveStatus(bool value)
+    {
+        IsNinjaAlive = value;
+        ToogleMeshes(IsNinjaAlive);
     }
 
     private IEnumerator WaitToStopAttack()
@@ -131,13 +143,17 @@ public class Ninja : MonoBehaviour
 
     private void HidePlayer()
     {
-        _mesh.SetActive(false);
-        _katana.SetActive(false);
+        ToogleMeshes(false);
     }
 
     private void RevealPlayer()
     {
-        _mesh.SetActive(true);
-        _katana.SetActive(true);
+        ToogleMeshes(true);
+    }
+
+    private void ToogleMeshes(bool value)
+    {
+        _mesh.SetActive(value);
+        _katana.SetActive(value);
     }
 }

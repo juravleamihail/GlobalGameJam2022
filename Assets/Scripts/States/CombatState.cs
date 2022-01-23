@@ -80,6 +80,8 @@ namespace States
 
             //should wait for animations and everything else
             yield return new WaitForSeconds(3f);
+            
+            
             Init();
         }
 
