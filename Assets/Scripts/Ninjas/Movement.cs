@@ -47,9 +47,11 @@ public class Movement : MonoBehaviour
         Vector2Int nextTileOnGrid = pathComponent.GetNextTile();
         _nextTileWorldPosition = GameManager.Instance.ConvertGridCoordsToVector3((uint)nextTileOnGrid.x, (uint)nextTileOnGrid.y);
 
-        Vector3 pos = _nextTileWorldPosition;
-        pos.y = transform.position.y;
-        transform.LookAt(pos);
+        //Vector3 pos = _nextTileWorldPosition;
+        //pos.y = transform.position.y;
+        //transform.LookAt(pos);
+        //this should work but for some reason it doesn't
+
     }
 
     private void Update()
@@ -57,6 +59,12 @@ public class Movement : MonoBehaviour
         if (!_isMovePhaseForNinja)
         {
             return;
+        }
+
+        if (_isMovingOneTile)
+        {
+            Ninja ninja = GetComponent<Ninja>();
+            ninja.SyncWithTile();
         }
 
         Vector3 nextTileVector = _nextTileWorldPosition - transform.position;
@@ -82,15 +90,6 @@ public class Movement : MonoBehaviour
         {
             Vector3 direction = Vector3.Normalize(nextTileVector);
             transform.Translate(direction * _moveSpeed * Time.deltaTime);
-
-            Ninja ninja = gameObject.GetComponent<Ninja>();
-
-            Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
-            Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
-
-            ninja.SyncWithTile(tileObject);
-
-            //TODO this seems to cause bugs sometimes; get the tiles using the path instead of the position (see IsBetweenTiles commented method)
         }
     }
 

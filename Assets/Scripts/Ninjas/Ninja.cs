@@ -119,8 +119,13 @@ public class Ninja : MonoBehaviour
         Hide();
     }
 
-    public void SyncWithTile(Transform tileObject)
+    public void SyncWithTile()//Transform tileObject)
     {
+        Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
+        Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
+
+        //TODO this seems to cause bugs sometimes; get the tiles using the path instead of the position (see IsBetweenTiles commented method in Movement.cs)
+
         TileToPlayerConnection tileConnection = tileObject.gameObject.GetComponent<TileToPlayerConnection>();
 
         if (tileConnection == null || tileConnection.PlayerType == null)
