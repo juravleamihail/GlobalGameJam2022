@@ -44,8 +44,16 @@ public class Path : MonoBehaviour
     }    
 
     public void SetNewDestination(Vector2Int gridPos)
-    { 
+    {
+        Vector2Int prevTile = GetDestination();
+        StartDisappearingTimer(prevTile);
         _Path.Add(gridPos);
+    }
+
+    public void StartDisappearingTimer(Vector2Int gridPos)
+    {
+        Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)gridPos.x, (uint)gridPos.y);
+        tileObject.GetComponent<Tile>().StartDisappearTimer();
     }
 
     public void RemoveLastTileFromPath()
@@ -64,6 +72,13 @@ public class Path : MonoBehaviour
 
         ApplyDefaultMaterial(_Path.Count-1);
         _Path.RemoveAt(_Path.Count - 1);
+
+        //restore feedback color to the new last-tile (if it's not the first one)
+        if (IsOnlyCurrentTile())
+        {
+            return;
+        }
+        PathDrawFeedback(GetDestination());
     }
     public void ApplyDefaultMaterial(int index)
     {
