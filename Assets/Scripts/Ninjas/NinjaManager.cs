@@ -39,8 +39,7 @@ public class NinjaManager : Singleton<NinjaManager>
                 Debug.Log("Error: " + prefab + " ninja prefab needs to have Ninja script attached.");
                 return;
             }
-            ninja.NinjaType = _ninjaTypeList.ninjaList[playerIndex];
-            ninja.ninjaIndex = i;
+            ninja.Init(_ninjaTypeList.ninjaList[playerIndex], i);
             ninjaList.Add(ninja);
         }
 
