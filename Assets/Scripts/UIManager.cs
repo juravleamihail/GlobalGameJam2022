@@ -60,10 +60,26 @@ public class UIManager : Singleton<UIManager>
         if (player == 0)
         {
             Player1Avatars[character].SelectAvatar();
+
+            for (int i = 0; i < Player1Avatars.Length; i++)
+            {
+                if(i != character)
+                {
+                    DeSelectCharacter(player, i);
+                }
+            }
         }
         else
         {
             Player2Avatars[character].SelectAvatar();
+
+            for (int i = 0; i < Player2Avatars.Length; i++)
+            {
+                if (i != character)
+                {
+                    DeSelectCharacter(player, i);
+                }
+            }
         }
     }
 
