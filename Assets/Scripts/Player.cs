@@ -86,7 +86,7 @@ public class Player : PlayerInputHandler
     private void SelectNinja(int ninjaIndex)
     {
         //TODO clamp ninja indices
-        UIManager.Instance.SelectCharacter(_selectedNinjaIndex, ninjaIndex);
+        UIManager.Instance.SelectCharacter(PlayerType.PlayerIndex, ninjaIndex);
         _selectedNinjaIndex = ninjaIndex;
     }
 
