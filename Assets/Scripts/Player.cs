@@ -10,9 +10,10 @@ public class Player : PlayerInputHandler
 
     [SerializeField] private Material _pathDrawMaterial;
     public Material pathDrawMaterial { get { return _pathDrawMaterial; } }
-  
+
     private void Start()
     {
+        _pathDrawMaterial = PlayerManager.Instance.pathMaterials[PlayerType.PlayerIndex];
         Debug.Log("Player index: " + PlayerInput.playerIndex);
     }
 
@@ -55,7 +56,7 @@ public class Player : PlayerInputHandler
 
     private void TryDrawPath(GridSystem.Directions direction)
     {
-        if (!PlayerManager.Instance.canPlayersDrawPaths)
+        if (!PlayerManager.Instance.isTurnState)
         {
             return;
         }

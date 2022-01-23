@@ -5,26 +5,29 @@ using UnityEngine;
 
 public class NinjaManager : Singleton<NinjaManager>
 {
-    [SerializeField]private Transform p0NinjaPrefab;
     [SerializeField]private Transform p1NinjaPrefab;
-    [SerializeField]private Vector2Int[] p0NinjaSpawnPoints;
+    [SerializeField]private Transform p2NinjaPrefab;
     [SerializeField]private Vector2Int[] p1NinjaSpawnPoints;
+    [SerializeField]private Vector2Int[] p2NinjaSpawnPoints;
 
     private Dictionary<int,List<Ninja>> allNinjas;
 
-    public int debugSelectedP0Ninja;
     public int debugSelectedP1Ninja;
+    public int debugSelectedP2Ninja;
 
     private void Awake()
     {
         base.Awake();
         allNinjas = new Dictionary<int, List<Ninja>>();
-
-        InitNinjasForPlayer(0, p0NinjaSpawnPoints, p0NinjaPrefab);
-        InitNinjasForPlayer(1, p1NinjaSpawnPoints, p1NinjaPrefab);
     }
 
-    internal void InitNinjasForPlayer(int playerIndex, Vector2Int[] spawnPoints, Transform prefab)
+    private void Start()
+    {
+        SpawnNinjasForPlayer(0, p1NinjaSpawnPoints, p1NinjaPrefab);
+        SpawnNinjasForPlayer(1, p2NinjaSpawnPoints, p2NinjaPrefab);
+    }
+
+    internal void SpawnNinjasForPlayer(int playerIndex, Vector2Int[] spawnPoints, Transform prefab)
     {
         List<Ninja> ninjaList = new List<Ninja>();
 

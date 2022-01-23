@@ -14,12 +14,14 @@ public class PlayerManager : Singleton<PlayerManager>
 
     [SerializeField] private Transform _mapParent;
 
-    public bool canPlayersDrawPaths { get; private set; }
+    public bool isTurnState { get; private set; }
+
+    public Material[] pathMaterials;
 
     public override void Awake()
     {
         base.Awake();
-        GameManager.Instance.onTurnStateChanged = SetCanPlayersDrawPaths;
+        GameManager.Instance.onTurnStateChanged = SetIsTurnState;
         
         _players = new List<Player>();
         InitPlayers();
@@ -45,13 +47,12 @@ public class PlayerManager : Singleton<PlayerManager>
            player.transform.position = Vector3.zero;
             player.PlayerType = _playerTypeList.playerTypeList[i];
 
-           _players.Add(player);
-           
+           _players.Add(player);         
         }
     }
 
-    void SetCanPlayersDrawPaths(bool inCanPlayersDrawPaths)
+    void SetIsTurnState(bool inIsTurnState)
     {
-        canPlayersDrawPaths = inCanPlayersDrawPaths;
+        isTurnState = inIsTurnState;
     }
 }

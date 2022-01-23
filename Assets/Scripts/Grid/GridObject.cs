@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridObject : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         GameManager.Instance.InitGridContainer(gameObject);
     }

@@ -7,8 +7,9 @@ public class Path : MonoBehaviour
 
     private List<Vector2Int> _Path;
 
-    private void Awake()
+    private void Start()
     {
+        _Path = new List<Vector2Int>();
         ResetPath();
     }
 
@@ -19,7 +20,7 @@ public class Path : MonoBehaviour
 
     private void ResetPath()
     {
-        //this should only get called when using the Undo key (and in the Awake of this class, for consistency)
+        //this should only get called when using the Undo key (and in the Start method of this class, for consistency)
         //we shouldn't need to rely on resetting the path when the path is complete
         //the recursive implementation of movement should handle that automatically
 

@@ -18221,6 +18221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 665936283}
   - component: {fileID: 665936282}
+  - component: {fileID: 665936284}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -18243,6 +18244,9 @@ MonoBehaviour:
   _playerTypeList: {fileID: 11400000, guid: b59f97f1ea2f14738bef6967d58e39dc, type: 2}
   _maxPlayers: 2
   _mapParent: {fileID: 0}
+  pathMaterials:
+  - {fileID: 2100000, guid: ba0e8f1a01e994e6c921c64def964db5, type: 2}
+  - {fileID: 2100000, guid: c3e0e80e9931945a0a8cb1ace1e8bbc1, type: 2}
 --- !u!4 &665936283
 Transform:
   m_ObjectHideFlags: 0
@@ -18257,6 +18261,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &665936284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665936281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 432286c78f9bd41f7b617fbb707c9413, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: Keyboard
+  m_DefaultActionMap: PlayerActions
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!43 &671191333
 Mesh:
   m_ObjectHideFlags: 0
@@ -47364,7 +47398,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -47387,13 +47421,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125740495}
-  m_LocalRotation: {x: 0.35256416, y: -0.0000069737434, z: -0.0000039190054, w: 0.9357877}
-  m_LocalPosition: {x: 3.7090409, y: 9.067095, z: -7.305662}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 7.920147, y: 19, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!43 &2137645202
 Mesh:
   m_ObjectHideFlags: 0
