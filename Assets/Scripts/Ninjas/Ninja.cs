@@ -13,7 +13,7 @@ public class Ninja : MonoBehaviour
     public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
     public Action<bool> onUndoInput { private get; set; }
     public bool hasPath;
-    public int ninjaIndex; //TODO needs implementing
+    public int ninjaIndex;
 
     [SerializeField] private Animator _animatorController;
     [SerializeField] private GameObject _mesh;
