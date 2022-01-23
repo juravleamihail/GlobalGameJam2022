@@ -31,8 +31,9 @@ public class NinjaManager : Singleton<NinjaManager>
         List<Ninja> ninjaList = new List<Ninja>();
         Transform prefab = _ninjaTypeList.ninjaList[playerIndex].Prefab.transform;
 
-        foreach (Vector2Int spawnPoint in spawnPoints)
+        for (int i = 0; i<spawnPoints.Length; ++i)
         {
+            Vector2Int spawnPoint = spawnPoints[i];
             Vector3 spawnPointInWorld = GameManager.Instance.ConvertGridCoordsToVector3((uint)spawnPoint.x, (uint)spawnPoint.y);
             Transform ninjaTransform = Instantiate(prefab, spawnPointInWorld, prefab.transform.rotation);
             Ninja ninja = ninjaTransform.gameObject.GetComponent<Ninja>();
@@ -42,6 +43,7 @@ public class NinjaManager : Singleton<NinjaManager>
                 return;
             }
             ninja.NinjaType = _ninjaTypeList.ninjaList[playerIndex];
+            ninja.ninjaIndex = i;
             ninjaList.Add(ninja);
         }
 
