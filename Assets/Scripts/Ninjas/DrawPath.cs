@@ -9,12 +9,6 @@ public class DrawPath : MonoBehaviour
     {
         Ninja ninja = gameObject.GetComponent<Ninja>();
         ninja.onDrawPathInput = OnDrawInputReceived;
-        //TODO replace this with the following:
-        //  subscribe to an onDrawPathInput action in the Ninja script of this same GameObject
-        //  the Player knows about NinjaManager
-        //  Player calls TryDrawPath(ninjaIndex, direction) on NinjaManager
-        //  NinjaManager checks if the selected ninja may draw
-        //  if yes, invoke Ninja.onDrawPathInput on that specific ninja
     }
 
     private void OnDrawInputReceived(GridSystem.Directions direction)

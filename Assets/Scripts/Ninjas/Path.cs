@@ -63,8 +63,8 @@ public class Path : MonoBehaviour
     {
         //TODO add all conditions here:
 
-        // 1. ninja already on that tile
-        //  TODO keep an array of locations of ninjas for both players in the GameMode, compare to that array
+        // 1. friendly ninja already on that tile
+        //  TODO keep an array of locations of ninjas in PlayerManager or NinjaManager, compare to that array
 
         // 2. tile would be outside grid   
         if (!GameManager.Instance.IsOnGrid(destination))

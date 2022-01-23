@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 3501982844121361104}
   - component: {fileID: 1064417823382077867}
   - component: {fileID: 905922216602310290}
+  - component: {fileID: -6930761695170294419}
   m_Layer: 0
-  m_Name: PlaceholderPawn
+  m_Name: PlaceholderPawn2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c4f14ee6cf8d4a94e8d3360b0e3bee13, type: 2}
+  - {fileID: 2100000, guid: f1b933721f1a2ef4f8784639ba87644e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -136,7 +137,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293a53303a0a09e46afbacd2509701b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUsingMovePoints: 0
-  isUsingMaxDistance: 0
-  _movePoints: 0
-  _maxDistance: 0
+--- !u!114 &-6930761695170294419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3501982844121361111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e2ef5baa5b8449f9574c490eb7f256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
