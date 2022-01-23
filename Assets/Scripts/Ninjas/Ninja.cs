@@ -76,6 +76,7 @@ public class Ninja : MonoBehaviour
         _onPlayerDeath?.Invoke();
         _animatorController.SetBool("isDead", true);
         //Do some more stuff here (animations)
+        UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
         StartCoroutine(WaitToDestroyGameObject());
     }
 

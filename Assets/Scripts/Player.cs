@@ -86,6 +86,7 @@ public class Player : PlayerInputHandler
     private void SelectNinja(int ninjaIndex)
     {
         //TODO clamp ninja indices
+        UIManager.Instance.SelectCharacter(_selectedNinjaIndex, ninjaIndex);
         _selectedNinjaIndex = ninjaIndex;
     }
 
@@ -109,6 +110,7 @@ public class Player : PlayerInputHandler
     public void IncrementKills()
     {
         ++kills;
+        UIManager.Instance.AddKill(_selectedNinjaIndex, kills);
         if (GameManager.Instance.winByNrOfKills && kills >= GameManager.Instance.killsToWin)
         {
             GameManager.Instance.ShowWinScreen(PlayerType.PlayerIndex);
