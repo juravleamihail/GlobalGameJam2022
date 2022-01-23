@@ -19,10 +19,6 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Sprite noKillIcon;
     [SerializeField] private Sprite killIcon;
 
-    [SerializeField] private Text timerTxt;
-    private float timer;
-    [SerializeField] private GameSettingsSO gameSettings;
-
     [Space(10), Header("Events")]
     [SerializeField] private UnityEvent onBackButton;
 
@@ -122,8 +118,7 @@ public class UIManager : Singleton<UIManager>
             //TODO: I will change it later this parameter
             AddKillsIconsForPlayer1(5);
             AddKillsIconsForPlayer2(5);
-            timer = gameSettings.Timer;
-
+            
             isInit = true;
         }
     }
@@ -133,36 +128,7 @@ public class UIManager : Singleton<UIManager>
         onBackButton.Invoke();
         GameManager.Instance.BackToMainMenu();
     }
-
-    public void UpdateTimer(float value)
-    {
-        timerTxt.text = value.ToString("#");
-    }
-
-    private void Update()
-    {
-        if (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            UpdateTimer(timer);
-        }
-        else
-        {
-            TimmerTrigger();
-        }
-    }
-
-    private void TimmerTrigger()
-    {
-        //TODO: connect after the time is up
-        // we call ResetTimer() after
-    }
-
-    public void ResetTimer()
-    {
-        timer = gameSettings.Timer;
-    }
-
+    
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
