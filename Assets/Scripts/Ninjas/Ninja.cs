@@ -64,6 +64,11 @@ public class Ninja : MonoBehaviour
         // Do some more stuff here (score)
         _animatorController.SetBool("isAttacking", true);
         otherNinja.Dead();
+
+        int playerIndex = NinjaType.PlayerIndex;
+        Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
+        player.IncrementKills();
+            
         StartCoroutine(WaitToStopAttack());
     }
 

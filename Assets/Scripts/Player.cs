@@ -9,6 +9,8 @@ public class Player : PlayerInputHandler
     private int _selectedNinjaIndex;
     public int selectedNinjaIndex { get { return _selectedNinjaIndex; } }
 
+    public int kills { get; private set; } = 0;
+
     [SerializeField] private Material _pathDrawMaterial;
     public Material pathDrawMaterial { get { return _pathDrawMaterial; } }
 
@@ -101,5 +103,10 @@ public class Player : PlayerInputHandler
     public void DEBUG_SelectNinja(int ninjaIndex)
     {
         SelectNinja(ninjaIndex);
+    }
+
+    public void IncrementKills()
+    {
+        ++kills;
     }
 }

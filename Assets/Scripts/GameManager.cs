@@ -192,4 +192,9 @@ public class GameManager : Singleton<GameManager>
     {
         onTurnStateChanged?.Invoke(inCanPlayersDraw);
     }    
+
+    public void WinGame(int playerIndex)
+    {
+        //TODO call win state UI from here
+    }
 }
