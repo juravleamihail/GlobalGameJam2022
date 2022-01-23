@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3bf6dbfb9ed41ab86b8d872aa8c9fd, type: 3}
   m_Name: P1Ninja
   m_EditorClassIdentifier: 
-  NameText: Black Ninja
+  NameText: White Ninja
   PlayerIndex: 0
   Prefab: {fileID: 8267923001077502312, guid: d22d242d9486f3a4eaed38ea43a8832a, type: 3}

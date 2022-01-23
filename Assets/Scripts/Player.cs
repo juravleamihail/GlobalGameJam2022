@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Player : PlayerInputHandler
 {
     public PlayerTypeSO PlayerType { get; set; }
-    private int _selectedNinjaIndex;
+    private int _selectedNinjaIndex = 0;
     public int selectedNinjaIndex { get { return _selectedNinjaIndex; } }
 
     public int kills { get; private set; } = 0;
@@ -86,6 +86,7 @@ public class Player : PlayerInputHandler
     private void SelectNinja(int ninjaIndex)
     {
         //TODO clamp ninja indices
+        UIManager.Instance.SelectCharacter(_selectedNinjaIndex, ninjaIndex);
         _selectedNinjaIndex = ninjaIndex;
     }
 
@@ -109,6 +110,7 @@ public class Player : PlayerInputHandler
     public void IncrementKills()
     {
         ++kills;
+        UIManager.Instance.AddKill(_selectedNinjaIndex, kills);
         if (GameManager.Instance.winByNrOfKills && kills >= GameManager.Instance.killsToWin)
         {
             GameManager.Instance.ShowWinScreen(PlayerType.PlayerIndex);
@@ -133,7 +135,7 @@ public class Player : PlayerInputHandler
 
     public void OldStyleSelect(int ninjaIndex)
     {
-        PlayerManager.Instance.GetPlayerByIndex(ninjaIndex).SelectNinja(ninjaIndex);
+        SelectNinja(ninjaIndex);
     }
 
     public void OldStyleDown()

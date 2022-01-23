@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
 
     public bool canMoveOnlyOneNinjaPerTurn;
     public bool invisiblePaths;
+    public bool canPathIntersectItself;
 
     [SerializeField] private uint _movePoints;
     public uint movePoints { get { return _movePoints; } }

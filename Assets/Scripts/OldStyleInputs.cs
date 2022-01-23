@@ -5,9 +5,37 @@ public class OldStyleInputs : Singleton<OldStyleInputs>
 {
     public Player player0;
     public Player player1;
-        
+
+    public float undoPressTime;
+
+    private float _undoPressTimerP0;
+    private bool isPressingUndoP0;
+    private float _undoPressTimerP1;
+    private bool isPressingUndoP1;
+
+
     void Update()
     {
+        if (isPressingUndoP0)
+        {
+            _undoPressTimerP0 += Time.deltaTime;
+        }
+
+        if (isPressingUndoP1)
+        {
+            _undoPressTimerP1 += Time.deltaTime;
+        }
+
+        if (_undoPressTimerP0 >= undoPressTime)
+        {
+            player0.OldStyleUndo(true);
+        }
+
+        if (_undoPressTimerP1 >= undoPressTime)
+        {
+            player1.OldStyleUndo(true);
+        }
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             player0.OldStyleUp();
@@ -81,11 +109,25 @@ public class OldStyleInputs : Singleton<OldStyleInputs>
         if (Input.GetKeyDown(KeyCode.X))
         {
             player0.OldStyleUndo(false);
+            isPressingUndoP0 = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             player1.OldStyleUndo(false);
+            isPressingUndoP1 = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            _undoPressTimerP0 = 0f;
+            isPressingUndoP0 = false;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Backspace))
+        {
+            _undoPressTimerP1 = 0f;
+            isPressingUndoP1 = false;
         }
         //if (Input.GetKeyDown(KeyCode.M))
         //{
