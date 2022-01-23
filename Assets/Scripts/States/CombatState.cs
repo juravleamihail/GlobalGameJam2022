@@ -25,6 +25,11 @@ namespace States
         public override void OnEnter()
         {
             Debug.Log($"Enter state: {_state}");
+            Init();
+        }
+
+        private void Init()
+        {
             TryGetPlayers();
             _gm.StartCoroutine(TryTriggerCombat());
         }
@@ -44,11 +49,12 @@ namespace States
                     if (_player0Ninjas[i].GetPositionOnGrid() == _player1Ninjas[j].GetPositionOnGrid())
                     {
                         yield return TriggerCombatCoroutine(_player0Ninjas[i],_player1Ninjas[j]);
+                        yield break;
                     }
                 }
             }
 
-            //ComplateState();
+            ComplateState();
         }
         private IEnumerator TriggerCombatCoroutine(Ninja n1, Ninja n2)
         {
@@ -58,7 +64,7 @@ namespace States
 
             var res = _setCameras?.Invoke(_state);
             float transitionTimer = res == null ? 0 : (float) res;
-            
+
             yield return new WaitForSeconds(transitionTimer);
 
             var ph = transform.gameObject.GetComponent<PlayerHolder>();
@@ -71,6 +77,10 @@ namespace States
             {
                 n2.KillEnemy(n1);
             }
+
+            //should wait for animations and everything else
+            yield return new WaitForSeconds(3f);
+            Init();
         }
 
         public class Vector2IntComparer : IEqualityComparer<Vector2Int>{

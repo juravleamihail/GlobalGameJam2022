@@ -17,10 +17,9 @@ public class Ninja : MonoBehaviour
     [SerializeField] private Animator _animatorController;
     [SerializeField] private GameObject _mesh;
     
-    public void Init(NinjaTypeSO ninjaTypeSO, Action onDeathCb)
+    public void Init(NinjaTypeSO ninjaTypeSO)
     {
         NinjaType = ninjaTypeSO;
-        _onPlayerDeath += _onPlayerDeath;
     }
 
     public int GetPlayerIndex()
@@ -76,6 +75,7 @@ public class Ninja : MonoBehaviour
 
     private IEnumerator WaitToDestroyGameObject()
     {
+        NinjaManager.Instance.TryRemoveNinja(GetPlayerIndex(),this);
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
