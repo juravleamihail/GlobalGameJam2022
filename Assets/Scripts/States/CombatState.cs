@@ -65,8 +65,8 @@ namespace States
             var res = _setCameras?.Invoke(_state);
             float transitionTimer = res == null ? 0 : (float) res;
 
-            n1.RevealPlayer();
-            n2.RevealPlayer();
+            n1.Reveal();
+            n2.Reveal();
 
             yield return new WaitForSeconds(transitionTimer);
 

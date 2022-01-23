@@ -21,45 +21,47 @@ public class Player : PlayerInputHandler
         Debug.Log("Player index: " + PlayerInput.playerIndex);
     }
 
-    protected override void OnPlayerUndo(InputAction.CallbackContext context)
-    {
-        base.OnPlayerUndo(context);
+    //TODO uncomment these and remove the OldStyle ones when figuring out how to implement the long-press undo
 
-        UndoDrawPath(false);
-    }
+    //protected override void OnPlayerUndo(InputAction.CallbackContext context)
+    //{
+    //    base.OnPlayerUndo(context);
 
-    //TODO implement long-press undo
+    //    UndoDrawPath(false);
+    //}
 
-    protected override void OnPlayerSwitch(InputAction.CallbackContext context)
-    {
-        //TODO replace this with per-key selecting
-        base.OnPlayerSwitch(context);
-        Debug.Log("Player index: " + PlayerInput.playerIndex + "Switch");
-    }
+    ////TODO implement long-press undo
 
-    protected override void OnPlayerDown(InputAction.CallbackContext context)
-    {
-        base.OnPlayerDown(context);
-        TryDrawPath(GridSystem.Directions.Down);
-    }
+    //protected override void OnPlayerSwitch(InputAction.CallbackContext context)
+    //{
+    //    //TODO replace this with per-key selecting
+    //    base.OnPlayerSwitch(context);
+    //    Debug.Log("Player index: " + PlayerInput.playerIndex + "Switch");
+    //}
 
-    protected override void OnPlayerLeft(InputAction.CallbackContext context)
-    {
-        base.OnPlayerLeft(context);
-        TryDrawPath(GridSystem.Directions.Left);
-    }
+    //protected override void OnPlayerDown(InputAction.CallbackContext context)
+    //{
+    //    base.OnPlayerDown(context);
+    //    TryDrawPath(GridSystem.Directions.Down);
+    //}
 
-    protected override void OnPlayerRight(InputAction.CallbackContext context)
-    {
-        base.OnPlayerRight(context);
-        TryDrawPath(GridSystem.Directions.Right);
-    }
+    //protected override void OnPlayerLeft(InputAction.CallbackContext context)
+    //{
+    //    base.OnPlayerLeft(context);
+    //    TryDrawPath(GridSystem.Directions.Left);
+    //}
 
-    protected override void OnPlayerUp(InputAction.CallbackContext context)
-    {
-        base.OnPlayerUp(context);
-        TryDrawPath(GridSystem.Directions.Up);
-    }
+    //protected override void OnPlayerRight(InputAction.CallbackContext context)
+    //{
+    //    base.OnPlayerRight(context);
+    //    TryDrawPath(GridSystem.Directions.Right);
+    //}
+
+    //protected override void OnPlayerUp(InputAction.CallbackContext context)
+    //{
+    //    base.OnPlayerUp(context);
+    //    TryDrawPath(GridSystem.Directions.Up);
+    //}
 
     private void TryDrawPath(GridSystem.Directions direction)
     {

@@ -121,14 +121,6 @@ public class Ninja : MonoBehaviour
 
     public void SyncWithTile(Transform tileObject)
     {
-        if(!GetComponent<Movement>()._isMovingOneTile)
-        {
-            return;
-        }
-
-        Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
-        Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
-
         TileToPlayerConnection tileConnection = tileObject.gameObject.GetComponent<TileToPlayerConnection>();
 
         if (tileConnection == null || tileConnection.PlayerType == null)

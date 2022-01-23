@@ -46,7 +46,7 @@ public class GridSystem
             }
             //we assume that the tiles are placed correctly
             //and that each tile has the pivot at + (0f, 0f, 0f) relative to the neighboring edge of the previous tile
-            // this needs flipping the assets currently being used, so we should never refer to local space
+            // this may need flipping the assets currently being used, so we should never refer to local space
 
             Vector3 tileCenter = tile.position + new Vector3(_TileSize / 2, 0f, _TileSize / 2);
             Vector2Int gridCoords = ConvertVector3ToGridCoords(tileCenter.x, tileCenter.z);
