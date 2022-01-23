@@ -1168,6 +1168,7 @@ MonoBehaviour:
   ninjaIndex: 0
   _animatorController: {fileID: 8267923001077502313}
   _mesh: {fileID: 6029695836674769796}
+  _katana: {fileID: 4783397098740506767}
 --- !u!114 &1688078763216634284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,6 +1315,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 074984139e0008242beffe69bc184430, type: 3}
+--- !u!1 &4783397098740506767 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 074984139e0008242beffe69bc184430, type: 3}
+  m_PrefabInstance: {fileID: 5666482160757038558}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5271985622209247797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 074984139e0008242beffe69bc184430, type: 3}

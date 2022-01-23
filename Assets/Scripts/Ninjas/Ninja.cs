@@ -17,10 +17,16 @@ public class Ninja : MonoBehaviour
 
     [SerializeField] private Animator _animatorController;
     [SerializeField] private GameObject _mesh;
+    [SerializeField] private GameObject _katana;
     
     public void Init(NinjaTypeSO ninjaTypeSO)
     {
         NinjaType = ninjaTypeSO;
+    }
+
+    private void Start()
+    {
+        HidePlayer();
     }
 
     public int GetPlayerIndex()
@@ -67,6 +73,8 @@ public class Ninja : MonoBehaviour
         int playerIndex = NinjaType.PlayerIndex;
         Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
         player.IncrementKills();
+
+        RevealPlayer();
             
         StartCoroutine(WaitToStopAttack());
     }
@@ -77,6 +85,7 @@ public class Ninja : MonoBehaviour
         _animatorController.SetBool("isDead", true);
         //Do some more stuff here (animations)
         UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
+        RevealPlayer();
         StartCoroutine(WaitToDestroyGameObject());
     }
 
@@ -91,5 +100,17 @@ public class Ninja : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         _animatorController.SetBool("isAttacking", false);
+    }
+
+    private void HidePlayer()
+    {
+        _mesh.SetActive(false);
+        _katana.SetActive(false);
+    }
+
+    private void RevealPlayer()
+    {
+        _mesh.SetActive(true);
+        _katana.SetActive(true);
     }
 }
