@@ -104,6 +104,29 @@ public class Ninja : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         _animatorController.SetBool("isAttacking", false);
+        HidePlayer();
+    }
+
+    private void Update()
+    {
+        Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
+        Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
+
+        PlayerHolder tileScript = tileObject.gameObject.GetComponent<PlayerHolder>();
+
+        if(tileScript == null || tileScript.PlayerType == null)
+        {
+            return;
+        }
+
+        if(NinjaType.PlayerIndex == tileScript.PlayerType.PlayerIndex)
+        {
+            HidePlayer();
+        }
+        else
+        {
+            RevealPlayer();
+        }
     }
 
     private void HidePlayer()
