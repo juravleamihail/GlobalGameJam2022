@@ -42815,10 +42815,11 @@ MonoBehaviour:
   _mainMenuUI: {fileID: 526011808}
   _hudUI: {fileID: 851547412}
   _cameraController: {fileID: 0}
-  isUsingMovePoints: 0
+  isUsingMovePoints: 1
   isUsingMaxDistance: 0
   winByNrOfKills: 0
-  _movePoints: 0
+  canMoveOnlyOneNinjaPerTurn: 1
+  _movePoints: 3
   _maxDistance: 0
   _killsToWin: 0
 --- !u!4 &1906214244

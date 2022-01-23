@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class DrawTest : MonoBehaviour
+public class DebugKeys : MonoBehaviour
 {
     // Update is called once per frame
     void Update()
