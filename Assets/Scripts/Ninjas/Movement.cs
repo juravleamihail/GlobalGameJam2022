@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     protected bool _isMovePhaseForNinja = false;
     [SerializeField]protected float _distTolerance = 0.05f;
     [SerializeField]float _moveSpeed;
+    [SerializeField] private Animator _animatorController;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class Movement : MonoBehaviour
     {
         //call this at the start of the move phase;
         _isMovePhaseForNinja = true;
+        _animatorController.SetBool("isMoving", _isMovePhaseForNinja);
     }
 
     protected void SetupMovementToNextTile(out bool shouldMoveOneTile)
@@ -60,6 +62,7 @@ public class Movement : MonoBehaviour
             {
                 SetupMovementToNextTile(out _isMovingOneTile);
                 _isMovePhaseForNinja = _isMovingOneTile;
+                _animatorController.SetBool("isMoving", _isMovePhaseForNinja);
             }
         }
         else
