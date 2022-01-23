@@ -9,7 +9,7 @@ namespace States
         private readonly Action<float> _onTimer;
         private readonly Action<bool> _onMovementToggle;
     
-        public TurnState(float time, Action<float> onTimer, Action<bool> onToggle, EStates state) : base(state)
+        public TurnState(float time, Action<float> onTimer, Action<bool> onToggle, EStates state, Action onCompleted) : base(state, onCompleted)
         {
             _timer = time;
             _onTimer = onTimer;
@@ -37,7 +37,10 @@ namespace States
             {
                 _timer -= Time.deltaTime;
                 UpdateTimer(_timer);
+                return;
             }
+
+            ComplateState();
         }
 
         public override void OnExit()

@@ -31,6 +31,12 @@ public class CameraController : MonoBehaviour
         _currentState = state;
         return time;
     }
+
+    public void SetCombatCameraPosition(Vector3 pos)
+    {
+        var combatCamera = _camers.Find(c => c.State == EStates.Combat);
+        combatCamera.VCam.transform.position = pos;
+    }
     
     [Serializable]
     private struct CameraSet

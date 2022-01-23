@@ -58,19 +58,30 @@ public class GameManager : Singleton<GameManager>
        _stateMachine.ChangeState(state, ToggleUI, _cameraController.ChangeState);
     }
 
-    [ContextMenu("triggerTurnState")]
+   
     public void StartGame()
     {
-       ChangeState(CreateTurnState());
+        GoToTurnState();
     }
-  
+
     public void BackToMainMenu()
     {
        ChangeState(CreateMaineMenuState());
     }
-   
+    
+    [ContextMenu("triggerTurnState")]
+    private void GoToTurnState()
+    {
+        ChangeState(CreateTurnState());
+    }
+
+    private void GotoMoveState()
+    {
+        ChangeState(CreateMoveState());
+    }
+    
     [ContextMenu("triggerCombat")]
-    public void GoToCombat()
+    public void GoToCombatState()
     {
        ChangeState(CreateCombatState());
     }
@@ -108,7 +119,7 @@ public class GameManager : Singleton<GameManager>
     //Factory Pattern
     private StateBase CreateMaineMenuState()
     {
-       return new MenuState(EStates.MainMenu);
+       return new MenuState(EStates.MainMenu, null);
     }
 
     private StateBase CreateTurnState()
@@ -117,13 +128,19 @@ public class GameManager : Singleton<GameManager>
           _gameSettings.Timer,
           _hudUI.UpdateTimer,
           OnTurnStateChanged,
-          EStates.Gameplay
+          EStates.Gameplay,
+          GotoMoveState
        );
+    }
+
+    private StateBase CreateMoveState()
+    {
+        return new MoveState(EStates.Move, GoToCombatState);
     }
 
     private StateBase CreateCombatState()
     {
-       return new CombatState(EStates.Combat);
+       return new CombatState(_cameraController.SetCombatCameraPosition, EStates.Combat, GoToTurnState);
     }
 
     public Transform GetTileObjectAt(uint gridX, uint gridY)

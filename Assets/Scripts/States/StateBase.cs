@@ -5,6 +5,8 @@ namespace States
 {
     public abstract class StateBase
     {
+        private readonly Action _onStateCompleted;
+        
         protected Action<EStates> _setUiCb;
         protected Func<EStates, float> _setCameras;
         protected readonly EStates _state;
@@ -12,8 +14,9 @@ namespace States
         private float? _transitionTimer = 0;
         private float _delay = 1f;
         
-        public StateBase(EStates state)
+        public StateBase(EStates state, Action onComplated)
         {
+            _onStateCompleted = onComplated;
             _state = state;
         }
 
@@ -56,6 +59,12 @@ namespace States
         {
             _setUiCb = uiCb;
             _setCameras = camCb;
+        }
+
+        protected void ComplateState()
+        {
+            Debug.Log($"Completed state: {_state}");
+            _onStateCompleted?.Invoke();
         }
     }
 }

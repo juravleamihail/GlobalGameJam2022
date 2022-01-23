@@ -12,6 +12,8 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField]
     private int _maxPlayers=2;
 
+    public int MaxPlayers => _maxPlayers;
+    
     [SerializeField] private Transform _mapParent;
 
     public bool isTurnState { get; private set; }

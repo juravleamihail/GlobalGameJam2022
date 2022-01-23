@@ -171,6 +171,16 @@ public class NinjaManager : Singleton<NinjaManager>
         return false;
     }
 
+    internal List<Ninja> GetAllNinjaForPlayer(int playerID)
+    {
+        if(!allNinjas.TryGetValue(playerID, out var listOfNinjas))
+        {
+            return null;
+        }
+
+        return listOfNinjas;
+    }
+
     /*internal void AddNinja(int playerIndex)
     {
         DictionaryEntry<int, List<Ninja

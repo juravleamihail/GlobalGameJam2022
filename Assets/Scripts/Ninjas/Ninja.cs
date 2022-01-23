@@ -2,18 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Ninja : MonoBehaviour
 {
+    [SerializeField] private UnityAction _onPlayerDeath;
+        
     public NinjaTypeSO NinjaType { get; set; }
 
     public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
     public Action<bool> onUndoInput { private get; set; }
     public bool hasPath;
-
-    public void Init(NinjaTypeSO ninjaTypeSO)
+    
+    public void Init(NinjaTypeSO ninjaTypeSO, Action onDeathCb)
     {
         NinjaType = ninjaTypeSO;
+        _onPlayerDeath += _onPlayerDeath;
     }
 
     public int GetPlayerIndex()
@@ -49,5 +53,18 @@ public class Ninja : MonoBehaviour
     {
         Movement movement = gameObject.GetComponent<Movement>();
         movement.StartMovePhase();
+    }
+
+    public void KillEnemy(Ninja otherNinja)
+    {
+        // Do some more stuff here (score)
+        otherNinja.Dead();
+    }
+
+    private void Dead()
+    {
+        _onPlayerDeath?.Invoke();
+        //Do some more stuff here (animations)
+        Destroy(gameObject);
     }
 }

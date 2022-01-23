@@ -4,7 +4,7 @@ namespace States
 {
     public class MenuState : StateBase
     {
-        public MenuState(EStates state) : base(state)
+        public MenuState(EStates state, Action onCompleted) : base(state, onCompleted)
         {
             
         }
