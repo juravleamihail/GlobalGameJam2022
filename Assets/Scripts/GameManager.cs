@@ -193,8 +193,8 @@ public class GameManager : Singleton<GameManager>
         onTurnStateChanged?.Invoke(inCanPlayersDraw);
     }    
 
-    public void WinGame(int playerIndex)
+    public void ShowWinScreen(int playerIndex)
     {
-        //TODO call win state UI from here
+        UIManager.Instance.ShowWinScreen(playerIndex);
     }
 }

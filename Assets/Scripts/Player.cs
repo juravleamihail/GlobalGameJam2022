@@ -10,6 +10,7 @@ public class Player : PlayerInputHandler
     public int selectedNinjaIndex { get { return _selectedNinjaIndex; } }
 
     public int kills { get; private set; } = 0;
+    public int aliveNinjas { get; private set; } = 3;
 
     [SerializeField] private Material _pathDrawMaterial;
     public Material pathDrawMaterial { get { return _pathDrawMaterial; } }
@@ -110,7 +111,18 @@ public class Player : PlayerInputHandler
         ++kills;
         if (GameManager.Instance.winByNrOfKills && kills >= GameManager.Instance.killsToWin)
         {
-            GameManager.Instance.WinGame(PlayerType.PlayerIndex);
+            GameManager.Instance.ShowWinScreen(PlayerType.PlayerIndex);
+        }
+    }
+
+    public void RefreshAliveNinjas(int inAliveNinjas)
+    {
+        aliveNinjas = inAliveNinjas;
+        if (aliveNinjas <= 0)
+        {
+            int thisPlayerIndex = PlayerType.PlayerIndex;
+            int otherPlayerIndex = thisPlayerIndex == 0 ? 1 : 0;
+            GameManager.Instance.ShowWinScreen(otherPlayerIndex);
         }
     }
 }
