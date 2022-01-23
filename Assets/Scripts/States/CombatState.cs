@@ -65,6 +65,9 @@ namespace States
             var res = _setCameras?.Invoke(_state);
             float transitionTimer = res == null ? 0 : (float) res;
 
+            n1.RevealPlayer();
+            n2.RevealPlayer();
+
             yield return new WaitForSeconds(transitionTimer);
 
             var ph = transform.gameObject.GetComponent<PlayerHolder>();
