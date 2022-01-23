@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1064417823382077867}
   - component: {fileID: 905922216602310290}
   - component: {fileID: -6930761695170294419}
+  - component: {fileID: 735464418709141787}
   m_Layer: 0
   m_Name: PlaceholderPawn2
   m_TagString: Untagged
@@ -135,3 +136,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e2ef5baa5b8449f9574c490eb7f256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &735464418709141787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3501982844121361111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb7a0a859e52a443ad5c2a397c74948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distTolerance: 0.05
+  _moveSpeed: 1

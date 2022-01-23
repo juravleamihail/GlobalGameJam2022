@@ -13,7 +13,7 @@ public class Path : MonoBehaviour
         ResetPath();
     }
 
-    //TODO implement:
+    //TODO implement movement:
     //  while path length > 1
     //      ninja moves to first tile of path
     //      first tile of path is removed and array is offset to the left by 1
@@ -37,6 +37,16 @@ public class Path : MonoBehaviour
     {
         return _Path[_Path.Count - 1];
     }
+
+    public Vector2Int GetNextTile()
+    {
+        return _Path[1]; //0 is always the tile where the ninja is
+    }
+
+    public bool IsAtDestination()
+    {
+        return (_Path.Count == 1);
+    }    
 
     public void SetNewDestination(Vector2Int gridPos)
     { 
@@ -97,6 +107,13 @@ public class Path : MonoBehaviour
         //  not all path tiles are destination tiles
         //  path tiles should be able to intersect each other, but not in the destination point
         //  for now, we are treating each tile as a destination in the code, so this might cause problems
+
+        //7. the tile is already part of this path
+        if (_Path.Contains(destination))
+        {
+            return false;
+        }
+           
 
         return true;
     }
