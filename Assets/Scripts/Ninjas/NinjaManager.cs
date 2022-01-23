@@ -128,14 +128,16 @@ public class NinjaManager : Singleton<NinjaManager>
         return false;
     }
 
-    public void StartMovePhase()
+    public int StartMovePhase(Action onCompleteCb)
     {
-        List<Ninja> ninjaList = allNinjas[0];
+        List<Ninja> ninjaList = new List<Ninja>(allNinjas[0]);
         ninjaList.AddRange(allNinjas[1]);
         foreach (Ninja ninja in ninjaList)
         {
-            ninja.StartMovePhase();
+            ninja.StartMovePhase(onCompleteCb);
         }
+
+        return ninjaList.Count;
     }
 
     public bool IsNinjaAtLocation(Vector2Int tileCoords, out int playerIndex)
@@ -157,7 +159,7 @@ public class NinjaManager : Singleton<NinjaManager>
     private bool IsNinjaOfPlayer(int playerIndex, Vector2Int tileCoords)
     {
         List<Ninja> ninjaList;
-        ninjaList = allNinjas[0];
+        ninjaList = allNinjas[playerIndex];
         foreach (Ninja ninja in ninjaList)
         {
             Vector3 pos = ninja.transform.position;

@@ -78,7 +78,7 @@ public class OldStyleInputs : Singleton<OldStyleInputs>
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            player0.OldStyleSelect(0);
+            player0.OldStyleSelect(2);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -88,7 +88,7 @@ public class OldStyleInputs : Singleton<OldStyleInputs>
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            player0.OldStyleSelect(2);
+            player0.OldStyleSelect(0);
         }
 
         if (Input.GetKeyDown(KeyCode.J))

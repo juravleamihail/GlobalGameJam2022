@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class Movement : MonoBehaviour
     protected Vector3 _nextTileWorldPosition;
     protected bool _isMovingOneTile = false;
     protected bool _isMovePhaseForNinja = false;
+    private Action _onCompleteCb;
+    
     [SerializeField]protected float _distTolerance = 0.05f;
     [SerializeField]float _moveSpeed;
     [SerializeField] private Animator _animatorController;
@@ -18,11 +21,16 @@ public class Movement : MonoBehaviour
         _nextTileWorldPosition = transform.position;
     }
 
-    public void StartMovePhase()
+    public void StartMovePhase(Action onCompleteCb)
     {
+        _onCompleteCb = onCompleteCb;
         //call this at the start of the move phase;
         _isMovePhaseForNinja = true;
-        _animatorController.SetBool("isMoving", _isMovePhaseForNinja);
+        
+        if (!GetComponent<Path>().IsOnlyCurrentTile())
+        {
+            _animatorController.SetBool("isMoving", _isMovePhaseForNinja);
+        }
     }
 
     protected void SetupMovementToNextTile(out bool shouldMoveOneTile)
@@ -63,6 +71,7 @@ public class Movement : MonoBehaviour
                 SetupMovementToNextTile(out _isMovingOneTile);
                 _isMovePhaseForNinja = _isMovingOneTile;
                 _animatorController.SetBool("isMoving", _isMovePhaseForNinja);
+                _onCompleteCb?.Invoke();
             }
         }
         else
