@@ -78,6 +78,26 @@ public class Movement : MonoBehaviour
         {
             Vector3 direction = Vector3.Normalize(nextTileVector);
             transform.Translate(direction * _moveSpeed * Time.deltaTime);
+
+            if (IsBetweenTiles(_nextTileWorldPosition))
+            {
+                Vector2Int nextTileGridPosition = GameManager.Instance.ConvertVector3CoordsToGrid(_nextTileWorldPosition.x, _nextTileWorldPosition.z);
+                Transform nextTile = GameManager.Instance.GetTileObjectAt((uint)nextTileGridPosition.x, (uint)nextTileGridPosition.y);
+
+                Ninja ninja = gameObject.GetComponent<Ninja>();
+
+                ninja.SyncWithTile(nextTile);
+            }
         }   
+    }
+
+    private bool IsBetweenTiles(Vector3 destination)
+    {
+        float distance = Vector3.Magnitude(destination - transform.position);
+        if (Mathf.Approximately(distance, GameManager.Instance.GetTileSize()))
+        {
+            return true;
+        }
+        return false;
     }
 }

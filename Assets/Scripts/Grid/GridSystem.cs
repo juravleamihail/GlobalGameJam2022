@@ -8,7 +8,7 @@ public class GridSystem
     {
         _GridSize = gridSize;
         _TileSize = tileSize;
-        _Grid = new Transform[gridSize + 1, gridSize + 1]; 
+        _Grid = new Transform[gridSize + 1, gridSize + 1];
         //we use +1 because arrays start at (0, 0) but our grid starts at (1, 1)
         // TODO maybe change this and make the grid itself start at (0, 0) also?
     }
@@ -17,6 +17,8 @@ public class GridSystem
     protected float _TileSize;
 
     protected Transform[,] _Grid;
+
+    public float TileSize { get { return _TileSize; } }
 
     public enum Directions
     {

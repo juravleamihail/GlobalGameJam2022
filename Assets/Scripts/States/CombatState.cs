@@ -67,7 +67,7 @@ namespace States
 
             yield return new WaitForSeconds(transitionTimer);
 
-            var ph = transform.gameObject.GetComponent<PlayerHolder>();
+            var ph = transform.gameObject.GetComponent<TileToPlayerConnection>();
             
             if (ph.PlayerType.PlayerIndex == n1.GetPlayerIndex()) 
             {

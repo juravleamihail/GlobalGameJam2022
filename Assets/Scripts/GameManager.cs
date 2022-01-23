@@ -198,4 +198,10 @@ public class GameManager : Singleton<GameManager>
     {
         UIManager.Instance.ShowWinScreen(playerIndex);
     }
+
+
+    public float GetTileSize()
+    {
+        return _grid.TileSize;
+    }
 }

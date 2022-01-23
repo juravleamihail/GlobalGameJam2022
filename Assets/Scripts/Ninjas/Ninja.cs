@@ -84,7 +84,7 @@ public class Ninja : MonoBehaviour
         Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
         player.IncrementKills();
 
-        RevealPlayer();
+        Reveal();
             
         StartCoroutine(WaitToStopAttack());
     }
@@ -95,7 +95,7 @@ public class Ninja : MonoBehaviour
         _animatorController.SetBool("isDead", true);
         //Do some more stuff here (animations)
         UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
-        RevealPlayer();
+        Reveal();
         StartCoroutine(WaitToDestroyGameObject());
     }
 
@@ -116,37 +116,37 @@ public class Ninja : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         _animatorController.SetBool("isAttacking", false);
-        HidePlayer();
+        Hide();
     }
 
-    private void Update()
+    public void SyncWithTile(Transform tileObject)
     {
-        Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
-        Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
+        //Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
+        //Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
 
-        PlayerHolder tileScript = tileObject.gameObject.GetComponent<PlayerHolder>();
+        TileToPlayerConnection tileConnection = tileObject.gameObject.GetComponent<TileToPlayerConnection>();
 
-        if(tileScript == null || tileScript.PlayerType == null)
+        if (tileConnection == null || tileConnection.PlayerType == null)
         {
             return;
         }
 
-        if(NinjaType.PlayerIndex == tileScript.PlayerType.PlayerIndex)
+        if (NinjaType.PlayerIndex == tileConnection.PlayerType.PlayerIndex)
         {
-            HidePlayer();
+            Hide();
         }
         else
         {
-            RevealPlayer();
+            Reveal();
         }
     }
 
-    private void HidePlayer()
+    public void Hide()
     {
         ToogleMeshes(false);
     }
 
-    private void RevealPlayer()
+    public void Reveal()
     {
         ToogleMeshes(true);
     }
