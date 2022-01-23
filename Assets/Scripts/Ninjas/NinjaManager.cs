@@ -14,7 +14,7 @@ public class NinjaManager : Singleton<NinjaManager>
     public int debugSelectedP1Ninja;
     public int debugSelectedP2Ninja;
 
-    private void Awake()
+    public override void Awake()
     {
         base.Awake();
         allNinjas = new Dictionary<int, List<Ninja>>();
@@ -224,4 +224,8 @@ public class NinjaManager : Singleton<NinjaManager>
     {
         return allNinjas.FindAll(ninja => ninja.NinjaType.PlayerIndex == playerIndex);
     }*/
+    public bool TryRemoveNinja(int playerId, Ninja ninja)
+    {
+        return allNinjas[playerId].Remove(ninja);
+    }
 }
