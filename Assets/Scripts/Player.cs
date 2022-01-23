@@ -65,7 +65,7 @@ public class Player : PlayerInputHandler
     {
         if (!PlayerManager.Instance.isTurnState)
         {
-            //return;
+            return;
         }
 
         int playerIndex = PlayerType.PlayerIndex;
