@@ -181,6 +181,30 @@ public class NinjaManager : Singleton<NinjaManager>
         return listOfNinjas;
     }
 
+    public bool IsDestinationOfFriendlyNinja(int playerIndex, int ninjaIndex, Vector2Int destination)
+    {
+        List<Ninja> ninjaList = allNinjas[playerIndex];
+        for (int i = 0; i < ninjaList.Count; ++i)
+        {
+            if (i == ninjaIndex)
+            {
+                continue;
+            }
+
+            Ninja ninja = ninjaList[i];
+            {
+                //TODO obvious source of spaghetti code in this scope, should change
+                Path path = ninja.gameObject.GetComponent<Path>();
+                if (path.GetDestination() == destination)
+                {
+                    Debug.Log("Tile at " + destination.x + ", " + destination.y + " is the destination of friendly ninja.");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /*internal void AddNinja(int playerIndex)
     {
         DictionaryEntry<int, List<Ninja

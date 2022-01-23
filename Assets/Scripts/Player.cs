@@ -7,6 +7,7 @@ public class Player : PlayerInputHandler
 {
     public PlayerTypeSO PlayerType { get; set; }
     private int _selectedNinjaIndex;
+    public int selectedNinjaIndex { get { return _selectedNinjaIndex; } }
 
     [SerializeField] private Material _pathDrawMaterial;
     public Material pathDrawMaterial { get { return _pathDrawMaterial; } }
