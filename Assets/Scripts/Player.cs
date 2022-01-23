@@ -9,6 +9,9 @@ public class Player : PlayerInputHandler
     public PlayerTypeSO PlayerType { get; set; }
     private Transform _selectedNinja;
     public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
+
+    [SerializeField] private Material _pathDrawMaterial;
+    public Material pathDrawMaterial { get { return _pathDrawMaterial; } }
   
     private void Start()
     {

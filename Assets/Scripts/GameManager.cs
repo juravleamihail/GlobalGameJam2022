@@ -29,6 +29,10 @@ public class GameManager : Singleton<GameManager>
 
     public Action<bool> onTurnStateChanged { private get; set; }
 
+    //use these constants to signal exceptions; negative values for positions should not be used anywhere in the game
+    public Vector3 vector3Exception { get; } = new Vector3(-100f, -100f, -100f);
+    public Vector2Int vector2IntException { get; } = new Vector2Int(-1, -1);
+
     public override void Awake()
     {
         base.Awake();
@@ -112,6 +116,16 @@ public class GameManager : Singleton<GameManager>
        return new CombatState(EStates.Combat);
     }
 
+    public Transform GetTileObjectAt(uint gridX, uint gridY)
+    {
+        return _grid.GetTileObjectAt(gridX, gridY);
+    }
+
+    public Vector2Int GetGridCoordsOfTileObject(Transform tile)
+    {
+        return _grid.GetGridCoordsOfTileObject(tile);
+    }
+
     public Vector3 ConvertGridCoordsToVector3(uint gridX, uint gridY)
     {
         return _grid.ConvertGridCoordsToVector3(gridX, gridY);
@@ -122,14 +136,14 @@ public class GameManager : Singleton<GameManager>
         return _grid.ConvertVector3ToGridCoords(worldX, worldZ);
     }
 
-    public Vector2Int MoveOneTileOnGrid(uint currentGridX, uint currentGridY, GridSystem.Directions direction)
+    public Vector2Int GetAdjacentTileOnGrid(uint currentGridX, uint currentGridY, GridSystem.Directions direction)
     {
-        return _grid.MoveOneTileOnGrid(currentGridX, currentGridY, direction);
+        return _grid.GetAdjacentTileOnGrid(currentGridX, currentGridY, direction);
     }
 
-    public Vector3 MoveOneTileInWorld(Vector3 currentPosition, GridSystem.Directions direction)
+    public Vector3 GetAdjacentTileInWorld(Vector3 currentPosition, GridSystem.Directions direction)
     {
-        return _grid.MoveOneTileInWorld(currentPosition, direction);
+        return _grid.GetAdjacentTileInWorld(currentPosition, direction);
     }
 
     public bool IsOnGrid(Vector2Int gridPos)
@@ -139,6 +153,11 @@ public class GameManager : Singleton<GameManager>
     public bool IsOnGrid(Vector3 worldPos)
     {
         return _grid.IsOnGrid(worldPos);
+    }
+
+    public void InitGridContainer(GameObject gridContainer)
+    {
+        _grid.InitGameObjectConnection(gridContainer);
     }
  
     public void OnTurnStateChanged(bool inCanPlayersDraw)
