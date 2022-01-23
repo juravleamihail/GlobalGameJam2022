@@ -8,7 +8,7 @@ public class GridSystem
     {
         _GridSize = gridSize;
         _TileSize = tileSize;
-        _Grid = new Transform[gridSize + 1, gridSize + 1]; 
+        _Grid = new Transform[gridSize + 1, gridSize + 1];
         //we use +1 because arrays start at (0, 0) but our grid starts at (1, 1)
         // TODO maybe change this and make the grid itself start at (0, 0) also?
     }
@@ -17,6 +17,8 @@ public class GridSystem
     protected float _TileSize;
 
     protected Transform[,] _Grid;
+
+    public float TileSize { get { return _TileSize; } }
 
     public enum Directions
     {
@@ -44,7 +46,7 @@ public class GridSystem
             }
             //we assume that the tiles are placed correctly
             //and that each tile has the pivot at + (0f, 0f, 0f) relative to the neighboring edge of the previous tile
-            // this needs flipping the assets currently being used, so we should never refer to local space
+            // this may need flipping the assets currently being used, so we should never refer to local space
 
             Vector3 tileCenter = tile.position + new Vector3(_TileSize / 2, 0f, _TileSize / 2);
             Vector2Int gridCoords = ConvertVector3ToGridCoords(tileCenter.x, tileCenter.z);

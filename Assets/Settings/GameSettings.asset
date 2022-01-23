@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fcfc6e7bf9f4d46981d4b07b712f433, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  _timer: 10
+  _timer: 5
   _tileSize: 1
   _gridSize: 16

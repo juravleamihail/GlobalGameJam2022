@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     //this script is meant to be placed on each ninja
 
     protected Vector3 _nextTileWorldPosition;
-    public bool _isMovingOneTile = false;
+    protected bool _isMovingOneTile = false;
     protected bool _isMovePhaseForNinja = false;
     private Action _onCompleteCb;
     
@@ -46,6 +46,10 @@ public class Movement : MonoBehaviour
 
         Vector2Int nextTileOnGrid = pathComponent.GetNextTile();
         _nextTileWorldPosition = GameManager.Instance.ConvertGridCoordsToVector3((uint)nextTileOnGrid.x, (uint)nextTileOnGrid.y);
+
+        Vector3 pos = _nextTileWorldPosition;
+        pos.y = transform.position.y;
+        transform.LookAt(pos);
     }
 
     private void Update()
@@ -78,6 +82,25 @@ public class Movement : MonoBehaviour
         {
             Vector3 direction = Vector3.Normalize(nextTileVector);
             transform.Translate(direction * _moveSpeed * Time.deltaTime);
-        }   
+
+            Ninja ninja = gameObject.GetComponent<Ninja>();
+
+            Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
+            Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
+
+            ninja.SyncWithTile(tileObject);
+
+            //TODO this seems to cause bugs sometimes; get the tiles using the path instead of the position (see IsBetweenTiles commented method)
+        }
     }
+
+    //private bool IsBetweenTiles(Vector3 destination)
+    //{
+    //    float distance = Vector3.Magnitude(destination - transform.position);
+    //    if (Mathf.Approximately(distance, GameManager.Instance.GetTileSize()))
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 }

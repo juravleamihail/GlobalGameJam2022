@@ -7,7 +7,7 @@ public class PlayerHolderTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       var holder =  GetComponent<PlayerHolder>();
+       var holder =  GetComponent<TileToPlayerConnection>();
 
         var player = PlayerManager.Instance.GetPlayerByIndex(holder.PlayerType.PlayerIndex);
 

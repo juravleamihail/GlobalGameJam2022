@@ -84,7 +84,7 @@ public class Ninja : MonoBehaviour
         Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
         player.IncrementKills();
 
-        RevealPlayer();
+        Reveal();
             
         StartCoroutine(WaitToStopAttack());
     }
@@ -95,7 +95,7 @@ public class Ninja : MonoBehaviour
         _animatorController.SetBool("isDead", true);
         //Do some more stuff here (animations)
         UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
-        RevealPlayer();
+        Reveal();
         StartCoroutine(WaitToDestroyGameObject());
     }
 
@@ -116,42 +116,34 @@ public class Ninja : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         _animatorController.SetBool("isAttacking", false);
-        HidePlayer();
+        Hide();
     }
 
-    private void Update()
+    public void SyncWithTile(Transform tileObject)
     {
-        if(!GetComponent<Movement>()._isMovingOneTile)
+        TileToPlayerConnection tileConnection = tileObject.gameObject.GetComponent<TileToPlayerConnection>();
+
+        if (tileConnection == null || tileConnection.PlayerType == null)
         {
             return;
         }
 
-        Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
-        Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
-
-        PlayerHolder tileScript = tileObject.gameObject.GetComponent<PlayerHolder>();
-
-        if(tileScript == null || tileScript.PlayerType == null)
+        if (NinjaType.PlayerIndex == tileConnection.PlayerType.PlayerIndex)
         {
-            return;
-        }
-
-        if(NinjaType.PlayerIndex == tileScript.PlayerType.PlayerIndex)
-        {
-            HidePlayer();
+            Hide();
         }
         else
         {
-            RevealPlayer();
+            Reveal();
         }
     }
 
-    public void HidePlayer()
+    public void Hide()
     {
         ToogleMeshes(false);
     }
 
-    public void RevealPlayer()
+    public void Reveal()
     {
         ToogleMeshes(true);
     }
