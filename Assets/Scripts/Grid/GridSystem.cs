@@ -27,11 +27,6 @@ public class GridSystem
         Right
     }
 
-    //use these to signal exceptions; negative values for positions should not be used anywhere in the game
-    //these are meant to be const, but Unity won't allow const Vector3
-    private Vector3 _vector3Exception = new Vector3(-100f, -100f, -100f);
-    private Vector2Int _vector2IntException = new Vector2Int(-1, -1);
-
     public void InitGameObjectConnection(GameObject gridContainer)
     {
         Transform[] tiles = gridContainer.GetComponentsInChildren<Transform>();
@@ -54,12 +49,12 @@ public class GridSystem
         }
     }
     
-    public Transform GetTileAt(uint gridX, uint gridZ)
+    public Transform GetTileObjectAt(uint gridX, uint gridZ)
     {
         return _Grid[gridX, gridZ];
     }
 
-    public Vector2Int GetGridCoordsOfTile(Transform tile)
+    public Vector2Int GetGridCoordsOfTileObject(Transform tile)
     {
         for (int x = 1; x <= _GridSize; ++x)
         {
@@ -73,14 +68,14 @@ public class GridSystem
             }
         }
         Debug.Log("Tile object " + tile.gameObject.name + " was not found in grid.");
-        return _vector2IntException;
+        return GameManager.Instance.vector2IntException;
     }
 
     public Vector3 ConvertGridCoordsToVector3(uint gridX, uint gridY)
     {
         if (!IsOnGrid(new Vector2Int((int)gridX, (int)gridY)))
         {
-            return _vector3Exception;
+            return GameManager.Instance.vector3Exception;
         }
 
         //we assume the grid has the origin (0f, 0f, 0f)
@@ -108,13 +103,13 @@ public class GridSystem
         //check that the given X and Z map coords are valid in the grid
         if (!IsOnGrid(new Vector2Int(gridX, gridY)))
         {
-            return _vector2IntException;
+            return GameManager.Instance.vector2IntException;
         }
 
         return new Vector2Int(gridX, gridY);
     }
     
-    public Vector2Int MoveOneTileOnGrid(uint currentGridX, uint currentGridY, Directions direction)
+    public Vector2Int GetAdjacentTileOnGrid(uint currentGridX, uint currentGridY, Directions direction)
     {
         Vector2Int increment = new Vector2Int(0, 0);
         switch (direction)
@@ -140,13 +135,13 @@ public class GridSystem
 
         if (!IsOnGrid(result))
         {
-            return _vector2IntException;
+            return GameManager.Instance.vector2IntException;
         }
 
         return result;
     }
     
-    public Vector3 MoveOneTileInWorld(Vector3 currentPosition, Directions direction)
+    public Vector3 GetAdjacentTileInWorld(Vector3 currentPosition, Directions direction)
     {
         //this assumes the current position has y == 0f;
         //we will not do a check for this because of potential approximation errors with floats
@@ -154,19 +149,19 @@ public class GridSystem
         Vector2Int posOnGrid = ConvertVector3ToGridCoords(currentPosition.x, currentPosition.z);
         if (!IsValid(posOnGrid))
         {
-            return _vector3Exception;
+            return GameManager.Instance.vector3Exception;
         }
         
-        posOnGrid = MoveOneTileOnGrid((uint)posOnGrid.x, (uint)posOnGrid.y, direction);
+        posOnGrid = GetAdjacentTileOnGrid((uint)posOnGrid.x, (uint)posOnGrid.y, direction);
         if (!IsValid(posOnGrid))
         {
-            return _vector3Exception;
+            return GameManager.Instance.vector3Exception;
         }
 
         Vector3 result = ConvertGridCoordsToVector3((uint)posOnGrid.x, (uint)posOnGrid.y);
         if (!IsValid(result))
         {
-            return _vector3Exception;
+            return GameManager.Instance.vector3Exception;
         }
 
         return result;

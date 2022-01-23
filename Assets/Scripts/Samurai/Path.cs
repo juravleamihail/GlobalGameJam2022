@@ -37,21 +37,8 @@ public class Path : MonoBehaviour
         return _Path[_Path.Count - 1];
     }
 
-    public void AddTileToPath(uint gridX, uint gridY)
-    {
-        if (!CanThisPlayerDraw())
-        {
-            //TODO give audio-visual feedback for denied drawing
-            return;
-        }
-
-        Vector2Int gridPos = new Vector2Int((int)gridX, (int)gridY);
-        if (!CanBeDestination(gridPos))
-        {
-            //TODO give audio-visual feedback for "destination not allowed"
-            return;
-        }
-
+    public void SetNewDestination(Vector2Int gridPos)
+    { 
         _Path.Add(gridPos);
     }
 
@@ -110,12 +97,6 @@ public class Path : MonoBehaviour
         //  path tiles should be able to intersect each other, but not in the destination point
         //  for now, we are treating each tile as a destination in the code, so this might cause problems
 
-        return true;
-    }
-
-    public bool CanThisPlayerDraw()
-    {
-        //TODO if we have a single path per player per turn, check for that here
         return true;
     }
 
