@@ -121,6 +121,11 @@ public class Ninja : MonoBehaviour
 
     private void Update()
     {
+        if(!GetComponent<Movement>()._isMovingOneTile)
+        {
+            return;
+        }
+
         Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
         Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
 
@@ -141,12 +146,12 @@ public class Ninja : MonoBehaviour
         }
     }
 
-    private void HidePlayer()
+    public void HidePlayer()
     {
         ToogleMeshes(false);
     }
 
-    private void RevealPlayer()
+    public void RevealPlayer()
     {
         ToogleMeshes(true);
     }
