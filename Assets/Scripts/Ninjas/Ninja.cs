@@ -14,13 +14,15 @@ public class Ninja : MonoBehaviour
     public Action<bool> onUndoInput { private get; set; }
     public bool hasPath;
     public int ninjaIndex;
-
+    public bool IsNinjaAlive { get; private set; }
+    
     [SerializeField] private Animator _animatorController;
     [SerializeField] private GameObject _mesh;
     
     public void Init(NinjaTypeSO ninjaTypeSO)
     {
         NinjaType = ninjaTypeSO;
+        IsNinjaAlive = true;
     }
 
     public int GetPlayerIndex()
@@ -52,10 +54,10 @@ public class Ninja : MonoBehaviour
         onUndoInput?.Invoke(longUndo);
     }
 
-    public void StartMovePhase()
+    public void StartMovePhase(Action onCompleteCb)
     {
         Movement movement = gameObject.GetComponent<Movement>();
-        movement.StartMovePhase();
+        movement.StartMovePhase(onCompleteCb);
     }
 
     public void KillEnemy(Ninja otherNinja)
@@ -83,7 +85,9 @@ public class Ninja : MonoBehaviour
     {
         NinjaManager.Instance.TryRemoveNinja(GetPlayerIndex(),this);
         yield return new WaitForSeconds(2);
-        Destroy(gameObject);
+        
+        IsNinjaAlive = false;
+        _mesh.SetActive(IsNinjaAlive);
     }
 
     private IEnumerator WaitToStopAttack()
