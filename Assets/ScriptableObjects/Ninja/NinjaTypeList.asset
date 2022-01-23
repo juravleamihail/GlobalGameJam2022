@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15dda8b3c228e4e0393e2ca97405699e, type: 3}
+  m_Name: NinjaTypeList
+  m_EditorClassIdentifier: 
+  ninjaList:
+  - {fileID: 11400000, guid: 93f79cf77d4fe1c4aae933b96bc12454, type: 2}
+  - {fileID: 11400000, guid: bb9dbe619f8e054489cde5a00fe0e957, type: 2}

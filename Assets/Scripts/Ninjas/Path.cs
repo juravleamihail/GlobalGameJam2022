@@ -26,7 +26,7 @@ public class Path : MonoBehaviour
 
         _Path.Clear();
         Vector3 ninjaPos = transform.position;
-        Vector2Int currentTile = GameManager.Instance.ConvertVector3CoordsToGrid(ninjaPos.x, ninjaPos.y);
+        Vector2Int currentTile = GameManager.Instance.ConvertVector3CoordsToGrid(ninjaPos.x, ninjaPos.z);
         if (GameManager.Instance.IsOnGrid(currentTile))
         {
             _Path.Add(currentTile);

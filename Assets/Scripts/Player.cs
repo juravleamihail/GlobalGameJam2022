@@ -64,4 +64,10 @@ public class Player : PlayerInputHandler
         int playerIndex = PlayerType.PlayerIndex;
         NinjaManager.Instance.TryDrawPath(playerIndex, _selectedNinjaIndex, direction);
     }
+
+    public void DrawPathDebug(GridSystem.Directions direction)
+    {
+        int playerIndex = PlayerType.PlayerIndex;
+        NinjaManager.Instance.TryDrawPath(playerIndex, _selectedNinjaIndex, direction);
+    }
 }

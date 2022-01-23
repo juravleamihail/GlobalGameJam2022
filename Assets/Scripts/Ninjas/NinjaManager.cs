@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class NinjaManager : Singleton<NinjaManager>
 {
-    [SerializeField]private Transform p1NinjaPrefab;
-    [SerializeField]private Transform p2NinjaPrefab;
     [SerializeField]private Vector2Int[] p1NinjaSpawnPoints;
     [SerializeField]private Vector2Int[] p2NinjaSpawnPoints;
+    [SerializeField]private NinjaTypeListSO _ninjaTypeList;
 
     private Dictionary<int,List<Ninja>> allNinjas;
 
@@ -23,13 +22,14 @@ public class NinjaManager : Singleton<NinjaManager>
 
     private void Start()
     {
-        SpawnNinjasForPlayer(0, p1NinjaSpawnPoints, p1NinjaPrefab);
-        SpawnNinjasForPlayer(1, p2NinjaSpawnPoints, p2NinjaPrefab);
+        SpawnNinjasForPlayer(0, p1NinjaSpawnPoints);
+        SpawnNinjasForPlayer(1, p2NinjaSpawnPoints);
     }
 
-    internal void SpawnNinjasForPlayer(int playerIndex, Vector2Int[] spawnPoints, Transform prefab)
+    internal void SpawnNinjasForPlayer(int playerIndex, Vector2Int[] spawnPoints)
     {
         List<Ninja> ninjaList = new List<Ninja>();
+        Transform prefab = _ninjaTypeList.ninjaList[playerIndex].Prefab.transform;
 
         foreach (Vector2Int spawnPoint in spawnPoints)
         {
@@ -41,6 +41,7 @@ public class NinjaManager : Singleton<NinjaManager>
                 Debug.Log("Error: " + prefab + " ninja prefab needs to have Ninja script attached.");
                 return;
             }
+            ninja.NinjaType = _ninjaTypeList.ninjaList[playerIndex];
             ninjaList.Add(ninja);
         }
 

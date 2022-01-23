@@ -14,7 +14,7 @@ public class DrawPath : MonoBehaviour
     private void OnDrawInputReceived(GridSystem.Directions direction)
     {
         Path path = gameObject.GetComponent<Path>();
-        Vector2 currentDestination = path.GetDestination();
+        Vector2Int currentDestination = path.GetDestination();
 
         Vector2Int newDestination = GameManager.Instance.GetAdjacentTileOnGrid((uint)currentDestination.x, (uint)currentDestination.y, direction);
 
