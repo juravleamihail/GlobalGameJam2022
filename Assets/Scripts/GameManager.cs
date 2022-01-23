@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
     [Space(10), SerializeField] private GameSettingsSO _gameSettings;
     [Space(25), SerializeField] private MainMenu _mainMenuUI;
     [SerializeField] private Hud _hudUI;
+    [SerializeField] private GameObject _gameplayUI;
    
 	[SerializeField] CameraController _cameraController;
    
@@ -82,7 +83,8 @@ public class GameManager : Singleton<GameManager>
     private void ToggleUI(UIStates uiState)
     {
         _mainMenuUI.gameObject.SetActive(uiState == UIStates.MainMenu);
-        _hudUI.gameObject.SetActive(uiState == UIStates.Gameplay);
+        _gameplayUI.SetActive(uiState == UIStates.Gameplay);
+        //_hudUI.gameObject.SetActive(uiState == UIStates.Gameplay);
     }
 
     private enum UIStates{
@@ -98,7 +100,9 @@ public class GameManager : Singleton<GameManager>
     private void ToggleUI(EStates state)
     {
        _mainMenuUI.gameObject.SetActive(state == EStates.MainMenu);
-       _hudUI.gameObject.SetActive(state == EStates.Gameplay);
+        _gameplayUI.gameObject.SetActive(state == EStates.Gameplay);
+        UIManager.Instance.Init(state == EStates.Gameplay);
+        //_hudUI.gameObject.SetActive(state == EStates.Gameplay);
     }
 
     //Factory Pattern

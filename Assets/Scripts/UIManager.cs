@@ -25,6 +25,8 @@ public class UIManager : Singleton<UIManager>
     [Space(10), Header("Events")]
     [SerializeField] private UnityEvent onBackButton;
 
+    private bool isInit = false;
+
 
     public void DieCharacter(int player, int character)
     {
@@ -110,12 +112,17 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    private void Start()
+    public void Init(bool enable)
     {
-        //TODO: I will change it later this parameter
-        AddKillsIconsForPlayer1(5);
-        AddKillsIconsForPlayer2(5);
-        timer = gameSettings.Timer;
+        if(!isInit && enable)
+        {
+            //TODO: I will change it later this parameter
+            AddKillsIconsForPlayer1(5);
+            AddKillsIconsForPlayer2(5);
+            timer = gameSettings.Timer;
+
+            isInit = true;
+        }
     }
 
     public void OnBackButton()
