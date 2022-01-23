@@ -13,6 +13,7 @@ public class Ninja : MonoBehaviour
     public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
     public Action<bool> onUndoInput { private get; set; }
     public bool hasPath;
+    public int ninjaIndex;
 
     [SerializeField] private Animator _animatorController;
     [SerializeField] private GameObject _mesh;
@@ -62,6 +63,11 @@ public class Ninja : MonoBehaviour
         // Do some more stuff here (score)
         _animatorController.SetBool("isAttacking", true);
         otherNinja.Dead();
+
+        int playerIndex = NinjaType.PlayerIndex;
+        Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
+        player.IncrementKills();
+            
         StartCoroutine(WaitToStopAttack());
     }
 

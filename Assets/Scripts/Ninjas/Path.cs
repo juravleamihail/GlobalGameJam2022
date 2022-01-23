@@ -44,8 +44,19 @@ public class Path : MonoBehaviour
     }    
 
     public void SetNewDestination(Vector2Int gridPos)
-    { 
+    {
+        if (GameManager.Instance.invisiblePaths)
+        {
+            Vector2Int prevTile = GetDestination();
+            StartDisappearingTimer(prevTile);
+        }
         _Path.Add(gridPos);
+    }
+
+    public void StartDisappearingTimer(Vector2Int gridPos)
+    {
+        Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)gridPos.x, (uint)gridPos.y);
+        tileObject.GetComponent<Tile>().StartDisappearTimer();
     }
 
     public void RemoveLastTileFromPath()
@@ -64,6 +75,16 @@ public class Path : MonoBehaviour
 
         ApplyDefaultMaterial(_Path.Count-1);
         _Path.RemoveAt(_Path.Count - 1);
+
+        if (GameManager.Instance.invisiblePaths)
+        {
+            //restore feedback color to the new last-tile (if it's not the first one)
+            if (IsOnlyCurrentTile())
+            {
+                return;
+            }
+            PathDrawFeedback(GetDestination());
+        }
     }
     public void ApplyDefaultMaterial(int index)
     {
@@ -118,20 +139,28 @@ public class Path : MonoBehaviour
         }
 
         // 6. there is already another path of the same player with that destination
-        // if we will have multiple paths per player per turn:
-        //  not all path tiles are destination tiles
-        //  path tiles should be able to intersect each other, but not in the destination point
-        //  for now, we are treating each tile as a destination in the code, so this might cause problems
-
+        if (IsDestinationOfFriendlyNinja(destination))
+        {
+            return false;
+        }
+        
         //7. the tile is already part of this path
         if (_Path.Contains(destination))
         {
             return false;
         }
            
-
         return true;
     }
+
+    public bool IsDestinationOfFriendlyNinja(Vector2Int destination)
+    {
+        Ninja ninja = gameObject.GetComponent<Ninja>();
+        int playerIndex = ninja.GetPlayerIndex();
+        Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
+        int ninjaIndex = player.selectedNinjaIndex; //TODO implement and use ninja.ninjaIndex instead of this
+        return NinjaManager.Instance.IsDestinationOfFriendlyNinja(playerIndex, ninjaIndex, destination);
+    }    
 
     public void OnMovedOneTile()
     {

@@ -31,8 +31,9 @@ public class NinjaManager : Singleton<NinjaManager>
         List<Ninja> ninjaList = new List<Ninja>();
         Transform prefab = _ninjaTypeList.ninjaList[playerIndex].Prefab.transform;
 
-        foreach (Vector2Int spawnPoint in spawnPoints)
+        for (int i = 0; i<spawnPoints.Length; ++i)
         {
+            Vector2Int spawnPoint = spawnPoints[i];
             Vector3 spawnPointInWorld = GameManager.Instance.ConvertGridCoordsToVector3((uint)spawnPoint.x, (uint)spawnPoint.y);
             Transform ninjaTransform = Instantiate(prefab, spawnPointInWorld, prefab.transform.rotation);
             Ninja ninja = ninjaTransform.gameObject.GetComponent<Ninja>();
@@ -42,6 +43,7 @@ public class NinjaManager : Singleton<NinjaManager>
                 return;
             }
             ninja.NinjaType = _ninjaTypeList.ninjaList[playerIndex];
+            ninja.ninjaIndex = i;
             ninjaList.Add(ninja);
         }
 
@@ -179,6 +181,30 @@ public class NinjaManager : Singleton<NinjaManager>
         }
 
         return listOfNinjas;
+    }
+
+    public bool IsDestinationOfFriendlyNinja(int playerIndex, int ninjaIndex, Vector2Int destination)
+    {
+        List<Ninja> ninjaList = allNinjas[playerIndex];
+        for (int i = 0; i < ninjaList.Count; ++i)
+        {
+            if (i == ninjaIndex)
+            {
+                continue;
+            }
+
+            Ninja ninja = ninjaList[i];
+            {
+                //TODO obvious source of spaghetti code in this scope, should change
+                Path path = ninja.gameObject.GetComponent<Path>();
+                if (path.GetDestination() == destination)
+                {
+                    Debug.Log("Tile at " + destination.x + ", " + destination.y + " is the destination of friendly ninja.");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /*internal void AddNinja(int playerIndex)

@@ -42814,11 +42814,13 @@ MonoBehaviour:
   _gameSettings: {fileID: 11400000, guid: 3733eda3a425c471e8090792414d66ff, type: 2}
   _mainMenuUI: {fileID: 526011808}
   _hudUI: {fileID: 851547412}
+  _gameplayUI: {fileID: 0}
   _cameraController: {fileID: 0}
-  isUsingMovePoints: 1
+  isUsingMovePoints: 0
   isUsingMaxDistance: 0
   winByNrOfKills: 0
-  canMoveOnlyOneNinjaPerTurn: 1
+  canMoveOnlyOneNinjaPerTurn: 0
+  invisiblePaths: 0
   _movePoints: 3
   _maxDistance: 0
   _killsToWin: 0
