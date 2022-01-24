@@ -194,7 +194,7 @@ public class NinjaManager : Singleton<NinjaManager>
         {
             foreach (Ninja ninja in _allNinjas[i])
             {
-                if (ninja.GetGridPositionViaPath() == tileCoords)
+                if (ninja.IsNinjaAlive && ninja.GetGridPositionViaPath() == tileCoords)
                 {
                     return ninja;
                 }
@@ -258,5 +258,10 @@ public class NinjaManager : Singleton<NinjaManager>
         {
             ninja.AddToOnNinjaDeath(onNinjaDeath);
         }
+    }
+
+    public bool IsNinjaAlive(int playerID, int ninjaIndex)
+    {
+        return _allNinjas[playerID][ninjaIndex].IsNinjaAlive;
     }
 }

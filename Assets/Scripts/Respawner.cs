@@ -7,7 +7,6 @@ public class Respawner : MonoBehaviour
     Vector2Int[] respawnPoints;
     [SerializeField]private int _turnsDelay;
     private Dictionary<int,int> _turnsElapsedPerNinja;
-    private bool[] _areNinjasAlive; //TODO maybe avoid this extra caching; instead, use the Dictionary in NinjaManager and check Ninja.IsNinjaAlive
 
     //this is meant to be attached to the Player prefab
 
@@ -34,11 +33,6 @@ public class Respawner : MonoBehaviour
         respawnPoints = new Vector2Int[inRespawnPoints.Length];
         inRespawnPoints.CopyTo(respawnPoints, 0);
         _turnsElapsedPerNinja = new Dictionary<int, int>(3);
-        _areNinjasAlive = new bool[3];
-        for (int i=0; i<3; ++i)
-        {
-            _areNinjasAlive[i] = true;
-        }
         Player player = GetComponent<Player>();
         player.onEnterMoveState = OnTurnElapsed;
         NinjaManager.Instance.InitNinjasDeathAction(player.PlayerType.PlayerIndex, OnNinjaKilled);
@@ -46,9 +40,10 @@ public class Respawner : MonoBehaviour
 
     private void OnTurnElapsed()
     {
+        int playerId = GetComponent<Player>().PlayerType.PlayerIndex;
         for (int i = 0; i<3; ++i)
         {
-            if (!_areNinjasAlive[i])
+            if (!NinjaManager.Instance.IsNinjaAlive(playerId, i))
             {
                 ++_turnsElapsedPerNinja[i];
                 if (_turnsElapsedPerNinja[i]>=_turnsDelay)
@@ -64,7 +59,6 @@ public class Respawner : MonoBehaviour
     private void OnNinjaKilled(Ninja ninja)
     {
         int ninjaIndex = ninja.ninjaIndex;     
-        _areNinjasAlive[ninjaIndex] = false;
         if (_turnsDelay == 0)
         {
             RespawnNinja(ninja);
@@ -114,7 +108,6 @@ public class Respawner : MonoBehaviour
             ninja.RespawnAt(respawnPoint);
 
             _turnsElapsedPerNinja[ninjaIndex] = 0;
-            _areNinjasAlive[ninjaIndex] = true;
         }
         else
         {

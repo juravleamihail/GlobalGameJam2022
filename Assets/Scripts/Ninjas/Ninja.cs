@@ -96,10 +96,10 @@ public class Ninja : MonoBehaviour
         //Do some more stuff here (animations)
         UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
         Reveal();
-        StartCoroutine(WaitToSetNinjaDead());
+        StartCoroutine(WaitToSetupNinjaDead());
     }
 
-    private IEnumerator WaitToSetNinjaDead()
+    private IEnumerator WaitToSetupNinjaDead()
     {
         yield return new WaitForSeconds(2);
         SetupNinjaDead();
@@ -108,6 +108,7 @@ public class Ninja : MonoBehaviour
     private void SetupNinjaDead()
     {
         ChangeNinjaAliveStatus(false);
+        GetComponent<Path>().ClearPath();
         _onNinjaDeath?.Invoke(this);
     }
 
@@ -122,7 +123,6 @@ public class Ninja : MonoBehaviour
         _animatorController.SetBool("isDead", false);
         UIManager.Instance.RessurectCharacter(NinjaType.PlayerIndex, ninjaIndex);
 
-        GetComponent<Path>().ClearPath(); //TODO path should actually be cleared earlier, but where?
         GetComponent<Path>().Init();
 
         ChangeNinjaAliveStatus(true);
