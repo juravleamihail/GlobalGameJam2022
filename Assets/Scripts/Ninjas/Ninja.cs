@@ -102,7 +102,6 @@ public class Ninja : MonoBehaviour
 
     private IEnumerator WaitToDestroyGameObject()
     {
-        NinjaManager.Instance.TryRemoveNinja(GetPlayerIndex(),this);
         yield return new WaitForSeconds(2);
         SetNinjaAliveStatus(false);
     }

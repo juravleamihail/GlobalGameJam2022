@@ -226,10 +226,7 @@ public class NinjaManager : Singleton<NinjaManager>
     {
         return allNinjas.FindAll(ninja => ninja.NinjaType.PlayerIndex == playerIndex);
     }*/
-    public bool TryRemoveNinja(int playerId, Ninja ninja)
-    {
-        return _allNinjas[playerId].Remove(ninja);
-    }
+
     public void InitNinjasDeathAction(int playerId, UnityAction<Ninja> onNinjaDeath)
     {
         List <Ninja> ninjaList = GetAllNinjaForPlayer(playerId);

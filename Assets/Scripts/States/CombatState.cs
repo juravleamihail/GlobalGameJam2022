@@ -45,7 +45,8 @@ namespace States
             {
                 for (var j = 0; j < _player1Ninjas.Count; j++)
                 {
-                    if (_player0Ninjas[i].GetPositionOnGrid() == _player1Ninjas[j].GetPositionOnGrid())
+                    if (_player0Ninjas[i].IsNinjaAlive&& _player1Ninjas[j].IsNinjaAlive &&
+                        _player0Ninjas[i].GetPositionOnGrid() == _player1Ninjas[j].GetPositionOnGrid())
                     {
                         yield return TriggerCombatCoroutine(_player0Ninjas[i],_player1Ninjas[j]);
                     }
@@ -54,6 +55,7 @@ namespace States
 
             ComplateState();
         }
+        
         private IEnumerator TriggerCombatCoroutine(Ninja n1, Ninja n2)
         {
             var tilePos = n1.GetPositionOnGrid();
