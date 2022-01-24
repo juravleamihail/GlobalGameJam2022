@@ -50,8 +50,6 @@ public class Movement : MonoBehaviour
         //Vector3 pos = _nextTileWorldPosition;
         //pos.y = transform.position.y;
         //transform.LookAt(pos);
-        //this should work but for some reason it doesn't
-
     }
 
     private void Update()

@@ -2,14 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NinjaManager : Singleton<NinjaManager>
 {
-    [SerializeField]private Vector2Int[] p1NinjaSpawnPoints;
-    [SerializeField]private Vector2Int[] p2NinjaSpawnPoints;
+    [SerializeField]private Vector2Int[] _p1NinjaSpawnPoints;
+    [SerializeField]private Vector2Int[] _p2NinjaSpawnPoints;
     [SerializeField]private NinjaTypeListSO _ninjaTypeList;
 
     private Dictionary<int,List<Ninja>> allNinjas;
+
+    public Vector2Int[] p1NinjaSpawnPoints { get { return _p1NinjaSpawnPoints; } }
+    public Vector2Int[] p2NinjaSpawnPoints { get { return _p2NinjaSpawnPoints; } }
 
     public override void Awake()
     {
@@ -19,8 +23,8 @@ public class NinjaManager : Singleton<NinjaManager>
 
     private void Start()
     {
-        SpawnNinjasForPlayer(0, p1NinjaSpawnPoints);
-        SpawnNinjasForPlayer(1, p2NinjaSpawnPoints);
+        SpawnNinjasForPlayer(0, _p1NinjaSpawnPoints);
+        SpawnNinjasForPlayer(1, _p2NinjaSpawnPoints);
     }
 
     internal void SpawnNinjasForPlayer(int playerIndex, Vector2Int[] spawnPoints)
@@ -225,5 +229,13 @@ public class NinjaManager : Singleton<NinjaManager>
     public bool TryRemoveNinja(int playerId, Ninja ninja)
     {
         return allNinjas[playerId].Remove(ninja);
+    }
+    public void InitNinjasDeathAction(int playerId, UnityAction<Ninja> onNinjaDeath)
+    {
+        List <Ninja> ninjaList = GetAllNinjaForPlayer(playerId);
+        foreach (Ninja ninja in ninjaList)
+        {
+            ninja.AddToOnNinjaDeath(onNinjaDeath);
+        }
     }
 }

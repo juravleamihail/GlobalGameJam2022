@@ -15,6 +15,11 @@ namespace States
         {
             base.OnEnter();
             _remainingNinjasToMove = NinjaManager.Instance.StartMovePhase(OnMovementComplete);
+
+            Player player0 = PlayerManager.Instance.GetPlayerByIndex(0);
+            Player player1 = PlayerManager.Instance.GetPlayerByIndex(1);
+            player0.onEnterMoveState?.Invoke();
+            player1.onEnterMoveState?.Invoke();
         }
 
         private void OnMovementComplete()

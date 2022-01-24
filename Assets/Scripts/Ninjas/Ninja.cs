@@ -6,8 +6,9 @@ using UnityEngine.Events;
 
 public class Ninja : MonoBehaviour
 {
-    [SerializeField] private UnityAction _onPlayerDeath;
-        
+    //[SerializeField] private UnityAction _onNinjaDeath;
+    [SerializeField] private UnityAction<Ninja> _onNinjaDeath;
+
     public NinjaTypeSO NinjaType { get; set; }
 
     public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
@@ -91,7 +92,7 @@ public class Ninja : MonoBehaviour
 
     private void Dead()
     {
-        _onPlayerDeath?.Invoke();
+        _onNinjaDeath?.Invoke(this);
         _animatorController.SetBool("isDead", true);
         //Do some more stuff here (animations)
         UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
@@ -157,5 +158,10 @@ public class Ninja : MonoBehaviour
     {
         _mesh.SetActive(value);
         _katana.SetActive(value);
+    }
+
+    public void AddToOnNinjaDeath(UnityAction<Ninja> onNinjaDeath)
+    {
+        _onNinjaDeath += onNinjaDeath;
     }
 }
