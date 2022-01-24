@@ -53,7 +53,9 @@ public class Respawner : MonoBehaviour
                 ++_turnsElapsedPerNinja[i];
                 if (_turnsElapsedPerNinja[i]>=_turnsDelay)
                 {
-                    RespawnNinja(i);
+                    int playerIndex = GetComponent<Player>().PlayerType.PlayerIndex;
+                    Ninja ninja = NinjaManager.Instance.GetNinja(playerIndex, i);
+                    RespawnNinja(ninja);
                 }
             }
         }
@@ -65,7 +67,7 @@ public class Respawner : MonoBehaviour
         _areNinjasAlive[ninjaIndex] = false;
         if (_turnsDelay == 0)
         {
-            RespawnNinja(ninjaIndex);
+            RespawnNinja(ninja);
         }
     }
 
@@ -114,13 +116,15 @@ public class Respawner : MonoBehaviour
         return false;
     }
 
-    private void RespawnNinja(int ninjaIndex)
+    private void RespawnNinja(Ninja ninja)
     {
+        int ninjaIndex = ninja.ninjaIndex;
+        
         Vector2Int respawnPoint = new Vector2Int(0,0);
         if (GetAvailableRespawnPoint(out respawnPoint))
         {
-            //TODO do the actual respawn here
-            
+            ninja.RespawnAt(respawnPoint);
+
             _turnsElapsedPerNinja[ninjaIndex] = 0;
             _areNinjasAlive[ninjaIndex] = true;
         }

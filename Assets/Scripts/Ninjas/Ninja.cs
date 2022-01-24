@@ -16,16 +16,16 @@ public class Ninja : MonoBehaviour
 
     public int ninjaIndex;
     public bool IsNinjaAlive { get; private set; }
-    
+
     [SerializeField] private Animator _animatorController;
     [SerializeField] private GameObject _mesh;
     [SerializeField] private GameObject _katana;
-    
+
     public void Init(NinjaTypeSO ninjaTypeSO, int index)
     {
         NinjaType = ninjaTypeSO;
         ninjaIndex = index;
-        SetNinjaAliveStatus(true);
+        ChangeNinjaAliveStatus(true);
     }
 
     private void Start()
@@ -61,7 +61,7 @@ public class Ninja : MonoBehaviour
     }
 
     public void UndoDrawPath(bool longUndo)
-    {        
+    {
         if (!IsNinjaAlive)
         {
             return;
@@ -86,27 +86,49 @@ public class Ninja : MonoBehaviour
         player.IncrementKills();
 
         Reveal();
-            
+
         StartCoroutine(WaitToStopAttack());
     }
 
     private void Dead()
     {
-        _onNinjaDeath?.Invoke(this);
         _animatorController.SetBool("isDead", true);
         //Do some more stuff here (animations)
         UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
         Reveal();
-        StartCoroutine(WaitToDestroyGameObject());
+        StartCoroutine(WaitToSetNinjaDead());
     }
 
-    private IEnumerator WaitToDestroyGameObject()
+    private IEnumerator WaitToSetNinjaDead()
     {
         yield return new WaitForSeconds(2);
-        SetNinjaAliveStatus(false);
+        SetupNinjaDead();
     }
 
-    private void SetNinjaAliveStatus(bool value)
+    private void SetupNinjaDead()
+    {
+        ChangeNinjaAliveStatus(false);
+        _onNinjaDeath?.Invoke(this);
+    }
+
+    public void RespawnAt(Vector2Int respawnPoint)
+    {
+        Vector3 respawnWorldPosition = GameManager.Instance.ConvertGridCoordsToVector3((uint)respawnPoint.x, (uint)respawnPoint.y);
+        transform.position = respawnWorldPosition;
+
+        GameObject prefab = PlayerManager.Instance.GetPlayerByIndex(GetPlayerIndex()).PlayerType.Prefab;
+        transform.rotation = prefab.transform.rotation;
+
+        _animatorController.SetBool("isDead", false);
+        UIManager.Instance.RessurectCharacter(NinjaType.PlayerIndex, ninjaIndex);
+
+        GetComponent<Path>().ClearPath(); //TODO path should actually be cleared earlier, but where?
+        GetComponent<Path>().Init();
+
+        ChangeNinjaAliveStatus(true);
+    }
+    
+    private void ChangeNinjaAliveStatus(bool value)
     {
         IsNinjaAlive = value;
         ToogleMeshes(IsNinjaAlive);

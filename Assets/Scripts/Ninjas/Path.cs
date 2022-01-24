@@ -10,22 +10,22 @@ public class Path : MonoBehaviour
     private void Start()
     {
         _Path = new List<Vector2Int>();
-        ResetPath();
+        Init();
     }
 
-    private void ResetPath()
+    public void Init()
     {
-        //this is semi-obsolete with this name
-        //either use it for resetting the path
-        //or remove the Clear() and rename it to Init()
-
-        _Path.Clear();
         Vector3 ninjaPos = transform.position;
         Vector2Int currentTile = GameManager.Instance.ConvertVector3CoordsToGrid(ninjaPos.x, ninjaPos.z);
         if (GameManager.Instance.IsOnGrid(currentTile))
         {
             _Path.Add(currentTile);
         }
+    }
+
+    public void ClearPath()
+    {
+        _Path.Clear();
     }
 
     public Vector2Int GetDestination()

@@ -185,6 +185,11 @@ public class NinjaManager : Singleton<NinjaManager>
         return listOfNinjas;
     }
 
+    public Ninja GetNinja(int playerID, int ninjaIndex)
+    {
+        return _allNinjas[playerID][ninjaIndex];
+    }
+
     public bool IsDestinationOfFriendlyNinja(int playerIndex, int ninjaIndex, Vector2Int destination)
     {
         List<Ninja> ninjaList = _allNinjas[playerIndex];
