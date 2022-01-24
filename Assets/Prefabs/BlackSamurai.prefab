@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distTolerance: 0.1
-  _moveSpeed: 3
+  _moveSpeed: 4
   _animatorController: {fileID: 8267923001077502313}
 --- !u!1 &8963249027291672191
 GameObject:

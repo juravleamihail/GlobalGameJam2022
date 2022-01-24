@@ -47,10 +47,11 @@ public class Movement : MonoBehaviour
 
         Vector2Int nextTileOnGrid = pathComponent.GetNextTile();
         _nextTileWorldPosition = GameManager.Instance.ConvertGridCoordsToVector3((uint)nextTileOnGrid.x, (uint)nextTileOnGrid.y);
-
-        //Vector3 pos = _nextTileWorldPosition;
-        //pos.y = transform.position.y;
-        //transform.LookAt(pos);
+        
+        //Rotate to object
+        Vector3 pos = _nextTileWorldPosition;
+        pos.y = transform.position.y;
+        transform.LookAt(pos);
     }
 
     private void Update()
@@ -86,8 +87,9 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            Vector3 direction = Vector3.Normalize(nextTileVector);
-            transform.Translate(direction * _moveSpeed * Time.deltaTime);
+           // Vector3 direction = Vector3.Normalize(nextTileVector);
+           //   transform.Translate(direction * _moveSpeed * Time.deltaTime);
+           transform.position = Vector3.MoveTowards(transform.position, _nextTileWorldPosition, _moveSpeed * Time.deltaTime);
         }
     }
 
