@@ -131,9 +131,8 @@ public class UIManager : Singleton<UIManager>
     {
         if(!isInit && enable)
         {
-            //TODO: I will change it later this parameter
-            AddKillsIconsForPlayer1(5);
-            AddKillsIconsForPlayer2(5);
+            AddKillsIconsForPlayer1(GameManager.Instance.killsToWin);
+            AddKillsIconsForPlayer2(GameManager.Instance.killsToWin);
             
             isInit = true;
         }
