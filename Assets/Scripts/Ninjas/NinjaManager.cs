@@ -10,7 +10,7 @@ public class NinjaManager : Singleton<NinjaManager>
     [SerializeField]private Vector2Int[] _p2NinjaSpawnPoints;
     [SerializeField]private NinjaTypeListSO _ninjaTypeList;
 
-    private Dictionary<int,List<Ninja>> allNinjas;
+    private Dictionary<int, List<Ninja>> _allNinjas;
 
     public Vector2Int[] p1NinjaSpawnPoints { get { return _p1NinjaSpawnPoints; } }
     public Vector2Int[] p2NinjaSpawnPoints { get { return _p2NinjaSpawnPoints; } }
@@ -18,7 +18,7 @@ public class NinjaManager : Singleton<NinjaManager>
     public override void Awake()
     {
         base.Awake();
-        allNinjas = new Dictionary<int, List<Ninja>>();
+        _allNinjas = new Dictionary<int, List<Ninja>>();
     }
 
     private void Start()
@@ -47,7 +47,7 @@ public class NinjaManager : Singleton<NinjaManager>
             ninjaList.Add(ninja);
         }
 
-        allNinjas.Add(playerIndex, ninjaList);
+        _allNinjas.Add(playerIndex, ninjaList);
     }
 
     public void TryDrawPath(int playerIndex, int ninjaIndex, GridSystem.Directions direction)
@@ -58,7 +58,7 @@ public class NinjaManager : Singleton<NinjaManager>
             return;
         }
 
-        Ninja ninja = allNinjas[playerIndex][ninjaIndex];
+        Ninja ninja = _allNinjas[playerIndex][ninjaIndex];
         ninja.TryDrawPath(direction);
     }
 
@@ -77,7 +77,7 @@ public class NinjaManager : Singleton<NinjaManager>
             }
         }
 
-        Ninja ninja = allNinjas[playerIndex][ninjaIndex];
+        Ninja ninja = _allNinjas[playerIndex][ninjaIndex];
         ninja.UndoDrawPath(longUndo);
     }
 
@@ -93,7 +93,7 @@ public class NinjaManager : Singleton<NinjaManager>
 
     private bool IsAnotherNinjaDrawing(int playerIndex, int ninjaIndex)
     {
-        List<Ninja> ninjaList = allNinjas[playerIndex];
+        List<Ninja> ninjaList = _allNinjas[playerIndex];
         for (int i = 0; i < ninjaList.Count; ++i)
         {
             if (i == ninjaIndex)
@@ -102,7 +102,7 @@ public class NinjaManager : Singleton<NinjaManager>
             }
 
             Ninja ninja = ninjaList[i];
-            if (ninja.hasPath)
+           if (ninja.IsDrawing())
             {
                 return true;
             }
@@ -112,7 +112,7 @@ public class NinjaManager : Singleton<NinjaManager>
 
     private bool IsAnotherNinjaDrawing(int playerIndex, int ninjaIndex, out int foundNinjaIndex)
     {
-        List<Ninja> ninjaList = allNinjas[playerIndex];
+        List<Ninja> ninjaList = _allNinjas[playerIndex];
         for (int i = 0; i < ninjaList.Count; ++i)
         {
             if (i == ninjaIndex)
@@ -121,7 +121,7 @@ public class NinjaManager : Singleton<NinjaManager>
             }
 
             Ninja ninja = ninjaList[i];
-            if (ninja.hasPath)
+            if (ninja.IsDrawing())
             {
                 foundNinjaIndex = i;
                 return true;
@@ -133,8 +133,8 @@ public class NinjaManager : Singleton<NinjaManager>
 
     public int StartMovePhase(Action onCompleteCb)
     {
-        List<Ninja> ninjaList = new List<Ninja>(allNinjas[0]);
-        ninjaList.AddRange(allNinjas[1]);
+        List<Ninja> ninjaList = new List<Ninja>(_allNinjas[0]);
+        ninjaList.AddRange(_allNinjas[1]);
         foreach (Ninja ninja in ninjaList)
         {
             ninja.StartMovePhase(onCompleteCb);
@@ -162,7 +162,7 @@ public class NinjaManager : Singleton<NinjaManager>
     private bool IsNinjaOfPlayer(int playerIndex, Vector2Int tileCoords)
     {
         List<Ninja> ninjaList;
-        ninjaList = allNinjas[playerIndex];
+        ninjaList = _allNinjas[playerIndex];
         foreach (Ninja ninja in ninjaList)
         {
             Vector3 pos = ninja.transform.position;
@@ -177,7 +177,7 @@ public class NinjaManager : Singleton<NinjaManager>
 
     internal List<Ninja> GetAllNinjaForPlayer(int playerID)
     {
-        if(!allNinjas.TryGetValue(playerID, out var listOfNinjas))
+        if(!_allNinjas.TryGetValue(playerID, out var listOfNinjas))
         {
             return null;
         }
@@ -187,7 +187,7 @@ public class NinjaManager : Singleton<NinjaManager>
 
     public bool IsDestinationOfFriendlyNinja(int playerIndex, int ninjaIndex, Vector2Int destination)
     {
-        List<Ninja> ninjaList = allNinjas[playerIndex];
+        List<Ninja> ninjaList = _allNinjas[playerIndex];
         for (int i = 0; i < ninjaList.Count; ++i)
         {
             if (i == ninjaIndex)
@@ -228,7 +228,7 @@ public class NinjaManager : Singleton<NinjaManager>
     }*/
     public bool TryRemoveNinja(int playerId, Ninja ninja)
     {
-        return allNinjas[playerId].Remove(ninja);
+        return _allNinjas[playerId].Remove(ninja);
     }
     public void InitNinjasDeathAction(int playerId, UnityAction<Ninja> onNinjaDeath)
     {

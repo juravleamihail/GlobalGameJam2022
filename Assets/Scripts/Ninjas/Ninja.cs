@@ -13,7 +13,7 @@ public class Ninja : MonoBehaviour
 
     public Action<GridSystem.Directions> onDrawPathInput { private get; set; }
     public Action<bool> onUndoInput { private get; set; }
-    public bool hasPath;
+
     public int ninjaIndex;
     public bool IsNinjaAlive { get; private set; }
     
@@ -163,5 +163,21 @@ public class Ninja : MonoBehaviour
     public void AddToOnNinjaDeath(UnityAction<Ninja> onNinjaDeath)
     {
         _onNinjaDeath += onNinjaDeath;
+    }
+
+    public bool IsDrawing()
+    {
+        Path path = GetComponent<Path>();
+        return path.IsOnlyCurrentTile();
+    }
+
+    public Vector2Int GetPathOrigin()
+    {
+        //this is called GetPathOrigin and not GetNinjaLocation because
+        //during the move phase, while moving between tiles,
+        //the logical first element of the path may not always reflect where the ninja appears to be
+
+        Path path = GetComponent<Path>();
+        return path.GetOrigin();
     }
 }

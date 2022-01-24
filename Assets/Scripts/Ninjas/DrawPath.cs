@@ -12,12 +12,6 @@ public class DrawPath : MonoBehaviour
         ninja.onUndoInput = OnUndoInputReceived;
     }
 
-    private void SetNinjaHasPath(bool inHasPath)
-    {
-        Ninja ninja = gameObject.GetComponent<Ninja>();
-        ninja.hasPath = inHasPath;
-    }
-
     private void OnDrawInputReceived(GridSystem.Directions direction)
     {
         Path path = gameObject.GetComponent<Path>();
@@ -33,7 +27,6 @@ public class DrawPath : MonoBehaviour
 
         path.SetNewDestination(newDestination);
         path.PathDrawFeedback(newDestination);
-        SetNinjaHasPath(true);
     }
 
     private void OnUndoInputReceived(bool longUndo)

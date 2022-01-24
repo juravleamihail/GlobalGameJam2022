@@ -183,4 +183,9 @@ public class Path : MonoBehaviour
 
         //TODO maybe add audio feedback
     }
+
+    public Vector2Int GetOrigin()
+    {
+        return _Path[0];
+    }
 }

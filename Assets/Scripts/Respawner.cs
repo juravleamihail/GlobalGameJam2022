@@ -99,7 +99,18 @@ public class Respawner : MonoBehaviour
 
     private bool IsTileOccupied(Vector2Int gridCoords)
     {
-        
+        List<Ninja> allNinjas = new List<Ninja>();
+        allNinjas.AddRange(NinjaManager.Instance.GetAllNinjaForPlayer(0));
+        allNinjas.AddRange(NinjaManager.Instance.GetAllNinjaForPlayer(1));
+
+        foreach (Ninja ninja in allNinjas)
+        {
+            if  (ninja.GetPathOrigin() == gridCoords)
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
