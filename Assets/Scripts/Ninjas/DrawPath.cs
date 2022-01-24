@@ -53,11 +53,6 @@ public class DrawPath : MonoBehaviour
         }
 
         path.RemoveLastTileFromPath();
-        
-        if (path.IsOnlyCurrentTile())
-        {
-            SetNinjaHasPath(false);
-        }
     }
 
     public void UndoFullPath()
@@ -67,6 +62,5 @@ public class DrawPath : MonoBehaviour
         {
             path.RemoveLastTileFromPath();
         }
-        SetNinjaHasPath(false);
     }
 }
