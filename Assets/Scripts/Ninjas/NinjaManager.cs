@@ -32,11 +32,14 @@ public class NinjaManager : Singleton<NinjaManager>
         List<Ninja> ninjaList = new List<Ninja>();
         Transform prefab = _ninjaTypeList.ninjaList[playerIndex].Prefab.transform;
 
+        var gm = GameManager.Instance;
+        
         for (int i = 0; i<spawnPoints.Length; ++i)
         {
             Vector2Int spawnPoint = spawnPoints[i];
-            Vector3 spawnPointInWorld = GameManager.Instance.ConvertGridCoordsToVector3((uint)spawnPoint.x, (uint)spawnPoint.y);
+            Vector3 spawnPointInWorld = gm.ConvertGridCoordsToVector3((uint)spawnPoint.x, (uint)spawnPoint.y);
             Transform ninjaTransform = Instantiate(prefab, spawnPointInWorld, prefab.transform.rotation);
+            ninjaTransform.LookAt(new Vector3(gm.GetGridSize/2,0,gm.GetGridSize/2));
             Ninja ninja = ninjaTransform.gameObject.GetComponent<Ninja>();
             if (ninja == null)
             {

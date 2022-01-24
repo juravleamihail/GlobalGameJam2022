@@ -37,6 +37,7 @@ public class GameManager : Singleton<GameManager>
     //use these constants to signal exceptions; negative values for positions should not be used anywhere in the game
     public Vector3 vector3Exception { get; } = new Vector3(-100f, -100f, -100f);
     public Vector2Int vector2IntException { get; } = new Vector2Int(-1, -1);
+    public float GetGridSize => _gameSettings.GridSize;
 
     public override void Awake()
     {
