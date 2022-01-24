@@ -38,7 +38,7 @@ public class Ninja : MonoBehaviour
         return NinjaType.PlayerIndex;
     }
 
-    public Vector2Int GetPositionOnGrid()
+    public Vector2Int GetGridPositionViaTransform()
     {
         //TODO is this method ever used? if not, delete it
         Vector3 position = transform.position;
@@ -192,9 +192,9 @@ public class Ninja : MonoBehaviour
         return path.IsOnlyCurrentTile();
     }
 
-    public Vector2Int GetPathOrigin()
+    public Vector2Int GetGridPositionViaPath()
     {
-        //this is called GetPathOrigin and not GetNinjaLocation because
+        //this is called GetPositionViaPath() and not GetNinjaLocation because
         //during the move phase, while moving between tiles,
         //the logical first element of the path may not always reflect where the ninja appears to be
 

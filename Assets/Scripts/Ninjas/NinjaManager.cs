@@ -188,6 +188,22 @@ public class NinjaManager : Singleton<NinjaManager>
         return listOfNinjas;
     }
 
+    public Ninja GetNinjaOnTile(Vector2Int tileCoords)
+    {
+        for (int i=0; i<2; ++i)
+        {
+            foreach (Ninja ninja in _allNinjas[i])
+            {
+                if (ninja.GetGridPositionViaPath() == tileCoords)
+                {
+                    return ninja;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public Ninja GetNinja(int playerID, int ninjaIndex)
     {
         return _allNinjas[playerID][ninjaIndex];
