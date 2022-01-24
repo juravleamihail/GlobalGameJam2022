@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace States
 {
@@ -29,13 +31,19 @@ namespace States
             {
                 return;
             }
-            
+
             Wait();
         }
         
-        private async Task Wait() 
+        private async void Wait()
         {
-            await Task.Delay(2000);
+            float delay = 3;
+            while (delay > 0)
+            {
+                delay -= Time.deltaTime;
+                Task.Yield();
+            }
+
             ComplateState();
         }
     }

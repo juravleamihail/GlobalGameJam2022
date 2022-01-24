@@ -40,6 +40,7 @@ public class Movement : MonoBehaviour
         if (pathComponent.IsOnlyCurrentTile())
         {
             shouldMoveOneTile = false;
+            _onCompleteCb?.Invoke();
             return;
         }
         shouldMoveOneTile = true;
@@ -81,7 +82,6 @@ public class Movement : MonoBehaviour
                 SetupMovementToNextTile(out _isMovingOneTile);
                 _isMovePhaseForNinja = _isMovingOneTile;
                 _animatorController.SetBool("isMoving", _isMovePhaseForNinja);
-                _onCompleteCb?.Invoke();
             }
         }
         else

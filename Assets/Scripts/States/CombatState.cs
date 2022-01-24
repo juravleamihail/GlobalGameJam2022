@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,7 +11,6 @@ namespace States
     public class CombatState : StateBase
     {
         private NinjaManager _nm;
-        private GameManager _gm;
 
         private List<Ninja> _player0Ninjas;
         private List<Ninja> _player1Ninjas;
@@ -19,7 +19,6 @@ namespace States
         {
             _onCombatCameraChangePos = onCombatCameraChangePos;
             _nm = NinjaManager.Instance;
-            _gm = GameManager.Instance;
         }
 
         public override void OnEnter()
@@ -31,7 +30,7 @@ namespace States
         private void Init()
         {
             TryGetPlayers();
-            _gm.StartCoroutine(TryTriggerCombat());
+            GameManager.Instance.StartCoroutine(TryTriggerCombat());
         }
 
         private void TryGetPlayers()
@@ -49,7 +48,6 @@ namespace States
                     if (_player0Ninjas[i].GetPositionOnGrid() == _player1Ninjas[j].GetPositionOnGrid())
                     {
                         yield return TriggerCombatCoroutine(_player0Ninjas[i],_player1Ninjas[j]);
-                        yield break;
                     }
                 }
             }
@@ -59,7 +57,7 @@ namespace States
         private IEnumerator TriggerCombatCoroutine(Ninja n1, Ninja n2)
         {
             var tilePos = n1.GetPositionOnGrid();
-            var transform = _gm.GetTileObjectAt((uint)tilePos.x, (uint)tilePos.y);
+            var transform = GameManager.Instance.GetTileObjectAt((uint)tilePos.x, (uint)tilePos.y);
             _onCombatCameraChangePos?.Invoke(transform.position);
 
             var res = _setCameras?.Invoke(_state);
@@ -68,7 +66,11 @@ namespace States
             n1.Reveal();
             n2.Reveal();
 
-            yield return new WaitForSeconds(transitionTimer);
+            while (transitionTimer > 0)
+            {
+                transitionTimer -= Time.deltaTime;
+                yield return null;
+            }
 
             var ph = transform.gameObject.GetComponent<TileToPlayerConnection>();
             
@@ -82,10 +84,12 @@ namespace States
             }
 
             //should wait for animations and everything else
-            yield return new WaitForSeconds(3f);
-            
-            
-            Init();
+            float delayTimer = 3;
+            while (delayTimer > 0)
+            {
+                delayTimer -= Time.deltaTime;
+                yield return null;
+            }
         }
 
         public class Vector2IntComparer : IEqualityComparer<Vector2Int>{

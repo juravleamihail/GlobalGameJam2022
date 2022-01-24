@@ -11,8 +11,12 @@ public class Respawner : MonoBehaviour
 
     //this is meant to be attached to the Player prefab
 
-    private void Start()
+    private IEnumerator Start()
     {
+        //wait a frame since the ninjas are not initialized;
+        //need to find a different solution
+        yield return null;
+        
         Player player = GetComponent<Player>();
         int playerIndex = player.PlayerType.PlayerIndex;
         if (playerIndex == 0)
