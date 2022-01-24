@@ -133,7 +133,10 @@ public class UIManager : Singleton<UIManager>
         {
             AddKillsIconsForPlayer1(GameManager.Instance.killsToWin);
             AddKillsIconsForPlayer2(GameManager.Instance.killsToWin);
-            
+
+            SelectCharacter(0, 0);
+            SelectCharacter(1, 0);
+
             isInit = true;
         }
     }
