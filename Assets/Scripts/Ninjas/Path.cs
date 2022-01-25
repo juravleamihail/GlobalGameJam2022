@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Path : MonoBehaviour
 {
     //this script is meant to be placed on each ninja
+    public Action onClearPath;
+    public Action onInitPath;
 
     private List<Vector2Int> _Path;
 
@@ -21,11 +24,19 @@ public class Path : MonoBehaviour
         {
             _Path.Add(currentTile);
         }
+        onInitPath?.Invoke();
     }
 
     public void ClearPath()
     {
         _Path.Clear();
+
+        for (int i = 0; i<_Path.Count; ++i)
+        {
+            ApplyDefaultMaterial(i);
+        }
+
+        onClearPath?.Invoke();
     }
 
     public Vector2Int GetDestination()

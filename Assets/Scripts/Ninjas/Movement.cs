@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
 {
     //this script is meant to be placed on each ninja
 
-    protected Vector3 _nextTileWorldPosition;
+    protected Vector3 _nextTileWorldPosition; //TODO find a way to avoid this caching
     protected bool _isMovingOneTile = false;
     protected bool _isMovePhaseForNinja = false;
     private Action _onCompleteCb;
@@ -16,9 +16,22 @@ public class Movement : MonoBehaviour
     [SerializeField]float _moveSpeed;
     [SerializeField] private Animator _animatorController;
 
-    private void Start()
+    private void Awake()
     {
+        GetComponent<Path>().onClearPath = OnClearPath;
+        GetComponent<Path>().onInitPath = OnInitPath;
+    }
+    private void OnClearPath()
+    {
+        //TODO restore all tiles in path to their original colors
+    }
+
+    private void OnInitPath()
+    {
+        //a lot of potential instability due to these caches, find ways to avoid the need for them
         _nextTileWorldPosition = transform.position;
+        _isMovingOneTile = false;
+        _isMovePhaseForNinja = false;
     }
 
     public void StartMovePhase(Action onCompleteCb)
