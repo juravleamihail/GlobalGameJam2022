@@ -22,11 +22,11 @@ public class GridSystem
 
     public enum Directions
     {
-        None,
         Up,
+        Right,
         Down,
         Left,
-        Right
+        None
     }
 
     public void InitGameObjectConnection(GameObject gridContainer)
@@ -212,5 +212,42 @@ public class GridSystem
             return false;
         }
         return true;
+    }
+
+    //gets a grid direction relative to a given vector (meant to be used with a ninja's transform.forward)
+    public Directions GetRelativeDirection(GridSystem.Directions inDirection, Vector3 inVector)
+    {
+        //we will need the angle between the Up position in the grid and the vector
+        //we will assume that the map is placed correctly and that GridSystem.Directions.Up corresponds with Vector3.forward
+        Vector3 gridUp = Vector3.forward;
+        float dotProduct = Vector3.Dot(inVector, gridUp);
+        float cos = dotProduct / (inVector.magnitude * gridUp.magnitude);
+        float angleInRadians = Mathf.Acos(cos);
+
+        if (Mathf.Approximately(angleInRadians, 0f))
+        {
+            return inDirection;
+        }
+        if (Mathf.Approximately(angleInRadians, Mathf.PI / 2))
+        {
+            return AddAngleToDirection(inDirection, 1);
+        }
+        if (Mathf.Approximately(angleInRadians, Mathf.PI))
+        {
+            return AddAngleToDirection(inDirection, 2);
+        }
+        if (Mathf.Approximately(angleInRadians, 3 * Mathf.PI / 2))
+        {
+            return AddAngleToDirection(inDirection, 3);
+        }
+        Debug.Log("Angle should be a multiple of 90 degrees.");
+        return Directions.None; //this should signal an exception somewhere
+    }
+
+    //this adds an angle to the direction; the angle must be a 90 degrees * the multiplier that is the second parameter
+    private Directions AddAngleToDirection(Directions inDirection, int ninetyDegreeAngleMultipler)
+    {
+        int result = ((int)inDirection + ninetyDegreeAngleMultipler) % 4; //there are four directions starting at 0, so a result of 4 should cycle back to 0
+        return (Directions)result;
     }
 }

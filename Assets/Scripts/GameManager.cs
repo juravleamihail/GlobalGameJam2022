@@ -24,6 +24,11 @@ public class GameManager : Singleton<GameManager>
     public bool invisiblePaths;
     public bool canPathIntersectItself;
 
+    public bool useRelativeDirections;
+
+    [SerializeField]private float _respawnDelayInTurns;
+    public float respawnDelayInTurns { get { return _respawnDelayInTurns; } }
+
     [SerializeField] private uint _movePoints;
     public uint movePoints { get { return _movePoints; } }
     [SerializeField] private uint _maxDistance;
@@ -200,9 +205,14 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.ShowWinScreen(playerIndex);
     }
 
-
     public float GetTileSize()
     {
         return _grid.TileSize;
+    }
+
+    //gets a grid direction relative to a given vector (meant to be used with a ninja's transform.forward)
+    public GridSystem.Directions GetRelativeDirection(GridSystem.Directions inDirection, Vector3 inVector)
+    {
+        return _grid.GetRelativeDirection(inDirection, inVector);
     }
 }

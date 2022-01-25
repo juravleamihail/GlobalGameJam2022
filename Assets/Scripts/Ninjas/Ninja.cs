@@ -33,6 +33,11 @@ public class Ninja : MonoBehaviour
         //HidePlayer();
     }
 
+    public Vector3 GetMeshForwardVector()
+    {
+        return _mesh.transform.forward;
+    }
+
     public int GetPlayerIndex()
     {
         return NinjaType.PlayerIndex;
@@ -179,7 +184,7 @@ public class Ninja : MonoBehaviour
     {
         _mesh.SetActive(value);
         _katana.SetActive(value);
-    }
+    }  
 
     public void AddToOnNinjaDeath(UnityAction<Ninja> onNinjaDeath)
     {

@@ -12,8 +12,16 @@ public class DrawPath : MonoBehaviour
         ninja.onUndoInput = OnUndoInputReceived;
     }
 
-    private void OnDrawInputReceived(GridSystem.Directions direction)
+    private void OnDrawInputReceived(GridSystem.Directions keyboardDirection)
     {
+        GridSystem.Directions direction = keyboardDirection;
+
+        if (GameManager.Instance.useRelativeDirections)
+        {
+            //TODO make this actually work, then uncomment it:
+            //direction = GameManager.Instance.GetRelativeDirection(keyboardDirection, GetComponent<Ninja>().GetMeshForwardVector());
+        }
+       
         Path path = gameObject.GetComponent<Path>();
         Vector2Int currentDestination = path.GetDestination();
 

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Respawner : MonoBehaviour
 {
     Vector2Int[] respawnPoints;
-    [SerializeField]private int _turnsDelay;
     private Dictionary<int,int> _turnsElapsedPerNinja;
 
     //this is meant to be attached to the Player prefab
@@ -32,7 +31,10 @@ public class Respawner : MonoBehaviour
     {
         respawnPoints = new Vector2Int[inRespawnPoints.Length];
         inRespawnPoints.CopyTo(respawnPoints, 0);
-        _turnsElapsedPerNinja = new Dictionary<int, int>(3);
+        _turnsElapsedPerNinja = new Dictionary<int, int>(3)
+        {
+            { 0, 0 }, {1, 0}, {2, 0}
+        };
         Player player = GetComponent<Player>();
         player.onEnterMoveState = OnTurnElapsed;
         NinjaManager.Instance.InitNinjasDeathAction(player.PlayerType.PlayerIndex, OnNinjaKilled);
@@ -46,7 +48,7 @@ public class Respawner : MonoBehaviour
             if (!NinjaManager.Instance.IsNinjaAlive(playerId, i))
             {
                 ++_turnsElapsedPerNinja[i];
-                if (_turnsElapsedPerNinja[i]>=_turnsDelay)
+                if (_turnsElapsedPerNinja[i]>=GameManager.Instance.respawnDelayInTurns)
                 {
                     int playerIndex = GetComponent<Player>().PlayerType.PlayerIndex;
                     Ninja ninja = NinjaManager.Instance.GetNinja(playerIndex, i);
@@ -57,9 +59,8 @@ public class Respawner : MonoBehaviour
     }
 
     private void OnNinjaKilled(Ninja ninja)
-    {
-        int ninjaIndex = ninja.ninjaIndex;     
-        if (_turnsDelay == 0)
+    {    
+        if (GameManager.Instance.respawnDelayInTurns == 0)
         {
             RespawnNinja(ninja);
         }
