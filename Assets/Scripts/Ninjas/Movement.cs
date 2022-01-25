@@ -56,6 +56,12 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
+        if (!GetComponent<Ninja>().IsNinjaAlive)
+        {
+            return;
+        }    
+
+        
         if (!_isMovePhaseForNinja)
         {
             return;
