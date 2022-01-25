@@ -38,11 +38,14 @@ public class NinjaManager : Singleton<NinjaManager>
         {
             Vector2Int spawnPoint = spawnPoints[i];
             Vector3 spawnPointInWorld = gm.ConvertGridCoordsToVector3((uint)spawnPoint.x, (uint)spawnPoint.y);
-
-            prefab.LookAt(new Vector3(gm.GetGridSize / 2, 0, gm.GetGridSize / 2));
-            Vector3 rotation = prefab.transform.rotation.eulerAngles;
-            if (GameManager.Instance.useRelativeDirections)
+            Transform ninjaTransform = Instantiate(prefab, spawnPointInWorld, prefab.rotation);
+            if (!GameManager.Instance.useRelativeDirections)
             {
+                ninjaTransform.LookAt(new Vector3(gm.GetGridSize / 2, 0, gm.GetGridSize / 2));
+            }
+            else
+            {
+                Vector3 rotation = ninjaTransform.rotation.eulerAngles;
                 switch (playerIndex)
                 {
                     case 0:
@@ -55,9 +58,8 @@ public class NinjaManager : Singleton<NinjaManager>
                         Debug.Log("PlayerIndex should be 0 or 1");
                         return;
                 }
+                ninjaTransform.rotation = Quaternion.Euler(rotation);
             }
-
-            Transform ninjaTransform = Instantiate(prefab, spawnPointInWorld, Quaternion.Euler(rotation));
             Ninja ninja = ninjaTransform.gameObject.GetComponent<Ninja>();
             if (ninja == null)
             {
