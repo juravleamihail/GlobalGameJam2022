@@ -122,14 +122,13 @@ public class Ninja : MonoBehaviour
         Vector3 respawnWorldPosition = GameManager.Instance.ConvertGridCoordsToVector3((uint)respawnPoint.x, (uint)respawnPoint.y);
         transform.position = respawnWorldPosition;
 
-        GameObject prefab = PlayerManager.Instance.GetPlayerByIndex(GetPlayerIndex()).PlayerType.Prefab;
-        transform.rotation = prefab.transform.rotation;
+        transform.LookAt(new Vector3(GameManager.Instance.GetGridSize / 2, 0, GameManager.Instance.GetGridSize / 2));
 
         _animatorController.SetBool("isDead", false);
         UIManager.Instance.RessurectCharacter(NinjaType.PlayerIndex, ninjaIndex);
 
         GetComponent<Path>().Init();
-
+        
         ChangeNinjaAliveStatus(true);
     }
     
