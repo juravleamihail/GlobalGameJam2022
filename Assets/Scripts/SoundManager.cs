@@ -12,6 +12,9 @@ public class SoundManager : Singleton<SoundManager>
             
         [SerializeField] private AudioSource _musicAudioSource;
         [SerializeField] private List<string> _bgMusicNames;
+        [SerializeField] private AudioSource _soundAudioSource;
+        [SerializeField] private AudioClip[] _swordKillSounds;
+        [SerializeField] private AudioClip _winSound;
         public override void Awake()
         {
             base.Awake();
@@ -76,4 +79,17 @@ public class SoundManager : Singleton<SoundManager>
             
             EditorUtility.SetDirty(this);
         }
+
+        public void PlayRandomSwordKillSound(AudioSource playerAudioSource)
+        {
+            int randomSound = Random.Range(0, _swordKillSounds.Length-1);
+        playerAudioSource.clip = _swordKillSounds[randomSound];
+        playerAudioSource.Play();
+        }
+
+        public void PlayWinSound()
+    {
+        _soundAudioSource.clip = _winSound;
+        _soundAudioSource.Play();
     }
+}

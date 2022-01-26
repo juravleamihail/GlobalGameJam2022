@@ -17,6 +17,8 @@ public class Ninja : MonoBehaviour
     public int ninjaIndex;
     public bool IsNinjaAlive { get; private set; }
 
+    public AudioSource _soundSource;
+
     [SerializeField] private Animator _animatorController;
     [SerializeField] private GameObject _mesh;
     [SerializeField] private GameObject _katana;
@@ -89,6 +91,7 @@ public class Ninja : MonoBehaviour
         int playerIndex = NinjaType.PlayerIndex;
         Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
         player.IncrementKills();
+        SoundManager.Instance.PlayRandomSwordKillSound(_soundSource);
 
         Reveal();
 

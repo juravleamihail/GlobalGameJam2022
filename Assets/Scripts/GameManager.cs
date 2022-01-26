@@ -3,6 +3,7 @@ using States;
 using UI;
 using System;
 using UnityEngine;
+using System.Collections;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -200,8 +201,15 @@ public class GameManager : Singleton<GameManager>
         onTurnStateChanged?.Invoke(inCanPlayersDraw);
     }    
 
-    public void ShowWinScreen(int playerIndex)
+    public void PrepareToShowWinScreen(int playerIndex)
     {
+        StartCoroutine(WaitToShowWinScreen(playerIndex));
+    }
+
+    private IEnumerator WaitToShowWinScreen(int playerIndex)
+    {
+        yield return new WaitForSeconds(2);
+        SoundManager.Instance.PlayWinSound();
         UIManager.Instance.ShowWinScreen(playerIndex);
     }
 

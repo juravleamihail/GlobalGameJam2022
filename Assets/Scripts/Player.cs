@@ -118,7 +118,7 @@ public class Player : PlayerInputHandler
         UIManager.Instance.AddKill(PlayerType.PlayerIndex, kills);
         if (GameManager.Instance.winByNrOfKills && kills >= GameManager.Instance.killsToWin)
         {
-            GameManager.Instance.ShowWinScreen(PlayerType.PlayerIndex);
+            GameManager.Instance.PrepareToShowWinScreen(PlayerType.PlayerIndex);
         }
     }
 
@@ -129,7 +129,7 @@ public class Player : PlayerInputHandler
         {
             int thisPlayerIndex = PlayerType.PlayerIndex;
             int otherPlayerIndex = thisPlayerIndex == 0 ? 1 : 0;
-            GameManager.Instance.ShowWinScreen(otherPlayerIndex);
+            GameManager.Instance.PrepareToShowWinScreen(otherPlayerIndex);
         }
     }
 
