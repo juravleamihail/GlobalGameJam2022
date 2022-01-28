@@ -49,6 +49,11 @@ public class Path : MonoBehaviour
         return _Path[1]; //0 is always the tile where the ninja is
     }
 
+    public Vector2Int GetCurrentTile()
+    {
+        return _Path[0];
+    }
+
     public bool IsOnlyCurrentTile()
     {
         return (_Path.Count == 1);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using States;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,11 +16,14 @@ public class Ninja : MonoBehaviour
     public Action<bool> onUndoInput { private get; set; }
 
     public int ninjaIndex;
-    public bool IsNinjaAlive { get; private set; }
+    
+    public NinjaStates NinjaStatus { get; private set; }
+
+    public bool IsNinjaAlive => NinjaStatus != NinjaStates.Dead;
 
     public AudioSource _soundSource;
 
-    [SerializeField] private Animator _animatorController;
+        [SerializeField] private Animator _animatorController;
     [SerializeField] private GameObject _mesh;
     [SerializeField] private GameObject _katana;
 
@@ -60,7 +64,7 @@ public class Ninja : MonoBehaviour
 
     public void TryDrawPath(GridSystem.Directions direction)
     {
-        if (!IsNinjaAlive)
+        if (NinjaStatus == NinjaStates.Dead)
         {
             return;
         }
@@ -69,19 +73,37 @@ public class Ninja : MonoBehaviour
 
     public void UndoDrawPath(bool longUndo)
     {
-        if (!IsNinjaAlive)
+        if (NinjaStatus == NinjaStates.Dead)
         {
             return;
         }
         onUndoInput?.Invoke(longUndo);
     }
 
-    public void StartMovePhase(Action onCompleteCb)
+    public void ForceStopMovementPhase()
     {
         Movement movement = gameObject.GetComponent<Movement>();
-        movement.StartMovePhase(onCompleteCb);
+        movement.ForceStopMovementPhase();
     }
 
+    private Func<NinjaMovementData, bool> _onTileChangedCb;
+    public void StartMovePhase(Action onCompleteCb, Func<NinjaMovementData,bool> onTileChangedCb)
+    {
+        _onTileChangedCb = onTileChangedCb;
+        Movement movement = gameObject.GetComponent<Movement>();
+        movement.StartMovePhase(onCompleteCb, OnTileChangedCB);
+    }
+
+    private bool OnTileChangedCB(Vector2Int tilePos)
+    {
+        var result = new NinjaMovementData();
+        result.PlayerId = GetPlayerIndex();
+        result.NinjaId = ninjaIndex;
+        result.TilePos = tilePos;
+            
+        return _onTileChangedCb.Invoke(result);
+    }
+    
     public void KillEnemy(Ninja otherNinja)
     {
         // Do some more stuff here (score)
@@ -93,8 +115,6 @@ public class Ninja : MonoBehaviour
         player.IncrementKills();
         SoundManager.Instance.PlayRandomSwordKillSound(_soundSource);
 
-        Reveal();
-
         StartCoroutine(WaitToStopAttack());
     }
 
@@ -103,7 +123,7 @@ public class Ninja : MonoBehaviour
         _animatorController.SetBool("isDead", true);
         //Do some more stuff here (animations)
         UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
-        Reveal();
+        Reveal(false);
         StartCoroutine(WaitToSetupNinjaDead());
     }
 
@@ -132,24 +152,30 @@ public class Ninja : MonoBehaviour
 
         GetComponent<Path>().Init();
         
+        OnTileChangedCB(respawnPoint);
         ChangeNinjaAliveStatus(true);
     }
     
     private void ChangeNinjaAliveStatus(bool value)
     {
-        IsNinjaAlive = value;
-        ToogleMeshes(IsNinjaAlive);
+        NinjaStatus = value ? NinjaStates.Alive : NinjaStates.Dead;
+        ToogleMeshes(value);
     }
 
     private IEnumerator WaitToStopAttack()
     {
         yield return new WaitForSeconds(2);
         _animatorController.SetBool("isAttacking", false);
-        Hide();
+        NinjaStatus = NinjaStatus == NinjaStates.InCombat ? NinjaStates.Alive : NinjaStates.Dead;
     }
 
     public void SyncWithTile()//Transform tileObject)
     {
+        if (NinjaStatus == NinjaStates.InCombat)
+        {
+            return;
+        }
+        
         Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
         Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
 
@@ -168,7 +194,7 @@ public class Ninja : MonoBehaviour
         }
         else
         {
-            Reveal();
+            Reveal(false);
         }
     }
 
@@ -177,8 +203,12 @@ public class Ninja : MonoBehaviour
         ToogleMeshes(false);
     }
 
-    public void Reveal()
+    public void Reveal(bool forceInCombat)
     {
+        if (forceInCombat)
+        {
+            NinjaStatus = NinjaStates.InCombat;
+        }
         ToogleMeshes(true);
     }
 
@@ -207,5 +237,14 @@ public class Ninja : MonoBehaviour
 
         Path path = GetComponent<Path>();
         return path.GetOrigin();
+    }
+
+    public enum NinjaStates
+    {
+        Alive,
+        Dead,
+        Moving,
+        InCombat,
+        Defending
     }
 }

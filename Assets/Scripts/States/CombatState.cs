@@ -15,22 +15,47 @@ namespace States
         private List<Ninja> _player0Ninjas;
         private List<Ninja> _player1Ninjas;
         private Action<Vector3> _onCombatCameraChangePos;
-        public CombatState(Action<Vector3> onCombatCameraChangePos, EStates state, Action onCompleted) : base(state, onCompleted)
+        private List<NinjasCombatData> _ninjasInCombat;
+        
+        public CombatState(Action<Vector3> onCombatCameraChangePos, EStates state, Action onCompleted, List<NinjasCombatData> ninjasInCombat) : base(state, onCompleted)
         {
             _onCombatCameraChangePos = onCombatCameraChangePos;
+            _ninjasInCombat = ninjasInCombat;
             _nm = NinjaManager.Instance;
         }
 
         public override void OnEnter()
         {
             Debug.Log($"Enter state: {_state}");
-            Init();
+            
+            if (_ninjasInCombat != null)
+            {
+                TriggerOnMoveOverlapCombat();
+            }
+            else
+            {
+                Init();
+            }
+        }
+
+        private void TriggerOnMoveOverlapCombat()
+        {
+            _player0Ninjas = new List<Ninja>();
+            _player1Ninjas = new List<Ninja>();
+            
+            _ninjasInCombat.ForEach((data) =>
+            {
+                _player0Ninjas.Add(_nm.GetNinja(data.Player0CombatData.PlayerId, data.Player0CombatData.NinjaId));
+                _player1Ninjas.Add(_nm.GetNinja(data.Player1CombatData.PlayerId, data.Player1CombatData.NinjaId));
+            });
+            
+            _nm.StartCoroutine(TryTriggerCombat());
         }
 
         private void Init()
         {
             TryGetPlayers();
-            GameManager.Instance.StartCoroutine(TryTriggerCombat());
+            _nm.StartCoroutine(TryTriggerCombat());
         }
 
         private void TryGetPlayers()
@@ -53,6 +78,13 @@ namespace States
                 }
             }
 
+            if (_ninjasInCombat != null)
+            {
+                var res = _setCameras?.Invoke(EStates.Gameplay);
+                float transitionTimer = res == null ? 0 : (float) res + 1;
+                yield return new WaitForSeconds(transitionTimer);
+            }
+            
             ComplateState();
         }
         
@@ -65,8 +97,8 @@ namespace States
             var res = _setCameras?.Invoke(_state);
             float transitionTimer = res == null ? 0 : (float) res;
 
-            n1.Reveal();
-            n2.Reveal();
+            n1.Reveal(true);
+            n2.Reveal(true);
 
             while (transitionTimer > 0)
             {

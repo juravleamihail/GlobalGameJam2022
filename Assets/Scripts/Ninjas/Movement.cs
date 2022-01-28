@@ -11,6 +11,10 @@ public class Movement : MonoBehaviour
     protected bool _isMovingOneTile = false;
     protected bool _isMovePhaseForNinja = false;
     private Action _onCompleteCb;
+    private Func<Vector2Int, bool> _onTileCb;
+
+    private Path _pathComponent;
+    private Ninja _ninja;
     
     [SerializeField]protected float _distTolerance = 0.05f;
     [SerializeField]float _moveSpeed;
@@ -18,8 +22,10 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        GetComponent<Path>().onClearPath = OnClearPath;
-        GetComponent<Path>().onInitPath = OnInitPath;
+        _ninja = GetComponent<Ninja>();
+        _pathComponent = GetComponent<Path>();
+        _pathComponent.onClearPath = OnClearPath;
+        _pathComponent.onInitPath = OnInitPath;
     }
     private void OnClearPath()
     {
@@ -34,31 +40,48 @@ public class Movement : MonoBehaviour
         _isMovePhaseForNinja = false;
     }
 
-    public void StartMovePhase(Action onCompleteCb)
+    public void StartMovePhase(Action onCompleteCb, Func<Vector2Int,bool> onTileChangedCb)
+    {
+        SetMovementPhase(true, onCompleteCb, onTileChangedCb);
+    }
+    
+    public void ForceStopMovementPhase()
+    {
+        SetMovementPhase(false, null, null);
+    }
+
+    private void SetMovementPhase(bool state, Action onCompleteCb, Func<Vector2Int,bool> onTileChangedCb)
     {
         _onCompleteCb = onCompleteCb;
+        _onTileCb = onTileChangedCb;
         //call this at the start of the move phase;
-        _isMovePhaseForNinja = true;
+        _isMovePhaseForNinja = state;
         
         if (!GetComponent<Path>().IsOnlyCurrentTile())
         {
-            _animatorController.SetBool("isMoving", _isMovePhaseForNinja);
+            _animatorController.SetBool("isMoving", state);
         }
     }
-
+ 
     protected void SetupMovementToNextTile(out bool shouldMoveOneTile)
     {
-        Path pathComponent = gameObject.GetComponent<Path>();
-         
-        if (pathComponent.IsOnlyCurrentTile())
+        if (_pathComponent.IsOnlyCurrentTile())
         {
             shouldMoveOneTile = false;
             _onCompleteCb?.Invoke();
             return;
         }
+        
+        var result = _onTileCb?.Invoke(_pathComponent.GetCurrentTile());
+        if (result == true)
+        {
+            shouldMoveOneTile = false;
+            return;
+        }
+        
         shouldMoveOneTile = true;
 
-        Vector2Int nextTileOnGrid = pathComponent.GetNextTile();
+        Vector2Int nextTileOnGrid = _pathComponent.GetNextTile();
         _nextTileWorldPosition = GameManager.Instance.ConvertGridCoordsToVector3((uint)nextTileOnGrid.x, (uint)nextTileOnGrid.y);
         
         //Rotate to object
@@ -69,7 +92,7 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        if (!GetComponent<Ninja>().IsNinjaAlive)
+        if (!_ninja.IsNinjaAlive)
         {
             return;
         }    
@@ -82,8 +105,7 @@ public class Movement : MonoBehaviour
 
         if (_isMovingOneTile)
         {
-            Ninja ninja = GetComponent<Ninja>();
-            ninja.SyncWithTile();
+            _ninja.SyncWithTile();
         }
 
         Vector3 nextTileVector = _nextTileWorldPosition - transform.position;
@@ -93,9 +115,8 @@ public class Movement : MonoBehaviour
             if (_isMovingOneTile)
             {
                 _isMovingOneTile = false;
-                Path pathComponent = gameObject.GetComponent<Path>();
-                pathComponent.ApplyDefaultMaterial(0);
-                pathComponent.OnMovedOneTile();
+                _pathComponent.ApplyDefaultMaterial(0);
+                _pathComponent.OnMovedOneTile();
             }
             else
             {

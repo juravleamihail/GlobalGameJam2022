@@ -2,6 +2,7 @@ using DefaultNamespace;
 using States;
 using UI;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 
@@ -48,6 +49,11 @@ public class GameManager : Singleton<GameManager>
     public override void Awake()
     {
         base.Awake();
+
+        //No need to have 200FPS in this game
+        //We can downgrade it even more to 30
+        Application.targetFrameRate = 60;
+
         _stateMachine = new StateMachine();
         _grid = new GridSystem(_gameSettings.GridSize, _gameSettings.TileSize);
     }
@@ -144,12 +150,15 @@ public class GameManager : Singleton<GameManager>
 
     private StateBase CreateMoveState()
     {
-        return new MoveState(EStates.Move, GoToCombatState);
+        return new MoveState(EStates.Move, GoToCombatState, (list)=>
+        {
+            ChangeState(new CombatState(_cameraController.SetCombatCameraPosition, EStates.Combat, GotoMoveState, list));
+        });
     }
 
     private StateBase CreateCombatState()
     {
-       return new CombatState(_cameraController.SetCombatCameraPosition, EStates.Combat, GoToTurnState);
+       return new CombatState(_cameraController.SetCombatCameraPosition, EStates.Combat, GoToTurnState, null);
     }
 
     public Transform GetTileObjectAt(uint gridX, uint gridY)

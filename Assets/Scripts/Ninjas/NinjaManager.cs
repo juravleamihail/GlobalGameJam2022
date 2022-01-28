@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using States;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -154,16 +155,26 @@ public class NinjaManager : Singleton<NinjaManager>
         return false;
     }
 
-    public int StartMovePhase(Action onCompleteCb)
+    public int StartMovePhase(Action onCompleteCb, Func<NinjaMovementData,bool> onTileChangedCb)
     {
         List<Ninja> ninjaList = new List<Ninja>(_allNinjas[0]);
         ninjaList.AddRange(_allNinjas[1]);
         foreach (Ninja ninja in ninjaList)
         {
-            ninja.StartMovePhase(onCompleteCb);
+            ninja.StartMovePhase(onCompleteCb, onTileChangedCb);
         }
 
         return ninjaList.Count;
+    }
+
+    public void ForceStopMovementPhase()
+    {
+        List<Ninja> ninjaList = new List<Ninja>(_allNinjas[0]);
+        ninjaList.AddRange(_allNinjas[1]);
+        foreach (Ninja ninja in ninjaList)
+        {
+            ninja.ForceStopMovementPhase();
+        }
     }
 
     public bool IsNinjaAtLocation(Vector2Int tileCoords, out int playerIndex)
