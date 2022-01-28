@@ -31,10 +31,8 @@ namespace States
         private static Dictionary<int, Vector2Int> _player1Tiles = new Dictionary<int, Vector2Int>();
         private List<NinjasCombatData> _ninjasInCombat = new List<NinjasCombatData>();
         
-        private void OnTileChanged(NinjaMovementData movementData)
+        private bool OnTileChanged(NinjaMovementData movementData)
         {
-            Debug.LogWarning($"[MoveState] P{movementData.PlayerId} - N{movementData.NinjaId}, TilePos {movementData.TilePos}");
-
             if (movementData.PlayerId == 0)
             {
                 AddNewTileToPlayerO(movementData);
@@ -48,7 +46,10 @@ namespace States
             {
                 NinjaManager.Instance.ForceStopMovementPhase();
                 _onCombatTriggerCb?.Invoke(_ninjasInCombat);
+                return true;
             }
+
+            return false;
         }
 
         private bool CheckForSameTiles()

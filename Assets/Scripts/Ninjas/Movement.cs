@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     protected bool _isMovingOneTile = false;
     protected bool _isMovePhaseForNinja = false;
     private Action _onCompleteCb;
-    private Action<Vector2Int> _onTileCb;
+    private Func<Vector2Int, bool> _onTileCb;
 
     private Path _pathComponent;
     private Ninja _ninja;
@@ -40,7 +40,7 @@ public class Movement : MonoBehaviour
         _isMovePhaseForNinja = false;
     }
 
-    public void StartMovePhase(Action onCompleteCb, Action<Vector2Int> onTileChangedCb)
+    public void StartMovePhase(Action onCompleteCb, Func<Vector2Int,bool> onTileChangedCb)
     {
         SetMovementPhase(true, onCompleteCb, onTileChangedCb);
     }
@@ -50,7 +50,7 @@ public class Movement : MonoBehaviour
         SetMovementPhase(false, null, null);
     }
 
-    private void SetMovementPhase(bool state, Action onCompleteCb, Action<Vector2Int> onTileChangedCb)
+    private void SetMovementPhase(bool state, Action onCompleteCb, Func<Vector2Int,bool> onTileChangedCb)
     {
         _onCompleteCb = onCompleteCb;
         _onTileCb = onTileChangedCb;
@@ -65,12 +65,17 @@ public class Movement : MonoBehaviour
  
     protected void SetupMovementToNextTile(out bool shouldMoveOneTile)
     {
-        _onTileCb?.Invoke(_pathComponent.GetCurrentTile());
-        
         if (_pathComponent.IsOnlyCurrentTile())
         {
             shouldMoveOneTile = false;
             _onCompleteCb?.Invoke();
+            return;
+        }
+        
+        var result = _onTileCb?.Invoke(_pathComponent.GetCurrentTile());
+        if (result == true)
+        {
+            shouldMoveOneTile = false;
             return;
         }
         

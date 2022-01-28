@@ -155,7 +155,7 @@ public class NinjaManager : Singleton<NinjaManager>
         return false;
     }
 
-    public int StartMovePhase(Action onCompleteCb, Action<NinjaMovementData> onTileChangedCb)
+    public int StartMovePhase(Action onCompleteCb, Func<NinjaMovementData,bool> onTileChangedCb)
     {
         List<Ninja> ninjaList = new List<Ninja>(_allNinjas[0]);
         ninjaList.AddRange(_allNinjas[1]);

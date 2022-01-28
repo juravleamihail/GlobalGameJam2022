@@ -84,21 +84,25 @@ public class Ninja : MonoBehaviour
         Movement movement = gameObject.GetComponent<Movement>();
         movement.ForceStopMovementPhase();
     }
-    
-    public void StartMovePhase(Action onCompleteCb, Action<NinjaMovementData> onTileChangedCb)
+
+    private Func<NinjaMovementData, bool> _onTileChangedCb;
+    public void StartMovePhase(Action onCompleteCb, Func<NinjaMovementData,bool> onTileChangedCb)
     {
+        _onTileChangedCb = onTileChangedCb;
         Movement movement = gameObject.GetComponent<Movement>();
-        movement.StartMovePhase(onCompleteCb, (tilePos) =>
-        {
-            var result = new NinjaMovementData();
-            result.PlayerId = GetPlayerIndex();
-            result.NinjaId = ninjaIndex;
-            result.TilePos = tilePos;
-            
-            onTileChangedCb.Invoke(result);
-        });
+        movement.StartMovePhase(onCompleteCb, OnTileChangedCB);
     }
 
+    private bool OnTileChangedCB(Vector2Int tilePos)
+    {
+        var result = new NinjaMovementData();
+        result.PlayerId = GetPlayerIndex();
+        result.NinjaId = ninjaIndex;
+        result.TilePos = tilePos;
+            
+        return _onTileChangedCb.Invoke(result);
+    }
+    
     public void KillEnemy(Ninja otherNinja)
     {
         // Do some more stuff here (score)
@@ -146,6 +150,7 @@ public class Ninja : MonoBehaviour
 
         GetComponent<Path>().Init();
         
+        OnTileChangedCB(respawnPoint);
         ChangeNinjaAliveStatus(true);
     }
     
