@@ -109,7 +109,7 @@ namespace States
             Ninja winner, defeated;
 
             winner = DetermineWinner(n1, n2, tileTransform, out defeated);
-            n1.KillEnemy(defeated);
+            winner.KillEnemy(defeated);
 
             //should wait for animations and everything else
             float delayTimer = 3;
