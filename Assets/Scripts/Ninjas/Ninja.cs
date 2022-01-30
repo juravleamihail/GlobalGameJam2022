@@ -233,8 +233,12 @@ public class Ninja : MonoBehaviour
 
     public bool IsDrawing()
     {
+        if (!IsNinjaAlive)
+        {
+            return false;
+        }
         Path path = GetComponent<Path>();
-        return path.IsOnlyCurrentTile();
+        return !(path.IsOnlyCurrentTile());
     }
 
     public Vector2Int GetGridPositionViaPath()
