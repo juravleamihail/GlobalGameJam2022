@@ -5,7 +5,7 @@ namespace States
     public class StateMachine
     {
         private StateBase _currentState;
-        public StateBase currentState { get { return _currentState; } }
+        public StateBase currentState { get {return _currentState;} }
         
         public void ChangeState(StateBase newState, Action<EStates> _setUiCb, Func<EStates, float> _setCameras)
         {

@@ -237,4 +237,9 @@ public class GameManager : Singleton<GameManager>
     {
         return _stateMachine.currentState;
     }
+
+    public void ClearInvasions()
+    {
+        _grid.ClearInvasions();
+    }
 }

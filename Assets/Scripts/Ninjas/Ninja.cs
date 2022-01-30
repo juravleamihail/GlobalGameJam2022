@@ -239,6 +239,16 @@ public class Ninja : MonoBehaviour
         return path.GetOrigin();
     }
 
+    public bool HasPath()
+    {
+        return (IsNinjaAlive && !GetComponent<Path>().IsOnlyCurrentTile());
+    }
+
+    public Vector2Int GetDestination()
+    {
+        return GetComponent<Path>().GetDestination();
+    }
+
     public enum NinjaStates
     {
         Alive,

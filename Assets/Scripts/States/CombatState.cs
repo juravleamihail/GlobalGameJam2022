@@ -16,7 +16,7 @@ namespace States
         private List<Ninja> _player1Ninjas;
         private Action<Vector3> _onCombatCameraChangePos;
         private List<NinjasCombatData> _ninjasInCombat;
-        
+      
         public CombatState(Action<Vector3> onCombatCameraChangePos, EStates state, Action onCompleted, List<NinjasCombatData> ninjasInCombat) : base(state, onCompleted)
         {
             _onCombatCameraChangePos = onCombatCameraChangePos;
@@ -91,8 +91,8 @@ namespace States
         private IEnumerator TriggerCombatCoroutine(Ninja n1, Ninja n2)
         {
             var tilePos = n1.GetGridPositionViaPath();
-            var transform = GameManager.Instance.GetTileObjectAt((uint)tilePos.x, (uint)tilePos.y);
-            _onCombatCameraChangePos?.Invoke(transform.position);
+            var tileTransform = GameManager.Instance.GetTileObjectAt((uint)tilePos.x, (uint)tilePos.y);
+            _onCombatCameraChangePos?.Invoke(tileTransform.position);
 
             var res = _setCameras?.Invoke(_state);
             float transitionTimer = res == null ? 0 : (float) res;
@@ -106,16 +106,10 @@ namespace States
                 yield return null;
             }
 
-            var ph = transform.gameObject.GetComponent<TileToPlayerConnection>();
-            
-            if (ph.PlayerType.PlayerIndex == n1.GetPlayerIndex()) 
-            {
-                n1.KillEnemy(n2);
-            }
-            else
-            {
-                n2.KillEnemy(n1);
-            }
+            Ninja winner, defeated;
+
+            winner = DetermineWinner(n1, n2, tileTransform, out defeated);
+            n1.KillEnemy(defeated);
 
             //should wait for animations and everything else
             float delayTimer = 3;
@@ -123,6 +117,43 @@ namespace States
             {
                 delayTimer -= Time.deltaTime;
                 yield return null;
+            }
+        }
+
+        private Ninja DetermineWinner(Ninja n1, Ninja n2, Transform tileTransform, out Ninja defeated)
+        {
+            Tile tile = tileTransform.GetComponent<Tile>();
+            int defeatedNinjaPlayerID;
+            int defeatedNinjaIndex;
+            if (tile.IsBeingInvaded(out defeatedNinjaPlayerID, out defeatedNinjaIndex))
+            {
+                if (n1.GetPlayerIndex() == defeatedNinjaPlayerID && n1.ninjaIndex == defeatedNinjaIndex)
+                {
+                    defeated = n1;
+                    return n2;
+                }
+                else if (n2.GetPlayerIndex() == defeatedNinjaPlayerID && n2.ninjaIndex == defeatedNinjaIndex)
+                {
+                    defeated = n2;
+                    return n1;
+                }
+                else
+                {
+                    Debug.Log("Error: invasion should happen but none of the ninjas on the tile is the one invaded.");
+                }
+            }
+
+            var playerConnection = tileTransform.gameObject.GetComponent<TileToPlayerConnection>();
+
+            if (playerConnection.PlayerType.PlayerIndex == n1.GetPlayerIndex())
+            {
+                defeated = n2;
+                return n1;
+            }
+            else
+            {
+                defeated = n1;
+                return n2;
             }
         }
 

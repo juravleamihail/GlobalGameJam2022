@@ -21,9 +21,13 @@ namespace States
             base.OnEnter();
             _setUiCb.Invoke(_state);
 
+            GameManager.Instance.ClearInvasions();
+            
             SelectFirstAvailableNinjaForPlayer(0);
             SelectFirstAvailableNinjaForPlayer(1);
+            
             ToggleInput(true);
+            
             UpdateTimer(_timer);
         }
 

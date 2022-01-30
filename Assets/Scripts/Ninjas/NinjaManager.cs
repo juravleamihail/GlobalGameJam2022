@@ -157,6 +157,8 @@ public class NinjaManager : Singleton<NinjaManager>
 
     public int StartMovePhase(Action onCompleteCb, Func<NinjaMovementData,bool> onTileChangedCb)
     {
+        SetupInvasions();
+        
         List<Ninja> ninjaList = new List<Ninja>(_allNinjas[0]);
         ninjaList.AddRange(_allNinjas[1]);
         foreach (Ninja ninja in ninjaList)
@@ -180,6 +182,15 @@ public class NinjaManager : Singleton<NinjaManager>
         }
     }
 
+    public bool IsNinjaAtLocation(Vector2Int tileCoords)
+    {
+        if (IsNinjaOfPlayer(0, tileCoords) || IsNinjaOfPlayer(1, tileCoords))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public bool IsNinjaAtLocation(Vector2Int tileCoords, out int playerIndex)
     {
         if (IsNinjaOfPlayer(0, tileCoords))
@@ -196,19 +207,59 @@ public class NinjaManager : Singleton<NinjaManager>
         return false;
     }
 
+    public bool IsNinjaAtLocation(Vector2Int tileCoords, out int playerIndex, out int ninjaIndex)
+    {
+        int ninjaIdx = -1;
+        if (IsNinjaOfPlayer(0, tileCoords, out ninjaIdx))
+        {
+            playerIndex = 0;
+            ninjaIndex = ninjaIdx;
+            return true;
+        }
+        if (IsNinjaOfPlayer(1, tileCoords, out ninjaIdx))
+        {
+            playerIndex = 1;
+            ninjaIndex = ninjaIdx;
+            return true;
+        }
+        playerIndex = -1;
+        ninjaIndex = ninjaIdx;
+        return false;
+    }
+
     private bool IsNinjaOfPlayer(int playerIndex, Vector2Int tileCoords)
     {
         List<Ninja> ninjaList;
         ninjaList = _allNinjas[playerIndex];
         foreach (Ninja ninja in ninjaList)
         {
-            Vector3 pos = ninja.transform.position;
-            Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
+            //Vector3 pos = ninja.transform.position;
+            //Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
+            Vector2Int gridPos = ninja.GetGridPositionViaPath();
             if (gridPos == tileCoords)
             {
                 return true;
             }
         }
+        return false;
+    }
+
+    private bool IsNinjaOfPlayer(int playerIndex, Vector2Int tileCoords, out int ninjaIndex)
+    {
+        List<Ninja> ninjaList;
+        ninjaList = _allNinjas[playerIndex];
+        foreach (Ninja ninja in ninjaList)
+        {
+            //Vector3 pos = ninja.transform.position;
+            //Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
+            Vector2Int gridPos = ninja.GetGridPositionViaPath();
+            if (gridPos == tileCoords)
+            {
+                ninjaIndex = ninja.ninjaIndex;
+                return true;
+            }
+        }
+        ninjaIndex = -1;
         return false;
     }
 
@@ -310,5 +361,29 @@ public class NinjaManager : Singleton<NinjaManager>
             }
         }
         return -1;
+    }
+
+    public void SetupInvasions()
+    {
+        for (int playerID = 0; playerID < 2; ++playerID)
+        {
+            foreach (Ninja ninja in _allNinjas[playerID])
+            {
+                if (ninja.HasPath())
+                {
+                    Vector2Int destination = ninja.GetDestination();
+                    if (IsNinjaAtLocation(destination))
+                    {
+                        Tile tile = GameManager.Instance.GetTileObjectAt((uint)destination.x, (uint)destination.y).GetComponent<Tile>();
+                        tile.SetInvasion(playerID, ninja.ninjaIndex);
+                    }
+                }
+            }
+        }
+    }
+
+    public void ClearInvasions()
+    {
+        GameManager.Instance.ClearInvasions();
     }
 }

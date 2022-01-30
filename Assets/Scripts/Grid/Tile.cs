@@ -8,7 +8,22 @@ public class Tile : MonoBehaviour
     private float _disappearTimer;
     private bool isTimerOn;
     public float disappearTime;
-    
+
+    public InvasionData invasionData { get; private set; }
+  
+    public struct InvasionData
+    {
+        public InvasionData(bool inIsBeingInvaded = false, int inInvadedPlayerID = -1, int inInvadedNinjaIndex = -1)
+        {
+            isBeingInvaded = inIsBeingInvaded;
+            invadedPlayerID = inInvadedPlayerID;
+            invadedNinjaIndex = inInvadedNinjaIndex;
+        }
+
+        public bool isBeingInvaded { get; private set; }
+        public int invadedPlayerID { get; private set; }
+        public int invadedNinjaIndex { get; private set; }
+    }
 
     private void Awake()
     {
@@ -35,5 +50,22 @@ public class Tile : MonoBehaviour
             }
             _disappearTimer += Time.deltaTime;
         }
+    }
+
+    public void SetInvasion(int invadedPlayerID, int invadedNinjaIndex)
+    {
+        invasionData = new InvasionData(true, invadedPlayerID, invadedNinjaIndex);
+    }
+
+    public void ClearInvasion()
+    {
+        invasionData = new InvasionData();
+    }
+
+    public bool IsBeingInvaded(out int invadedPlayerID, out int invadedNinjaIndex)
+    {
+        invadedPlayerID = invasionData.invadedPlayerID;
+        invadedNinjaIndex = invasionData.invadedNinjaIndex;
+        return invasionData.isBeingInvaded;
     }
 }

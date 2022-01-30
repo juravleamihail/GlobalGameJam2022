@@ -250,4 +250,21 @@ public class GridSystem
         int result = ((int)inDirection + ninetyDegreeAngleMultipler) % 4; //there are four directions starting at 0, so a result of 4 should cycle back to 0
         return (Directions)result;
     }
+
+    public void ClearInvasions()
+    {
+        foreach (Transform tileTransform in _Grid)
+        {
+            if (tileTransform == null)
+            {
+                continue;
+            }
+
+            Tile tile = tileTransform.GetComponent<Tile>();
+            if (tile != null)
+            {
+                tile.ClearInvasion();
+            }
+        }
+    }
 }
