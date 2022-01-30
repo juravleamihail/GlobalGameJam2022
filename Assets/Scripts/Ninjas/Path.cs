@@ -224,6 +224,13 @@ public class Path : MonoBehaviour
 
     public Vector2Int GetOrigin()
     {
-        return _Path[0];
+        if (_Path.Count >= 1)
+        {
+            return _Path[0];
+        }
+        else
+        {
+            return GameManager.Instance.vector2IntException;
+        }
     }
 }

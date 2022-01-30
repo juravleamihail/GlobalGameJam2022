@@ -125,7 +125,7 @@ public class NinjaManager : Singleton<NinjaManager>
             }
 
             Ninja ninja = ninjaList[i];
-           if (ninja.IsDrawing())
+            if (ninja.IsDrawing())
             {
                 return true;
             }
@@ -209,13 +209,13 @@ public class NinjaManager : Singleton<NinjaManager>
     public bool IsNinjaAtLocation(Vector2Int tileCoords, out int playerIndex, out int ninjaIndex)
     {
         int ninjaIdx = -1;
-        if (IsNinjaOfPlayer(0, tileCoords, out ninjaIdx))
+        if (IsNinjaOfPlayer(0, tileCoords, out ninjaIdx) && ninjaIdx != -1)
         {
             playerIndex = 0;
             ninjaIndex = ninjaIdx;
             return true;
         }
-        if (IsNinjaOfPlayer(1, tileCoords, out ninjaIdx))
+        if (IsNinjaOfPlayer(1, tileCoords, out ninjaIdx) && ninjaIdx != -1)
         {
             playerIndex = 1;
             ninjaIndex = ninjaIdx;
@@ -240,6 +240,12 @@ public class NinjaManager : Singleton<NinjaManager>
             //Vector3 pos = ninja.transform.position;
             //Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
             Vector2Int gridPos = ninja.GetGridPositionViaPath();
+
+            if (gridPos == GameManager.Instance.vector2IntException)
+            {
+                return false;
+            }
+
             if (gridPos == tileCoords)
             {
                 return true;
@@ -257,6 +263,13 @@ public class NinjaManager : Singleton<NinjaManager>
             //Vector3 pos = ninja.transform.position;
             //Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
             Vector2Int gridPos = ninja.GetGridPositionViaPath();
+
+            if (gridPos == GameManager.Instance.vector2IntException)
+            {
+                ninjaIndex = -1;
+                return false;
+            }
+
             if (gridPos == tileCoords)
             {
                 ninjaIndex = ninja.ninjaIndex;
@@ -283,7 +296,7 @@ public class NinjaManager : Singleton<NinjaManager>
         {
             foreach (Ninja ninja in _allNinjas[i])
             {
-                if (ninja.IsNinjaAlive && ninja.GetGridPositionViaPath() == tileCoords)
+                if (ninja.IsNinjaAlive && ninja.GetGridPositionViaPath() == tileCoords && tileCoords != GameManager.Instance.vector2IntException)
                 {
                     return ninja;
                 }

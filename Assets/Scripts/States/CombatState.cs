@@ -71,7 +71,8 @@ namespace States
                 for (var j = 0; j < _player1Ninjas.Count; j++)
                 {
                     if (_player0Ninjas[i].IsNinjaAlive&& _player1Ninjas[j].IsNinjaAlive &&
-                        _player0Ninjas[i].GetGridPositionViaPath() == _player1Ninjas[j].GetGridPositionViaPath())
+                        _player0Ninjas[i].GetGridPositionViaPath() == _player1Ninjas[j].GetGridPositionViaPath() && 
+                        _player0Ninjas[i].GetGridPositionViaPath() != GameManager.Instance.vector2IntException)
                     {
                         yield return TriggerCombatCoroutine(_player0Ninjas[i],_player1Ninjas[j]);
                     }
@@ -91,6 +92,11 @@ namespace States
         private IEnumerator TriggerCombatCoroutine(Ninja n1, Ninja n2)
         {
             var tilePos = n1.GetGridPositionViaPath();
+            if (tilePos == GameManager.Instance.vector2IntException)
+            {
+                yield break;
+            }
+
             var tileTransform = GameManager.Instance.GetTileObjectAt((uint)tilePos.x, (uint)tilePos.y);
             _onCombatCameraChangePos?.Invoke(tileTransform.position);
 

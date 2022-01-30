@@ -248,7 +248,14 @@ public class Ninja : MonoBehaviour
         //the logical first element of the path may not always reflect where the ninja appears to be
 
         Path path = GetComponent<Path>();
-        return path.GetOrigin();
+        if (path)
+        {
+            return path.GetOrigin();
+        }    
+        else
+        {
+            return GameManager.Instance.vector2IntException;
+        }
     }
 
     public bool HasPath()
