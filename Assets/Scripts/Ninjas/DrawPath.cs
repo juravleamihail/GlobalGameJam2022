@@ -14,6 +14,11 @@ public class DrawPath : MonoBehaviour
 
     private void OnDrawInputReceived(GridSystem.Directions keyboardDirection)
     {
+        if (!GetComponent<Ninja>().IsNinjaAlive)
+        {
+            return;
+        }
+
         GridSystem.Directions direction = keyboardDirection;
 
         if (GameManager.Instance.useRelativeDirections)

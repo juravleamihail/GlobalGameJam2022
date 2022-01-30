@@ -238,9 +238,9 @@ public class NinjaManager : Singleton<NinjaManager>
                 continue;
             }
 
-            Vector3 pos = ninja.transform.position;
-            Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
-            //Vector2Int gridPos = ninja.GetGridPositionViaPath();
+            //Vector3 pos = ninja.transform.position;
+            //Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
+            Vector2Int gridPos = ninja.GetGridPositionViaPath();
             if (gridPos == tileCoords)
             {
                 return true;
@@ -310,6 +310,12 @@ public class NinjaManager : Singleton<NinjaManager>
             }
 
             Ninja ninja = ninjaList[i];
+            
+            if (!ninja.IsNinjaAlive)
+            {
+                continue;
+            }
+            
             {
                 //TODO obvious source of spaghetti code in this scope, should change
                 Path path = ninja.gameObject.GetComponent<Path>();
