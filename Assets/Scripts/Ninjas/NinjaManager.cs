@@ -233,9 +233,14 @@ public class NinjaManager : Singleton<NinjaManager>
         ninjaList = _allNinjas[playerIndex];
         foreach (Ninja ninja in ninjaList)
         {
-            //Vector3 pos = ninja.transform.position;
-            //Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
-            Vector2Int gridPos = ninja.GetGridPositionViaPath();
+            if (!ninja.IsNinjaAlive)
+            {
+                continue;
+            }
+
+            Vector3 pos = ninja.transform.position;
+            Vector2Int gridPos = GameManager.Instance.ConvertVector3CoordsToGrid(pos.x, pos.z);
+            //Vector2Int gridPos = ninja.GetGridPositionViaPath();
             if (gridPos == tileCoords)
             {
                 return true;
