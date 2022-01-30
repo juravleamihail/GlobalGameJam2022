@@ -31,7 +31,7 @@ public class Ninja : MonoBehaviour
     {
         NinjaType = ninjaTypeSO;
         ninjaIndex = index;
-        ChangeNinjaAliveStatus(true);
+        SetNinjaAliveStatus(true);
     }
 
     private void Start()
@@ -125,7 +125,7 @@ public class Ninja : MonoBehaviour
         UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
         Reveal(false);
 
-        ChangeNinjaAliveStatus(false);
+        SetNinjaAliveStatus(false);
         GetComponent<Path>().ClearPath();
 
         StartCoroutine(WaitToFinishNinjaDeathLogic());
@@ -156,11 +156,11 @@ public class Ninja : MonoBehaviour
         GetComponent<Path>().Init();
         
         OnTileChangedCB(respawnPoint);
-        ChangeNinjaAliveStatus(true);
+        SetNinjaAliveStatus(true);
         ShowNinjaAliveStatus();
     }
     
-    private void ChangeNinjaAliveStatus(bool value)
+    private void SetNinjaAliveStatus(bool value)
     {
         NinjaStatus = value ? NinjaStates.Alive : NinjaStates.Dead;
     }
