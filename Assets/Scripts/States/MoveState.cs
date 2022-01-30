@@ -65,11 +65,13 @@ namespace States
                         {
                             Player0CombatData = new NinjaMovementData()
                             {
+                                PlayerId = 0,
                                 NinjaId = kv0.Key,
                                 TilePos = kv0.Value
                             },
                             Player1CombatData = new NinjaMovementData()
                             {
+                                PlayerId = 1,
                                 NinjaId = kv1.Key,
                                 TilePos = kv1.Value
                             }
