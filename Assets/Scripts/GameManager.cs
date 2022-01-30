@@ -39,7 +39,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private uint _killsToWin;
     public uint killsToWin { get { return _killsToWin; } }
 
-    public Action<bool> onTurnStateChanged { private get; set; }
+    //public Action<bool> onTurnStateChanged { private get; set; }
 
     //use these constants to signal exceptions; negative values for positions should not be used anywhere in the game
     public Vector3 vector3Exception { get; } = new Vector3(-100f, -100f, -100f);
@@ -207,7 +207,7 @@ public class GameManager : Singleton<GameManager>
  
     public void OnTurnStateChanged(bool inCanPlayersDraw)
     {
-        onTurnStateChanged?.Invoke(inCanPlayersDraw);
+        //onTurnStateChanged?.Invoke(inCanPlayersDraw);
     }    
 
     public void PrepareToShowWinScreen(int playerIndex)
@@ -231,5 +231,10 @@ public class GameManager : Singleton<GameManager>
     public GridSystem.Directions GetRelativeDirection(GridSystem.Directions inDirection, Vector3 inVector)
     {
         return _grid.GetRelativeDirection(inDirection, inVector);
+    }
+
+    public StateBase GetCurrentState()
+    {
+        return _stateMachine.currentState;
     }
 }

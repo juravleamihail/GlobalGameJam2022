@@ -161,7 +161,10 @@ public class NinjaManager : Singleton<NinjaManager>
         ninjaList.AddRange(_allNinjas[1]);
         foreach (Ninja ninja in ninjaList)
         {
-            ninja.StartMovePhase(onCompleteCb, onTileChangedCb);
+            if (ninja.IsNinjaAlive)
+            {
+                ninja.StartMovePhase(onCompleteCb, onTileChangedCb);
+            }
         }
 
         return ninjaList.Count;
@@ -294,5 +297,18 @@ public class NinjaManager : Singleton<NinjaManager>
     public bool IsNinjaAlive(int playerID, int ninjaIndex)
     {
         return _allNinjas[playerID][ninjaIndex].IsNinjaAlive;
+    }
+
+    public int GetIndexOfFirstAvailableNinja(int playerID)
+    {
+        List<Ninja> ninjaList = _allNinjas[playerID];
+        foreach (Ninja ninja in ninjaList)
+        {
+            if (IsNinjaAlive(playerID, ninja.ninjaIndex))
+            {
+                return ninja.ninjaIndex;
+            }
+        }
+        return -1;
     }
 }

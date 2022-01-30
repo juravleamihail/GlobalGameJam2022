@@ -61,7 +61,7 @@ namespace States
             _setCameras = camCb;
         }
 
-        protected void ComplateState()
+        protected void CompleteState()
         {
             Debug.Log($"Completed state: {_state}");
             _onStateCompleted?.Invoke();

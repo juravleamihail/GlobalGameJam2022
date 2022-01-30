@@ -71,7 +71,7 @@ namespace States
                 for (var j = 0; j < _player1Ninjas.Count; j++)
                 {
                     if (_player0Ninjas[i].IsNinjaAlive&& _player1Ninjas[j].IsNinjaAlive &&
-                        _player0Ninjas[i].GetGridPositionViaTransform() == _player1Ninjas[j].GetGridPositionViaTransform())
+                        _player0Ninjas[i].GetGridPositionViaPath() == _player1Ninjas[j].GetGridPositionViaPath())
                     {
                         yield return TriggerCombatCoroutine(_player0Ninjas[i],_player1Ninjas[j]);
                     }
@@ -85,12 +85,12 @@ namespace States
                 yield return new WaitForSeconds(transitionTimer);
             }
             
-            ComplateState();
+            CompleteState();
         }
         
         private IEnumerator TriggerCombatCoroutine(Ninja n1, Ninja n2)
         {
-            var tilePos = n1.GetGridPositionViaTransform();
+            var tilePos = n1.GetGridPositionViaPath();
             var transform = GameManager.Instance.GetTileObjectAt((uint)tilePos.x, (uint)tilePos.y);
             _onCombatCameraChangePos?.Invoke(transform.position);
 
@@ -136,5 +136,10 @@ namespace States
                 return Mathf.FloorToInt (vec.x) ^ Mathf.FloorToInt (vec.y) << 2;
             }
         }
+    }
+    public struct NinjasCombatData
+    {
+        public NinjaMovementData Player0CombatData;
+        public NinjaMovementData Player1CombatData;
     }
 }

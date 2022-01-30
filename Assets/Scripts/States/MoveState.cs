@@ -123,16 +123,10 @@ namespace States
                 Task.Yield();
             }
 
-            ComplateState();
+            CompleteState();
         }
     }
-    
-    public struct NinjasCombatData
-    {
-        public NinjaMovementData Player0CombatData;
-        public NinjaMovementData Player1CombatData;
-    }
-
+   
     public struct NinjaMovementData
     {
         public int PlayerId;

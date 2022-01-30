@@ -16,14 +16,13 @@ public class PlayerManager : Singleton<PlayerManager>
     
     [SerializeField] private Transform _mapParent;
 
-    public bool isTurnState { get; private set; }
+    //public bool isTurnState { get; private set; }
 
     public Material[] pathMaterials;
 
     public override void Awake()
     {
         base.Awake();
-        GameManager.Instance.onTurnStateChanged = SetIsTurnState;
         
         _players = new List<Player>();
         InitPlayers();
@@ -60,10 +59,5 @@ public class PlayerManager : Singleton<PlayerManager>
                 OldStyleInputs.Instance.player1 = player;
             }                
         }
-    }
-
-    void SetIsTurnState(bool inIsTurnState)
-    {
-        isTurnState = inIsTurnState;
     }
 }

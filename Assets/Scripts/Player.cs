@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using States;
 
 public class Player : PlayerInputHandler
 {
@@ -68,7 +69,9 @@ public class Player : PlayerInputHandler
 
     private void TryDrawPath(GridSystem.Directions direction)
     {
-        if (!PlayerManager.Instance.isTurnState)
+        TurnState turnState = GameManager.Instance.GetCurrentState() as TurnState;
+
+        if (turnState == null) //if we are not in the turn state
         {
             return;
         }
@@ -79,7 +82,9 @@ public class Player : PlayerInputHandler
 
     private void UndoDrawPath(bool longUndo = false)
     {
-        if (!PlayerManager.Instance.isTurnState)
+        TurnState turnState = GameManager.Instance.GetCurrentState() as TurnState;
+
+        if (turnState == null) //if we are not in the turn state
         {
             return;
         }
@@ -88,7 +93,7 @@ public class Player : PlayerInputHandler
         NinjaManager.Instance.UndoDrawPath(playerIndex, _selectedNinjaIndex, longUndo);
     }
 
-    private void SelectNinja(int ninjaIndex)
+    public void SelectNinja(int ninjaIndex)
     {
         //TODO clamp ninja indices
         UIManager.Instance.SelectCharacter(PlayerType.PlayerIndex, ninjaIndex);

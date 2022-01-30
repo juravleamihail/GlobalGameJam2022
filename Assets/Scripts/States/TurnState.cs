@@ -20,9 +20,25 @@ namespace States
         {
             base.OnEnter();
             _setUiCb.Invoke(_state);
-            
+
+            SelectFirstAvailableNinjaForPlayer(0);
+            SelectFirstAvailableNinjaForPlayer(1);
             ToggleInput(true);
             UpdateTimer(_timer);
+        }
+
+        public void SelectFirstAvailableNinjaForPlayer(int playerID)
+        {
+            int ninjaIndex = NinjaManager.Instance.GetIndexOfFirstAvailableNinja(playerID);
+            Player player = PlayerManager.Instance.GetPlayerByIndex(playerID);
+            if (ninjaIndex != -1)
+            {
+                player.SelectNinja(ninjaIndex);
+            }
+            else
+            {
+                Debug.Log("A -1 ninja index was returned for selection at the turn start");
+            }
         }
 
         public override void Update()
@@ -40,7 +56,7 @@ namespace States
                 return;
             }
 
-            ComplateState();
+            CompleteState();
         }
 
         public override void OnExit()
