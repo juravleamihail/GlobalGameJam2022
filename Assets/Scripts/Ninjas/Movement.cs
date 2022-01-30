@@ -112,10 +112,10 @@ public class Movement : MonoBehaviour
         float distance = Vector3.Magnitude(nextTileVector);
         if (distance < _distTolerance)
         {
+            _pathComponent.ApplyDefaultMaterialToTile(0);
             if (_isMovingOneTile)
             {
                 _isMovingOneTile = false;
-                _pathComponent.ApplyDefaultMaterial(0);
                 _pathComponent.OnMovedOneTile();
             }
             else

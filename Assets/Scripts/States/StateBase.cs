@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace States
@@ -23,7 +24,20 @@ namespace States
         public virtual void OnEnter()
         {
             Debug.Log($"Enter state: {_state}");
+            VisuallyHideAllPaths();
             _transitionTimer = _setCameras?.Invoke(_state);
+        }
+
+        private void VisuallyHideAllPaths()
+        {
+            List<Ninja> ninjas = new List<Ninja>();
+            ninjas.AddRange(NinjaManager.Instance.GetAllNinjaForPlayer(0));
+            ninjas.AddRange(NinjaManager.Instance.GetAllNinjaForPlayer(1));
+            foreach (Ninja ninja in ninjas)
+            {
+                Path path = ninja.GetComponent<Path>();
+                path.ApplyDefaultMaterialToAllTiles();
+            }    
         }
 
         public virtual void Update()
@@ -64,6 +78,7 @@ namespace States
         protected void CompleteState()
         {
             Debug.Log($"Completed state: {_state}");
+            VisuallyHideAllPaths();
             _onStateCompleted?.Invoke();
         }
     }

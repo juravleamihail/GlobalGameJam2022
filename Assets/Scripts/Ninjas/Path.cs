@@ -33,7 +33,7 @@ public class Path : MonoBehaviour
 
         for (int i = 0; i<_Path.Count; ++i)
         {
-            ApplyDefaultMaterial(i);
+            ApplyDefaultMaterialToTile(i);
         }
 
         onClearPath?.Invoke();
@@ -89,7 +89,7 @@ public class Path : MonoBehaviour
             return;
         }
 
-        ApplyDefaultMaterial(_Path.Count-1);
+        ApplyDefaultMaterialToTile(_Path.Count-1);
         _Path.RemoveAt(_Path.Count - 1);
 
         if (GameManager.Instance.invisiblePaths)
@@ -102,7 +102,7 @@ public class Path : MonoBehaviour
             PathDrawFeedback(GetDestination());
         }
     }
-    public void ApplyDefaultMaterial(int index)
+    public void ApplyDefaultMaterialToTile(int index)
     {
         Vector2Int lastTileCoords = _Path[index];
         Transform lastTileTransform = GameManager.Instance.GetTileObjectAt((uint)lastTileCoords.x, (uint)lastTileCoords.y);
@@ -111,6 +111,14 @@ public class Path : MonoBehaviour
 
         Renderer renderer = lastTile.gameObject.GetComponent<Renderer>();
         renderer.material = defaultMaterial;
+    }
+
+    public void ApplyDefaultMaterialToAllTiles()
+    {
+        for (int idx = 0; idx < _Path.Count; ++idx)
+        {
+            ApplyDefaultMaterialToTile(idx);
+        }
     }
 
     public bool CanBeDestination(Vector2Int destination)
