@@ -10740,11 +10740,11 @@ MonoBehaviour:
   _maxPlayers: 2
   _mapParent: {fileID: 766311866}
   pathMaterialsForWhiteTiles:
-  - {fileID: 2100000, guid: 2855c9b165a9607469048eee4e1b8651, type: 2}
-  - {fileID: 2100000, guid: a303fe85cae7fd34e8ea0c2a289c8d88, type: 2}
-  pathMaterialsForBlackTiles:
   - {fileID: 2100000, guid: 848dcdc61a59701429ddea94cbcbcca0, type: 2}
   - {fileID: 2100000, guid: 57c1575b291c9694da71966e9d0259ac, type: 2}
+  pathMaterialsForBlackTiles:
+  - {fileID: 2100000, guid: 2855c9b165a9607469048eee4e1b8651, type: 2}
+  - {fileID: 2100000, guid: a303fe85cae7fd34e8ea0c2a289c8d88, type: 2}
 --- !u!4 &233886307
 Transform:
   m_ObjectHideFlags: 0
