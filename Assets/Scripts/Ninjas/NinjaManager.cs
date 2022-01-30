@@ -372,10 +372,12 @@ public class NinjaManager : Singleton<NinjaManager>
                 if (ninja.HasPath())
                 {
                     Vector2Int destination = ninja.GetDestination();
-                    if (IsNinjaAtLocation(destination))
+                    int invadedPlayerID = -1;
+                    int invadedNinjaIndex = -1;
+                    if (IsNinjaAtLocation(destination, out invadedPlayerID, out invadedNinjaIndex))
                     {
                         Tile tile = GameManager.Instance.GetTileObjectAt((uint)destination.x, (uint)destination.y).GetComponent<Tile>();
-                        tile.SetInvasion(playerID, ninja.ninjaIndex);
+                        tile.SetInvasion(invadedPlayerID, invadedNinjaIndex);
                     }
                 }
             }
