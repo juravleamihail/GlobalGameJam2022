@@ -124,19 +124,22 @@ public class Ninja : MonoBehaviour
         //Do some more stuff here (animations)
         UIManager.Instance.DieCharacter(NinjaType.PlayerIndex, ninjaIndex);
         Reveal(false);
-        StartCoroutine(WaitToSetupNinjaDead());
-    }
 
-    private IEnumerator WaitToSetupNinjaDead()
-    {
-        yield return new WaitForSeconds(2);
-        SetupNinjaDead();
-    }
-
-    private void SetupNinjaDead()
-    {
         ChangeNinjaAliveStatus(false);
         GetComponent<Path>().ClearPath();
+
+        StartCoroutine(WaitToFinishNinjaDeathLogic());
+    }
+
+    private IEnumerator WaitToFinishNinjaDeathLogic()
+    {
+        yield return new WaitForSeconds(2);
+        FinishNinjaDeathLogic();
+    }
+
+    private void FinishNinjaDeathLogic()
+    {
+        ShowNinjaAliveStatus();
         _onNinjaDeath?.Invoke(this);
     }
 
@@ -154,12 +157,17 @@ public class Ninja : MonoBehaviour
         
         OnTileChangedCB(respawnPoint);
         ChangeNinjaAliveStatus(true);
+        ShowNinjaAliveStatus();
     }
     
     private void ChangeNinjaAliveStatus(bool value)
     {
         NinjaStatus = value ? NinjaStates.Alive : NinjaStates.Dead;
-        ToogleMeshes(value);
+    }
+
+    private void ShowNinjaAliveStatus()
+    {
+        ToogleMeshes(IsNinjaAlive);
     }
 
     private IEnumerator WaitToStopAttack()
