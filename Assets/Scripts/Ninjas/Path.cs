@@ -197,10 +197,24 @@ public class Path : MonoBehaviour
         Ninja ninja = gameObject.GetComponent<Ninja>();
         int playerIndex = ninja.GetPlayerIndex();
         Player player = PlayerManager.Instance.GetPlayerByIndex(playerIndex);
-        Material material = player.pathDrawMaterial;
 
+        Material material;
         Transform destinationTile = GameManager.Instance.GetTileObjectAt((uint)newDestination.x, (uint)newDestination.y);
         Renderer tileRenderer = destinationTile.gameObject.GetComponent<Renderer>();
+        TileToPlayerConnection tileConnection = destinationTile.GetComponent<TileToPlayerConnection>();
+        switch (tileConnection.PlayerType.PlayerIndex)
+        {
+            case 0:
+                material = player.pathDrawMaterialWhiteTile;
+                break;
+            case 1:
+                material = player.pathDrawMaterialBlackTile;
+                break;
+            default:
+                Debug.Log("Error: Player ID should be 0 or 1.");
+                material = tileRenderer.material;
+                break;
+        }
         tileRenderer.material = material;
 
         //TODO add invisibility logic versions (with an editor-exposed design switch between them)

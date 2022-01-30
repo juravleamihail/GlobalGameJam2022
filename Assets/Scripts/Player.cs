@@ -14,14 +14,18 @@ public class Player : PlayerInputHandler
     public int kills { get; private set; } = 0;
     public int aliveNinjas { get; private set; } = 3;
 
-    [SerializeField] private Material _pathDrawMaterial;
-    public Material pathDrawMaterial { get { return _pathDrawMaterial; } }
+    [SerializeField] private Material _pathDrawMaterialWhiteTile;
+    public Material pathDrawMaterialWhiteTile { get { return _pathDrawMaterialWhiteTile; } }
+
+    [SerializeField] private Material _pathDrawMaterialBlackTile;
+    public Material pathDrawMaterialBlackTile { get { return _pathDrawMaterialBlackTile; } }
 
     public Action onEnterMoveState;
 
     private void Start()
     {
-        _pathDrawMaterial = PlayerManager.Instance.pathMaterials[PlayerType.PlayerIndex];
+        _pathDrawMaterialWhiteTile = PlayerManager.Instance.pathMaterialsForWhiteTiles[PlayerType.PlayerIndex];
+        _pathDrawMaterialBlackTile = PlayerManager.Instance.pathMaterialsForBlackTiles[PlayerType.PlayerIndex];
         Debug.Log("Player index: " + PlayerInput.playerIndex);
     }
 

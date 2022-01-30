@@ -18,7 +18,8 @@ public class PlayerManager : Singleton<PlayerManager>
 
     //public bool isTurnState { get; private set; }
 
-    public Material[] pathMaterials;
+    public Material[] pathMaterialsForWhiteTiles;
+    public Material[] pathMaterialsForBlackTiles;
 
     public override void Awake()
     {
