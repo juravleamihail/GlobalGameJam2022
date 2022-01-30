@@ -169,7 +169,7 @@ public class NinjaManager : Singleton<NinjaManager>
             }
         }
 
-        return ninjaList.Count;
+        return ninjaList.FindAll(n=>n.IsNinjaAlive).Count;
     }
 
     public void ForceStopMovementPhase()
