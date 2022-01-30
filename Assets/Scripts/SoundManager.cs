@@ -67,8 +67,9 @@ public class SoundManager : Singleton<SoundManager>
             Resources.UnloadAsset(clip);
             Resources.UnloadUnusedAssets();
         }
-        
-        [ContextMenu("Add Selection")]
+
+#if UNITY_EDITOR
+    [ContextMenu("Add Selection")]
         private void AddSelection()
         {
             var objs = Selection.objects;
@@ -79,8 +80,9 @@ public class SoundManager : Singleton<SoundManager>
             
             EditorUtility.SetDirty(this);
         }
+#endif
 
-        public void PlayRandomSwordKillSound(AudioSource playerAudioSource)
+    public void PlayRandomSwordKillSound(AudioSource playerAudioSource)
         {
             int randomSound = Random.Range(0, _swordKillSounds.Length-1);
         playerAudioSource.clip = _swordKillSounds[randomSound];
