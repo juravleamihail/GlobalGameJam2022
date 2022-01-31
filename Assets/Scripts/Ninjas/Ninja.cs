@@ -96,6 +96,11 @@ public class Ninja : MonoBehaviour
 
     private bool OnTileChangedCB(Vector2Int tilePos)
     {
+        if (tilePos == GameManager.Instance.vector2IntException)
+        {
+            return false;
+        }
+        
         var result = new NinjaMovementData();
         result.PlayerId = GetPlayerIndex();
         result.NinjaId = ninjaIndex;
@@ -183,11 +188,12 @@ public class Ninja : MonoBehaviour
         {
             return;
         }
-        
-        Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
-        Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
 
-        //TODO this seems to cause bugs sometimes; get the tiles using the path instead of the position (see IsBetweenTiles commented method in Movement.cs)
+        //Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
+        Vector2Int ninjaCoordsOnGrid = GetGridPositionViaPath();
+        Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
+        //TODO implement something like the IsBetweenTiles commented method in Movement.cs
+
 
         TileToPlayerConnection tileConnection = tileObject.gameObject.GetComponent<TileToPlayerConnection>();
 

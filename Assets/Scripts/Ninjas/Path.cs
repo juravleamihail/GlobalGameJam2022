@@ -51,6 +51,10 @@ public class Path : MonoBehaviour
 
     public Vector2Int GetCurrentTile()
     {
+        if (_Path.Count < 1)
+        {
+            return GameManager.Instance.vector2IntException;
+        }
         return _Path[0];
     }
 
