@@ -94,6 +94,7 @@ public class Path : MonoBehaviour
         }
 
         ApplyDefaultMaterialToTile(_Path.Count-1);
+        //TODO remove only the symbol of the player that moved past the tile, not of both players (where it applies)
         _Path.RemoveAt(_Path.Count - 1);
 
         if (GameManager.Instance.invisiblePaths)
@@ -108,12 +109,16 @@ public class Path : MonoBehaviour
     }
     public void ApplyDefaultMaterialToTile(int index)
     {
-        Vector2Int lastTileCoords = _Path[index];
-        Transform lastTileTransform = GameManager.Instance.GetTileObjectAt((uint)lastTileCoords.x, (uint)lastTileCoords.y);
-        Tile lastTile = lastTileTransform.gameObject.GetComponent<Tile>();
-        Material defaultMaterial = lastTile.defaultMaterial;
+        Vector2Int tileCoords = _Path[index];
+        Transform tileTransform = GameManager.Instance.GetTileObjectAt((uint)tileCoords.x, (uint)tileCoords.y);
+        Tile tile = tileTransform.gameObject.GetComponent<Tile>();
 
-        Renderer renderer = lastTile.gameObject.GetComponent<Renderer>();
+        tile.selectedByPlayer[0] = false;
+        tile.selectedByPlayer[1] = false;
+
+        Material defaultMaterial = tile.defaultMaterial;
+
+        Renderer renderer = tile.gameObject.GetComponent<Renderer>();
         renderer.material = defaultMaterial;
     }
 
@@ -204,15 +209,33 @@ public class Path : MonoBehaviour
 
         Material material;
         Transform destinationTile = GameManager.Instance.GetTileObjectAt((uint)newDestination.x, (uint)newDestination.y);
+
+        Tile tile = destinationTile.GetComponent<Tile>();
+        tile.selectedByPlayer[playerIndex] = true;
+        
         Renderer tileRenderer = destinationTile.gameObject.GetComponent<Renderer>();
         TileToPlayerConnection tileConnection = destinationTile.GetComponent<TileToPlayerConnection>();
         switch (tileConnection.PlayerType.PlayerIndex)
         {
             case 0:
-                material = player.pathDrawMaterialWhiteTile;
+                if (tile.selectedByPlayer[0] && tile.selectedByPlayer[1])
+                {
+                    material = PlayerManager.Instance.pathMaterialsForWhiteTiles[2];
+                }
+                else
+                {
+                    material = player.pathDrawMaterialWhiteTile;
+                }                
                 break;
             case 1:
-                material = player.pathDrawMaterialBlackTile;
+                if (tile.selectedByPlayer[0] && tile.selectedByPlayer[1])
+                {
+                    material = PlayerManager.Instance.pathMaterialsForBlackTiles[2];
+                }
+                else
+                {
+                    material = player.pathDrawMaterialBlackTile;
+                }                    
                 break;
             default:
                 Debug.Log("Error: Player ID should be 0 or 1.");

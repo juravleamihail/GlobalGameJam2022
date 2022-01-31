@@ -9,6 +9,8 @@ public class Tile : MonoBehaviour
     private bool isTimerOn;
     public float disappearTime;
 
+    [HideInInspector] public List<bool> selectedByPlayer = new List<bool>(2);
+
     public InvasionData invasionData { get; private set; }
   
     public struct InvasionData
@@ -29,6 +31,8 @@ public class Tile : MonoBehaviour
     {
         Renderer renderer = gameObject.GetComponent<Renderer>();
         defaultMaterial = renderer.material;
+        selectedByPlayer.Add(false);
+        selectedByPlayer.Add(false);
     }
 
     public void StartDisappearTimer()
