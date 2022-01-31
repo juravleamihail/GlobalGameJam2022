@@ -284,7 +284,7 @@ public class NinjaManager : Singleton<NinjaManager>
     {
         if(!_allNinjas.TryGetValue(playerID, out var listOfNinjas))
         {
-            return null;
+            return new List<Ninja>();
         }
 
         return listOfNinjas;

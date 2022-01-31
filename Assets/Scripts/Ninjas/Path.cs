@@ -195,9 +195,8 @@ public class Path : MonoBehaviour
         return NinjaManager.Instance.IsDestinationOfFriendlyNinja(playerIndex, ninjaIndex, destination);
     }    
 
-    public void OnMovedOneTile()
+    public void RemoveCurrentTile()
     {
-        //TODO make a call to this from the movement logic
         _Path.RemoveAt(0);
     }
 

@@ -189,8 +189,8 @@ public class Ninja : MonoBehaviour
             return;
         }
 
-        //Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
-        Vector2Int ninjaCoordsOnGrid = GetGridPositionViaPath();
+        Vector2Int ninjaCoordsOnGrid = GameManager.Instance.ConvertVector3CoordsToGrid(transform.position.x, transform.position.z);
+        //Vector2Int ninjaCoordsOnGrid = GetGridPositionViaPath();
         Transform tileObject = GameManager.Instance.GetTileObjectAt((uint)ninjaCoordsOnGrid.x, (uint)ninjaCoordsOnGrid.y);
         //TODO implement something like the IsBetweenTiles commented method in Movement.cs
 

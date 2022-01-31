@@ -59,7 +59,13 @@ namespace States
             {
                 foreach (var kv1 in _player1Tiles)
                 {
-                    if (kv0.Value == kv1.Value)
+                    Vector3 p0posV3 = NinjaManager.Instance.GetNinja(0, kv0.Key).transform.position;
+                    Vector2Int p0pos = GameManager.Instance.ConvertVector3CoordsToGrid(p0posV3.x, p0posV3.z);
+
+                    Vector3 p1posV3 = NinjaManager.Instance.GetNinja(1, kv1.Key).transform.position;
+                    Vector2Int p1pos = GameManager.Instance.ConvertVector3CoordsToGrid(p1posV3.x, p1posV3.z);
+
+                    if (p0pos == p1pos)
                     {
                         _ninjasInCombat.Add(new NinjasCombatData()
                         {
@@ -67,13 +73,15 @@ namespace States
                             {
                                 PlayerId = 0,
                                 NinjaId = kv0.Key,
-                                TilePos = kv0.Value
+                                //TilePos = kv0.Value
+                                TilePos = p0pos
                             },
                             Player1CombatData = new NinjaMovementData()
                             {
                                 PlayerId = 1,
                                 NinjaId = kv1.Key,
-                                TilePos = kv1.Value
+                                TilePos = p1pos
+                                //TilePos = kv1.Value
                             }
                         });
                         hasSameTiles = true;

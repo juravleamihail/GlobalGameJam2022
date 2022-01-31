@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
 
     protected Vector3 _nextTileWorldPosition; //TODO find a way to avoid this caching
     protected bool _isMovingOneTile = false;
+    public bool isMovingOneTile { get { return _isMovingOneTile; } }
     protected bool _isMovePhaseForNinja = false;
     private Action _onCompleteCb;
     private Func<Vector2Int, bool> _onTileCb;
@@ -71,19 +72,19 @@ public class Movement : MonoBehaviour
             _onCompleteCb?.Invoke();
             return;
         }
-        
+
         var result = _onTileCb?.Invoke(_pathComponent.GetCurrentTile());
         if (result == true)
         {
             shouldMoveOneTile = false;
             return;
         }
-        
-        shouldMoveOneTile = true;
 
+        shouldMoveOneTile = true;
+        
         Vector2Int nextTileOnGrid = _pathComponent.GetNextTile();
         _nextTileWorldPosition = GameManager.Instance.ConvertGridCoordsToVector3((uint)nextTileOnGrid.x, (uint)nextTileOnGrid.y);
-        
+
         //Rotate to object
         Vector3 pos = _nextTileWorldPosition;
         pos.y = transform.position.y;
@@ -115,8 +116,8 @@ public class Movement : MonoBehaviour
             _pathComponent.ApplyDefaultMaterialToTile(0);
             if (_isMovingOneTile)
             {
+                _pathComponent.RemoveCurrentTile();
                 _isMovingOneTile = false;
-                _pathComponent.OnMovedOneTile();
             }
             else
             {
